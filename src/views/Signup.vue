@@ -2,7 +2,7 @@
   <div class="bg">
     <br>
     <b-container>
-      <b-container>
+      <!-- <b-container>
         <b-row>
           <b-col>
             <div>
@@ -14,7 +14,7 @@
             </div>
           </b-col>
         </b-row>
-      </b-container>
+      </b-container> -->
       <b-container>
         <b-row>
           <b-col>
