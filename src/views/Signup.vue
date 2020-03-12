@@ -20,19 +20,19 @@
           <b-col>
             <div class="align-left" id="idcustomer">
               <div>Customer ID </div>
-              <input type="text">
+              <input type="text" v-model="empCategory.employee_id">
             </div>
           </b-col>
           <b-col>
             <div>
               <div class="align-left">Name</div>
-              <input type="text">
+              <input type="text" v-model="empCategory.employee_name">
             </div>
           </b-col>
           <b-col>
             <div>
               <div class="align-left">Lastname</div>
-              <input type="text">
+              <input type="text" v-model="empCategory.employee_lastname">
             </div>
           </b-col>
         </b-row>
@@ -44,7 +44,7 @@
           <div>
             <div class="align-left">Job Position</div>
             <!-- <input type="text"> -->
-            <select name="" id="">
+            <select name="" id="" v-model="empCategory.job_position_id">
               <option value="0">ผู้จัดการ</option>
             </select>
           </div>
@@ -52,13 +52,13 @@
         <b-col>
           <div>
             <div class="align-left">Email</div>
-            <input type="text">
+            <input type="text" v-model="empCategory.employee_email">
           </div>
         </b-col>
         <b-col>
           <div>
             <div class="align-left">Tel.</div>
-            <input type="text">
+            <input type="text" v-model="empCategory.employee_tel">
           </div>
         </b-col>
       </b-row>
@@ -68,33 +68,60 @@
         <b-col>
           <div>
             <div class="align-left">Password</div>
-            <input type="text">
+            <input type="password" v-model="empCategory.password">
           </div>
         </b-col>
         <b-col>
           <div>
             <div class="align-left">Work Start Date</div>
-            <input type="text">
+            <input type="date" v-model="empCategory.start_date">
           </div>
         </b-col>
         <b-col>
         </b-col>
       </b-row>
     </b-container>
+    <br>
+    <button v-on:click="send ()">send</button>
     </b-container>
   </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
   data () {
     return {
-      cc: '#2c3e50'
+      cc: '#2c3e50',
+      empCategory: {
+        employee_pic: '/img/nok.jpg',
+        employee_id: '',
+        employee_name: '',
+        employee_lastname: '',
+        job_position_id: '',
+        employee_email: '',
+        employee_tel: '',
+        password: '',
+        start_date: '',
+        leave_sick: '30',
+        leave_activity: '7',
+        leave_vacation: '14'
+      }
     }
   },
   metaInfo () {
     return {
       title: 'Signup',
       titleTemplate: '%s - LPTT'
+    }
+  },
+  methods: {
+    send () {
+      console.log('test')
+      axios.post('http://127.0.0.1:4000/emp/post-emp', this.empCategory).then(response => {
+        console.log(response)
+      }).catch(e => {
+        this.error.push(e)
+      })
     }
   }
 }

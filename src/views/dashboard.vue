@@ -1,8 +1,5 @@
 <template>
   <div>
-      <div>
-
-</div>
     <div id="mySidenav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" v-on:click="openNav ()">&times;</a>
       <a href="#">Leave Report</a>
@@ -18,6 +15,19 @@
           <b-col><span style="font-size:30px;cursor:pointer" v-on:click="openNav ()">{{symbols}}</span></b-col>
         </b-row>
       </b-container>
+      <b-container>
+        <b-row>
+          <b-col>
+            aaa
+          </b-col>
+          <b-col>
+            aaa
+          </b-col>
+          <b-col>
+            aaa
+          </b-col>
+        </b-row>
+      </b-container>
     </div>
   </div>
 </template>
@@ -27,6 +37,12 @@ export default {
     return {
       isTrue: true,
       symbols: '&#9776;'
+    }
+  },
+  metaInfo () {
+    return {
+      title: 'Dashboard',
+      titleTemplate: '%s - LPTT'
     }
   },
   methods: {
