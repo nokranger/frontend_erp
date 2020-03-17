@@ -1,34 +1,6 @@
 <template>
   <div>
-    <div id="mySidenav" class="sidenav">
-      <a href="javascript:void(0)" class="closebtn" v-on:click="openNav ()">&times;</a>
-      <a href="#">Leave Report</a>
-      <a href="#">Transportation Report</a>
-      <a href="#">Approve leave</a>
-      <a href="#">Approve Transportation </a>
-    </div>
-    <div>
-      <b-container>
-        <b-row>
-          <b-col></b-col>
-          <b-col></b-col>
-          <b-col><span style="font-size:30px;cursor:pointer" v-on:click="openNav ()">{{symbols}}</span></b-col>
-        </b-row>
-      </b-container>
-      <b-container>
-        <b-row>
-          <b-col>
-            aaa
-          </b-col>
-          <b-col>
-            aaa
-          </b-col>
-          <b-col>
-            aaa
-          </b-col>
-        </b-row>
-      </b-container>
-    </div>
+    dashboard
   </div>
 </template>
 <script>

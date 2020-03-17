@@ -3,6 +3,10 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Signup from '../views/Signup.vue'
 import Dashboard from '../views/dashboard.vue'
+import Approveleave from '../views/approve_leave.vue'
+import ApproveTransportation from '../views/approve_transportation.vue'
+import LeaveReport from '../views/leave_report.vue'
+import TransportationReport from '../views/transportation_report.vue'
 
 import Meta from 'vue-meta'
 
@@ -11,7 +15,7 @@ Vue.use(Meta)
 
 const routes = [
   {
-    path: '/',
+    path: '/ss',
     name: 'Home',
     component: Home
   },
@@ -29,9 +33,29 @@ const routes = [
     component: Signup
   },
   {
-    path: '/dashboard',
+    path: '/',
     name: 'dashboard',
     component: Dashboard
+  },
+  {
+    path: '/approveleave',
+    name: 'approve_leave',
+    component: Approveleave
+  },
+  {
+    path: '/approvetrans',
+    name: 'Approve_trans',
+    component: ApproveTransportation
+  },
+  {
+    path: '/leavereport',
+    name: 'leave_report',
+    component: LeaveReport
+  },
+  {
+    path: '/transreport',
+    name: 'trans_report',
+    component: TransportationReport
   }
 ]
 
