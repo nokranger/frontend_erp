@@ -14,7 +14,9 @@ export default {
   components: {
     'app-header': Header
   },
-  data () {}
+  data () {
+    return {}
+  }
 }
 </script>
 

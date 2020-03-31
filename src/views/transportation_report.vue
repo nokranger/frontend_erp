@@ -11,6 +11,9 @@ import transreport from '../components/form_trans'
 export default {
   components: {
     'app-trans': transreport
+  },
+  data () {
+    return {}
   }
 }
 </script>
