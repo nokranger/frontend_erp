@@ -69,31 +69,11 @@ export default {
     console.log('test')
     axios.get('http://127.0.0.1:4000/emp/get-all-emp').then(response => {
       const vm = this
-      // console.log(JSON.stringify(response.data.result))
-      // console.log(JSON.parse(JSON.stringify(response.data.result)))
-      // for (let i = 0; i < 2; i++) {
-      //   console.log(response.data.result[i].employee_id)
-      // }
-      // this.emp = JSON.parse(response.data.result)
-      // let emps = []
       const res = response.data.result
       vm.getData(res)
-      // response.data.result.forEach((obj) => {
-      //   let emps = []
-      //   // console.log(obj.employee_id)
-      //   emps = obj
-      //   // console.log(emps)
-      //   // console.log('aa : ', emps.employee_id)
-      //   vm.emp = emps
-      // })
-      // // for (let i = 0; i < this.emp.lenght; i++) {
-      // //   console.log(i)
-      // // }
-      // console.log(this.emp[1].employee_id)
+    }).catch(e => {
+      this.error.push(e)
     })
-    // .catch(e => {
-    //   this.error.push(e)
-    // })
   }
 }
 </script>
