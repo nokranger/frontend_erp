@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-bind:style="{colorlptt}">
     <app-header></app-header>
     <!-- <div id="nav">
       <router-link to="/">Home</router-link> |
@@ -15,7 +15,9 @@ export default {
     'app-header': Header
   },
   data () {
-    return {}
+    return {
+      colorlptt: '#29265b'
+    }
   }
 }
 </script>
@@ -26,7 +28,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #29265b;;
 }
 
 #nav {

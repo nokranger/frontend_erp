@@ -8,15 +8,31 @@
             <div>
               Member
               <b-col>
-                {{emp.employee_id[1]}}
+                <!-- {{emp.employee_id[1]}} -->
+                <!-- <ul style="list-style-type: none;margin:0;padding:0;">
+                  <li v-for="(employee_ids, index) in employee_id" :key="index">
+                    {{employee_ids}}
+                  </li>
+                </ul> -->
+                {{employee_id}}
               </b-col>
             </div>
           </b-col>
           <b-col>
-            bbb
+            <div>
+              Activity
+              <b-col>
+                {{event}}
+              </b-col>
+            </div>
           </b-col>
           <b-col>
-            ccc
+            <div>
+              Approve
+              <b-col>
+                {{approve}}
+              </b-col>
+            </div>
           </b-col>
         </b-row>
       </b-container>
@@ -28,11 +44,13 @@ import axios from 'axios'
 export default {
   data () {
     return {
+      lpttcolor: '#29265b',
       isTrue: true,
       symbols: '&#9776;',
-      emp: {
-        employee_id: []
-      }
+      employee_id: [],
+      aa: ['a', 'b', 'c', 'd'],
+      event: [],
+      approve: []
     }
   },
   metaInfo () {
@@ -40,6 +58,23 @@ export default {
       title: 'Dashboard',
       titleTemplate: '%s - LPTT'
     }
+  },
+  created () {
+    console.log('test')
+  },
+  updated () {
+  },
+  mounted () {
+    axios.all([axios.get('http://127.0.0.1:4000/emp/get-last-emp'), axios.get('http://127.0.0.1:4000/leavear/get-all-la_report'), axios.get('http://127.0.0.1:4000/trans/get-last-trans')]).then(axios.spread((resemp, reslar, restrans) => {
+      // const vm = this
+      this.employee_id = resemp.data.result
+      // vm.getData(res)
+      this.event = reslar.data.result
+      this.approve = restrans.data.result
+    })).catch(e => {
+      this.error.push(e)
+    })
+    // console.log(this.info.length)
   },
   methods: {
     openNav () {
@@ -57,23 +92,13 @@ export default {
       document.getElementById('mySidenav').style.width = '0'
     },
     getData (res) {
-      console.log(res.length)
-      for (let i = 0; i < res.length; i++) {
-        this.emp.employee_id[i] = res[i].employee_id
-      }
-      console.log(this.emp.employee_id[1])
-      // this.emp = res
+      // console.log(res)
+      // for (let i = 0; i < res.length; i++) {
+      //   this.employee_id[i] = res[i].employee_id
+      // }
+      // console.log(typeof (res))
+      // console.log(this.employee_id)
     }
-  },
-  created () {
-    console.log('test')
-    axios.get('http://127.0.0.1:4000/emp/get-all-emp').then(response => {
-      const vm = this
-      const res = response.data.result
-      vm.getData(res)
-    }).catch(e => {
-      this.error.push(e)
-    })
   }
 }
 </script>
