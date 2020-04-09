@@ -9,12 +9,12 @@
               Member
               <b-col>
                 <!-- {{emp.employee_id[1]}} -->
-                <!-- <ul style="list-style-type: none;margin:0;padding:0;">
+                <ul style="list-style-type: none;margin:0;padding:0;">
                   <li v-for="(employee_ids, index) in employee_id" :key="index">
-                    {{employee_ids}}
+                    {{employee_ids.id}}
                   </li>
-                </ul> -->
-                {{employee_id}}
+                </ul>
+                <!-- {{employee_id}} -->
               </b-col>
             </div>
           </b-col>
@@ -22,7 +22,11 @@
             <div>
               Activity
               <b-col>
-                {{event}}
+                <ul style="list-style-type: none;margin:0;padding:0;">
+                  <li v-for="(events, index) in event" :key="index">
+                    {{events.id}}
+                  </li>
+                </ul>
               </b-col>
             </div>
           </b-col>
@@ -30,7 +34,12 @@
             <div>
               Approve
               <b-col>
-                {{approve}}
+                <ul style="list-style-type: none;margin:0;padding:0;">
+                  <li v-for="(approves, index) in approve" :key="index">
+                    {{approve.id}}
+                  </li>
+                  {{approve}}
+                </ul>
               </b-col>
             </div>
           </b-col>
@@ -67,10 +76,22 @@ export default {
   mounted () {
     axios.all([axios.get('http://127.0.0.1:4000/emp/get-last-emp'), axios.get('http://127.0.0.1:4000/leavear/get-all-la_report'), axios.get('http://127.0.0.1:4000/trans/get-last-trans')]).then(axios.spread((resemp, reslar, restrans) => {
       // const vm = this
-      this.employee_id = resemp.data.result
+      this.employee_id = resemp.data.result.map((data, i) => {
+        return {
+          id: data.employee_id
+        }
+      })
       // vm.getData(res)
-      this.event = reslar.data.result
-      this.approve = restrans.data.result
+      this.event = reslar.data.result.map((data, i) => {
+        return {
+          id: data.reason_for_leave
+        }
+      })
+      this.approve = restrans.data.result.map((data, i) => {
+        return {
+          id: data.approve_id
+        }
+      })
     })).catch(e => {
       this.error.push(e)
     })
