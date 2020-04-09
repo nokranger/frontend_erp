@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-bind:style="{lpttcolor}">
     dashboard
     <b-container fluid="xl">
       <b-container>
