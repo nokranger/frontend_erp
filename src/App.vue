@@ -1,6 +1,6 @@
 <template>
-  <div id="app" v-bind:style="{colorlptt}">
-    <!-- <app-header></app-header> -->
+  <div id="app">
+    <app-header></app-header>
     <!-- <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
@@ -9,11 +9,11 @@
   </div>
 </template>
 <script>
-// import Header from './components/header'
+import Header from './components/header'
 export default {
-  // components: {
-  //   'app-header': Header
-  // },
+  components: {
+    'app-header': Header
+  },
   data () {
     return {
       colorlptt: '#29265b'

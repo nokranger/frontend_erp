@@ -24,7 +24,7 @@
           <div>
             round trip
             <br />from :
-            <input type="text" v-model="transportation.trans_form"/>
+            <input type="text" v-model="transportation.trans_from"/>
             <br />to :
             <input type="text" v-model="transportation.trans_to"/>
           </div>
@@ -59,7 +59,7 @@ export default {
         trans_id: '',
         employee_id: '',
         trans_date: '',
-        trans_form: '',
+        trans_from: '',
         trans_to: '',
         trans_vehicle: '',
         approve_id: '',

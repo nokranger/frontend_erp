@@ -1,5 +1,5 @@
 <template>
-  <div v-bind:style="{lpttcolor}">
+  <div v-bind:style="{background: lpttcolor,hieght: '100%', padding: '50px'}">
     dashboard
     <b-container fluid="xl">
       <b-container>
@@ -32,13 +32,19 @@
           </b-col>
           <b-col>
             <div>
-              Approve
+              Approves
               <b-col>
                 <ul style="list-style-type: none;margin:0;padding:0;">
                   <li v-for="(approves, index) in approve" :key="index">
                     {{approve.id}}
+                    <p v-if="approves.id == '0'">
+                      ยังไม่ยืนยัน
+                    </p>
+                    <p v-else-if="approves.id == '1'">
+                      ยืนยันแล้ว
+                    </p>
                   </li>
-                  {{approve}}
+                  <!-- {{approve}} -->
                 </ul>
               </b-col>
             </div>
@@ -53,7 +59,7 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      lpttcolor: '#29265b',
+      lpttcolor: 'white',
       isTrue: true,
       symbols: '&#9776;',
       employee_id: [],
@@ -98,28 +104,6 @@ export default {
     // console.log(this.info.length)
   },
   methods: {
-    openNav () {
-      var el = document.getElementById('mySidenav')
-      if (el.style.width === '250px') {
-        el.style.width = '0px'
-        this.symbols = '&#9776;'
-      } else {
-        el.style.width = '250px'
-        this.symbols = '&times;'
-      }
-    },
-
-    closeNav () {
-      document.getElementById('mySidenav').style.width = '0'
-    },
-    getData (res) {
-      // console.log(res)
-      // for (let i = 0; i < res.length; i++) {
-      //   this.employee_id[i] = res[i].employee_id
-      // }
-      // console.log(typeof (res))
-      // console.log(this.employee_id)
-    }
   }
 }
 </script>
