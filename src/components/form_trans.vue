@@ -1,53 +1,90 @@
 <template>
   <div>
-    <b-container>
-      <b-row>
-        <b-col>
-          <div>
-            TransID <input type="text" v-model="transportation.trans_id">
-          </div>
-        </b-col>
-        <b-col>
-          <div>
-            EmpID <input type="text" v-model="transportation.employee_id">
-          </div>
-        </b-col>
-      </b-row>
-      <b-row>
-        <b-col>
-          <div>
-            Date
-            <input type="date" v-model="transportation.trans_date"/>
-          </div>
-        </b-col>
-        <b-col>
-          <div>
-            round trip
-            <br />from :
-            <input type="text" v-model="transportation.trans_from"/>
-            <br />to :
-            <input type="text" v-model="transportation.trans_to"/>
-          </div>
-        </b-col>
-        <b-col>
-          <div>
-            by & expense
+      <b-container>
+        <br>
+        <b-row>
+          <b-col>
             <div>
-              <select v-model="transportation.trans_vehicle">
-                <option value="1">BTS</option>
-                <option value="2">MRT</option>
-                <option value="3">Taxi</option>
-                <option value="4">Motorcycle</option>
-              </select>
-              expense
-              <input type="text" v-model="transportation.trans_values"/>
+              <div class="align-left">
+                TransID
+              </div>
+              <b-form-input type="text" v-model="transportation.trans_id"></b-form-input>
             </div>
+          </b-col>
+          <b-col>
+            <div>
+              <div class="align-left">
+                EmpID
+              </div>
+              <b-form-input type="text" v-model="transportation.employee_id"></b-form-input>
+            </div>
+          </b-col>
+        </b-row>
+      </b-container>
+      <b-container>
+        <br>
+        <b-row>
+          <b-col>
+            <div>
+              <div class="align-left">
+                วันที่
+              </div>
+              <b-form-input type="date" v-model="transportation.trans_date"></b-form-input>
+            </div>
+          </b-col>
+          <b-col></b-col>
+          <!-- <b-col></b-col> -->
+        </b-row>
+      </b-container>
+
+        <b-container>
+          <br>
+          <div class="align-center">
+            Round trip
           </div>
           <br>
-          <button v-on:click="send ()">Submit</button>
-        </b-col>
-      </b-row>
-    </b-container>
+          <b-row>
+            <b-col>
+              <div>
+                <div class="align-left">
+                  เริ่ม
+                </div>
+                <b-form-input type="text" v-model="transportation.trans_from"></b-form-input>
+              </div>
+            </b-col>
+            <b-col>
+              <div>
+                <div class="align-left">
+                  ถึง
+                </div>
+                <b-form-input type="text" v-model="transportation.trans_to"></b-form-input>
+              </div>
+            </b-col>
+            <b-col>
+              <div>
+                <div class="align-left">
+                  โดยสาร
+                </div>
+                <div>
+                  <b-form-select v-model="transportation.trans_vehicle" :options="options"></b-form-select>
+                  <!-- <b-form-select v-model="selected" :options="options"></b-form-select> -->
+                  <div class="align-left">
+                    ค่าใช้จ่าย
+                  </div>
+                  <b-form-input type="text" v-model="transportation.trans_values"></b-form-input>
+                </div>
+              </div>
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col>
+              <br>
+              <div>
+                <b-button variant="outline-primary" v-on:click="send ()">อัพโหลด</b-button>
+              </div>
+            </b-col>
+          </b-row>
+        </b-container>
   </div>
 </template>
 <script>
@@ -64,7 +101,24 @@ export default {
         trans_vehicle: '',
         approve_id: '',
         trans_values: ''
-      }
+      },
+      options: [
+        // {
+        //   value: null, text: 'Please Select'
+        // },
+        {
+          value: 1, text: 'BTS'
+        },
+        {
+          value: 2, text: 'MRT'
+        },
+        {
+          value: 3, text: 'Taxi'
+        },
+        {
+          value: 4, text: 'Motorcycle'
+        }
+      ]
       // detail_transportation: {
       //   trans_id: '',
       //   trans_date: '',
@@ -88,5 +142,15 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
+.align-left {
+  text-align:left
+}
+.align-center {
+  text-align: center;
+}
+div {
+  font-family: 'Kanit', sans-serif;
+}
 </style>

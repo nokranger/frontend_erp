@@ -19,20 +19,20 @@
         <b-row>
           <b-col>
             <div class="align-left" id="idcustomer">
-              <div>Customer ID </div>
-              <input type="text" v-model="empCategory.employee_id">
+              <div>รหัสพนักงาน</div>
+              <b-form-input type="text" v-model="empCategory.employee_id"></b-form-input>
             </div>
           </b-col>
           <b-col>
             <div>
-              <div class="align-left">Name</div>
-              <input type="text" v-model="empCategory.employee_name">
+              <div class="align-left">ชื่อ</div>
+              <b-form-input type="text" v-model="empCategory.employee_name"></b-form-input>
             </div>
           </b-col>
           <b-col>
             <div>
-              <div class="align-left">Lastname</div>
-              <input type="text" v-model="empCategory.employee_lastname">
+              <div class="align-left">นามสกุล</div>
+              <b-form-input type="text" v-model="empCategory.employee_lastname"></b-form-input>
             </div>
           </b-col>
         </b-row>
@@ -42,23 +42,23 @@
       <b-row>
         <b-col>
           <div>
-            <div class="align-left">Job Position</div>
-            <!-- <input type="text"> -->
-            <select name="" id="" v-model="empCategory.job_position_id">
+            <div class="align-left">ตำแหน่งพนักงาน</div>
+            <!-- <b-form-input type="text"> -->
+            <b-form-select name="" id="" v-model="empCategory.job_position_id">
               <option value="0">ผู้จัดการ</option>
-            </select>
+            </b-form-select>
           </div>
         </b-col>
         <b-col>
           <div>
-            <div class="align-left">Email</div>
-            <input type="text" v-model="empCategory.employee_email">
+            <div class="align-left">อีเมลล์</div>
+            <b-form-input type="text" v-model="empCategory.employee_email"></b-form-input>
           </div>
         </b-col>
         <b-col>
           <div>
-            <div class="align-left">Tel.</div>
-            <input type="text" v-model="empCategory.employee_tel">
+            <div class="align-left">เบอร์โทรศัพท์</div>
+            <b-form-input type="text" v-model="empCategory.employee_tel"></b-form-input>
           </div>
         </b-col>
       </b-row>
@@ -67,14 +67,14 @@
       <b-row>
         <b-col>
           <div>
-            <div class="align-left">Password</div>
-            <input type="password" v-model="empCategory.password">
+            <div class="align-left">รหัสผ่าน</div>
+            <b-form-input type="password" v-model="empCategory.password"></b-form-input>
           </div>
         </b-col>
         <b-col>
           <div>
-            <div class="align-left">Work Start Date</div>
-            <input type="date" v-model="empCategory.start_date">
+            <div class="align-left">วันเริ่มทำงาน</div>
+            <b-form-input type="date" v-model="empCategory.start_date"></b-form-input>
           </div>
         </b-col>
         <b-col>
@@ -82,7 +82,7 @@
       </b-row>
     </b-container>
     <br>
-    <button v-on:click="send ()">send</button>
+    <b-button variant="outline-primary" v-on:click="send ()">อัพโหลด</b-button>
     </b-container>
   </div>
 </template>
@@ -127,6 +127,10 @@ export default {
 }
 </script>
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
+div {
+  font-family: 'Kanit', sans-serif;
+}
 template {
   height: auto
 }

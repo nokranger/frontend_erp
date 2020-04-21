@@ -1,12 +1,15 @@
 <template>
   <div v-bind:style="{background: lpttcolor,hieght: '100%', padding: '50px'}">
-    dashboard
+    <div style="font-size:30px;">
+      แดชบอร์ด
+    </div>
     <b-container fluid="xl">
       <b-container>
+        <br>
         <b-row>
           <b-col>
             <div>
-              Member
+              รหัสพนักงาน
               <b-col>
                 <!-- {{emp.employee_id[1]}} -->
                 <ul style="list-style-type: none;margin:0;padding:0;">
@@ -20,7 +23,7 @@
           </b-col>
           <b-col>
             <div>
-              Activity
+              กิจกรรม
               <b-col>
                 <ul style="list-style-type: none;margin:0;padding:0;">
                   <li v-for="(events, index) in event" :key="index">
@@ -32,16 +35,16 @@
           </b-col>
           <b-col>
             <div>
-              Approves
+              สถานะ
               <b-col>
                 <ul style="list-style-type: none;margin:0;padding:0;">
                   <li v-for="(approves, index) in approve" :key="index">
                     {{approve.id}}
                     <p v-if="approves.id == '0'">
-                      ยังไม่ยืนยัน
+                      ยังไม่อนุมัติ
                     </p>
                     <p v-else-if="approves.id == '1'">
-                      ยืนยันแล้ว
+                      อนุมัติแล้ว
                     </p>
                   </li>
                   <!-- {{approve}} -->

@@ -2,7 +2,9 @@
   <div>
     <div>
       <b-container fluid="xl">
-        leave report
+        <div style="font-size:30px;">
+          ใบลา
+        </div>
         <app-leave></app-leave>
       </b-container>
     </div>
@@ -16,5 +18,15 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
+.align-left {
+  text-align:left
+}
+.align-center {
+  text-align: center;
+}
+div {
+  font-family: 'Kanit', sans-serif;
+}
 </style>

@@ -1,7 +1,9 @@
 <template>
   <div>
-    approve_trans
-    {{event}}
+    <div style="font-size:30px;">
+      อนุมัติใบเบิกค่าใช้จ่ายสำหรับเดินทาง
+    </div>
+    <!-- {{event}} -->
     <div>
       <b-container>
         <b-row>
@@ -14,42 +16,48 @@
             </ul>
           </b-col>
           <b-col>
-            รหัสพนักงาน
+            รหัสใบเบิก
             <ul style="list-style-type: none;margin:0;padding:0;">
               <li v-for="(events, index) in event" :key="index">
                 {{events.transId}}
               </li>
             </ul>
           </b-col>
-                    <b-col>
-            รหัสพนักงาน
+          <b-col>
+            เริ่ม
             <ul style="list-style-type: none;margin:0;padding:0;">
               <li v-for="(events, index) in event" :key="index">
                 {{events.from}}
               </li>
             </ul>
           </b-col>
-                    <b-col>
-            รหัสพนักงาน
+          <b-col>
+            ถึง
             <ul style="list-style-type: none;margin:0;padding:0;">
               <li v-for="(events, index) in event" :key="index">
                 {{events.to}}
               </li>
             </ul>
           </b-col>
-                    <b-col>
-            รหัสพนักงาน
+          <b-col>
+            ค่าใช้จ่าย
             <ul style="list-style-type: none;margin:0;padding:0;">
               <li v-for="(events, index) in event" :key="index">
                 {{events.prices}}
               </li>
             </ul>
           </b-col>
-                    <b-col>
-            รหัสพนักงาน
+          <b-col>
+            สถานะ
             <ul style="list-style-type: none;margin:0;padding:0;">
               <li v-for="(events, index) in event" :key="index">
-                {{events.approve}}
+                <!-- {{events.approve}} -->
+                <p v-if="events.approve == '0'">
+                  ยังไม่อนุมัติ
+                </p>
+                <p v-if="events.approve == '1'">
+                  อนุมัติแล้ว
+                </p>
               </li>
             </ul>
           </b-col>
@@ -89,5 +97,15 @@ export default {
   }
 }
 </script>
-<style lang="">
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
+.align-left {
+  text-align:left
+}
+.align-center {
+  text-align: center;
+}
+div {
+  font-family: 'Kanit', sans-serif;
+}
 </style>

@@ -1,6 +1,8 @@
 <template>
   <div>
-    ยืนยันใบลา
+    <div style="font-size:30px;">
+      อนุมัติใบลา
+    </div>
       <div>
         <b-row>
           <b-col>
@@ -33,10 +35,10 @@
               <li v-for="(events, index) in event" :key="index">
                 <!-- {{events.status}} -->
                 <p v-if="events.approve == '0'">
-                  ยังไม่ยืนยัน
+                  ยังไม่อนุมัติ
                 </p>
                 <p v-if="events.approve == '1'">
-                  ยืนยันแล้ว
+                  อนุมัติแล้ว
                 </p>
               </li>
             </ul>
@@ -88,5 +90,15 @@ export default {
   }
 }
 </script>
-<style lang="">
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
+.align-left {
+  text-align:left
+}
+.align-center {
+  text-align: center;
+}
+div {
+  font-family: 'Kanit', sans-serif;
+}
 </style>
