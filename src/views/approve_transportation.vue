@@ -2,10 +2,40 @@
   <div>
     <div style="font-size:30px;">
       อนุมัติใบเบิกค่าใช้จ่ายสำหรับเดินทาง
+      <br>
+      <br>
     </div>
     <!-- {{event}} -->
     <div>
       <b-container>
+        <table class="table">
+          <thead>
+            <tr class="table-active">
+              <th scope="col">#</th>
+              <th scope="col">Employee ID</th>
+              <th scope="col">Transportation Report ID</th>
+              <th scope="col">From</th>
+              <th scope="col">To</th>
+              <th scope="col">Expense</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(events, index) in event" :key="index" :class="index % 2 === 0 ? 'table-primary' : 'table-active'">
+              <th >{{index}}</th>
+              <th>{{events.id}}</th>
+              <th>{{events.transId}}</th>
+              <th>{{events.from}}</th>
+              <th>{{events.to}}</th>
+              <th>{{events.prices}}</th>
+              <th v-if="events.approve == '0'">Not approved</th>
+              <th v-else-if="events.approve == '1'">Approved</th>
+              <th v-else>-</th>
+            </tr>
+          </tbody>
+        </table>
+      </b-container>
+      <!-- <b-container>
         <b-row>
           <b-col>
             รหัสพนักงาน
@@ -51,7 +81,6 @@
             สถานะ
             <ul style="list-style-type: none;margin:0;padding:0;">
               <li v-for="(events, index) in event" :key="index">
-                <!-- {{events.approve}} -->
                 <p v-if="events.approve == '0'">
                   ยังไม่อนุมัติ
                 </p>
@@ -62,7 +91,7 @@
             </ul>
           </b-col>
         </b-row>
-      </b-container>
+      </b-container> -->
     </div>
   </div>
 </template>

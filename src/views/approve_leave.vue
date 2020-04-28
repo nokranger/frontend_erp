@@ -2,8 +2,36 @@
   <div>
     <div style="font-size:30px;">
       อนุมัติใบลา
+      <br>
+      <br>
     </div>
-      <div>
+    <div>
+      <b-container>
+        <table class="table">
+          <thead>
+            <tr class="table-active">
+              <th scope="col">#</th>
+              <th scope="col">Employee ID</th>
+              <th scope="col">Leave Report ID</th>
+              <th scope="col">Type Leave</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(events, index) in event" :key="index" :class="index % 2 === 0 ? 'table-primary' : 'table-active'">
+              <th>{{index}}</th>
+              <th>{{events.id}}</th>
+              <th>{{events.actId}}</th>
+              <th>{{events.reason}}</th>
+              <th v-if="events.approve == '0'">Not approved</th>
+              <th v-else-if="events.approve == '1'">Approved</th>
+              <th v-else>-</th>
+            </tr>
+          </tbody>
+        </table>
+      </b-container>
+    </div>
+      <!-- <div>
         <b-row>
           <b-col>
             รหัสพนักงาน
@@ -33,7 +61,6 @@
             สถานะ
             <ul style="list-style-type: none;margin:0;padding:0;">
               <li v-for="(events, index) in event" :key="index">
-                <!-- {{events.status}} -->
                 <p v-if="events.approve == '0'">
                   ยังไม่อนุมัติ
                 </p>
@@ -44,7 +71,7 @@
             </ul>
           </b-col>
         </b-row>
-      </div>
+      </div> -->
   </div>
 </template>
 <script>
