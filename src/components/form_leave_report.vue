@@ -77,7 +77,7 @@
             <b-col>
               <br>
               <div>
-                <b-button variant="outline-primary" v-on:click="send ()">อัพโหลด</b-button>
+                <b-button style="width:30%" variant="outline-primary" v-on:click="send ()"><i class="fas fa-upload"></i></b-button>
               </div>
             </b-col>
           </b-row>
