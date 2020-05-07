@@ -11,9 +11,11 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.5.0",
+    "chart.js": "^2.9.3",
     "core-js": "^3.6.4",
     "mdbvue": "^6.5.0",
     "vue": "^2.6.11",
+    "vue-google-charts": "^0.3.2",
     "vue-meta": "^2.3.3",
     "vue-router": "^3.1.5",
     "vuex": "^3.1.2"
