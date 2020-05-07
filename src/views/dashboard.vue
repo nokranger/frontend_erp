@@ -57,6 +57,55 @@
         <br>
         <b-row>
           <b-col>
+            <div class="card">
+              <!-- <img src="https://i.imgur.com/pdfcCXr.png" class="card-img-top" alt="map ckb"> -->
+              <br>
+              <div class="card-body">
+                <!-- <h5 class="card-title"><i class="fa fa-location-arrow" aria-hidden="true"></i> {{titleOA}}</h5> -->
+                <!-- <p class="card-text">{{detailOA}}</p><br> -->
+                <h5>Recently Activity</h5>
+                <p>ลากิจ - อนุสรณ์ - ยังไม่อนุมัติ</p>
+                <div class="align-right">
+                  <!-- <button class="button"><a class="linkmap" target="_blank" v-bind:href="linkOA"><img style="width:50px;height:50px;" src="https://i.imgur.com/JKjVDrz.png" alt="map ckb"></a></button> -->
+                </div>
+              </div>
+            </div>
+          </b-col>
+          <b-col>
+            <div class="card">
+              <!-- <img src="https://i.imgur.com/pdfcCXr.png" class="card-img-top" alt="map ckb"> -->
+              <br>
+              <div class="card-body">
+                <!-- <h5 class="card-title"><i class="fa fa-location-arrow" aria-hidden="true"></i> {{titleOA}}</h5> -->
+                <!-- <p class="card-text">{{detailOA}}</p><br> -->
+                <h5>Recently Transportation</h5>
+                <p>LPTT to Benz - อนุสรณ์ - ยังไม่อนุมัติ</p>
+                <div class="align-right">
+                  <!-- <button class="button"><a class="linkmap" target="_blank" v-bind:href="linkOA"><img style="width:50px;height:50px;" src="https://i.imgur.com/JKjVDrz.png" alt="map ckb"></a></button> -->
+                </div>
+              </div>
+            </div>
+          </b-col>
+          <b-col>
+            <div class="card">
+              <!-- <img src="https://i.imgur.com/pdfcCXr.png" class="card-img-top" alt="map ckb"> -->
+              <br>
+              <div class="card-body">
+                <!-- <h5 class="card-title"><i class="fa fa-location-arrow" aria-hidden="true"></i> {{titleOA}}</h5> -->
+                <!-- <p class="card-text">{{detailOA}}</p><br> -->
+                <h5>Recently Employee</h5>
+                <p>อนุสรณ์ - Programer</p>
+                <div class="align-right">
+                  <!-- <button class="button"><a class="linkmap" target="_blank" v-bind:href="linkOA"><img style="width:50px;height:50px;" src="https://i.imgur.com/JKjVDrz.png" alt="map ckb"></a></button> -->
+                </div>
+              </div>
+            </div>
+          </b-col>
+        </b-row>
+        <br>
+        <br>
+        <b-row>
+          <b-col>
             Activity
             <canvas id="my-chartline"></canvas>
           </b-col>
