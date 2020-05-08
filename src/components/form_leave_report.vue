@@ -37,7 +37,8 @@
               <div class="align-left">
                 ประเภทการลา
               </div>
-              <b-form-input type="text" v-model="leaveActivityReport.leave_category"></b-form-input>
+              <b-form-select v-model="leaveActivityReport.leave_category" :options="options"></b-form-select>
+              <!-- <b-form-input type="text" v-model="leaveActivityReport.leave_category"></b-form-input> -->
             </div>
           </b-col>
           <b-col>
@@ -102,7 +103,18 @@ export default {
         approve_date: '',
         status: '',
         file: ''
-      }
+      },
+      options: [
+        {
+          value: 1, text: 'ลากิจ'
+        },
+        {
+          value: 2, text: 'ลาป่วย'
+        },
+        {
+          value: 3, text: 'ลาพักร้อน'
+        }
+      ]
     }
   },
   methods: {

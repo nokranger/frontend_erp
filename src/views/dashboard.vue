@@ -1,7 +1,7 @@
 <template>
   <div v-bind:style="{background: lpttcolor,hieght: '100%', padding: '50px'}">
     <div style="font-size:30px;">
-      แดชบอร์ด
+      Dashboard
     </div>
     <!-- <b-container fluid="xl">
       <b-container>
@@ -107,7 +107,7 @@
         <b-row>
           <b-col>
             Activity
-            <canvas id="my-chartline"></canvas>
+            <canvas style="width:100%;height:auto;" id="my-chartline"></canvas>
           </b-col>
           <b-col>
             Most Station
