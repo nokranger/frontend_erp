@@ -7,6 +7,7 @@ import Approveleave from '../views/approve_leave.vue'
 import ApproveTransportation from '../views/approve_transportation.vue'
 import LeaveReport from '../views/leave_report.vue'
 import TransportationReport from '../views/transportation_report.vue'
+import PettyCash from '../views/petty_cash.vue'
 
 import Meta from 'vue-meta'
 
@@ -56,6 +57,15 @@ const routes = [
     path: '/transreport',
     name: 'trans_report',
     component: TransportationReport
+  },
+  {
+    path: '/pettycash',
+    name: 'petty_cash',
+    component: PettyCash
+  },
+  {
+    path: '*',
+    redirect: '/'
   }
 ]
 

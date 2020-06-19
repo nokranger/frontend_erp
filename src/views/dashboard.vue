@@ -1,5 +1,5 @@
 <template>
-  <div v-bind:style="{background: lpttcolor,hieght: '100%', padding: '50px'}">
+  <div>
     <div style="font-size:30px;">
       Dashboard
     </div>

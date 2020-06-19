@@ -6,6 +6,7 @@
       <a class="align-left" href="/"><i class="fas fa-home"></i> Home</a>
       <a class="align-left" href="/leavereport"><i class="fas fa-file-alt"></i> Leave Report</a>
       <a class="align-left" href="/transreport"><i class="fas fa-file-alt"></i> Transportation Report</a>
+      <a class="align-left" href="/pettycash"><i class="fas fa-file-alt"></i> Petty Cash Record</a>
       <a class="align-left" href="/approveleave"><i class="fas fa-calendar-check"></i> Approve leave</a>
       <a class="align-left" href="/approvetrans"><i class="fas fa-calendar-check"></i> Approve Transportation</a>
       <a class="align-left" href="/signup"><i class="fas fa-sign-in-alt"></i> Sign up</a>
