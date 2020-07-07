@@ -88,6 +88,7 @@
 </template>
 <script>
 import axios from 'axios'
+import md5 from 'md5'
 export default {
   data () {
     return {
@@ -116,7 +117,25 @@ export default {
   },
   methods: {
     send () {
-      console.log('test')
+      // console.log('test')
+      // console.log(md5(this.empCategory.password))
+      this.empCategory.password = md5(this.empCategory.password)
+      // this.empCategory = {
+      //   employee_pic: this.empCategory.employee_pic,
+      //   employee_id: this.empCategory.employee_id,
+      //   employee_name: this.empCategory.employee_name,
+      //   employee_lastname: this.empCategory.employee_lastname,
+      //   job_position_id: this.empCategory.job_position_id,
+      //   employee_email: this.empCategory.employee_email,
+      //   employee_tel: this.empCategory.employee_tel,
+      //   password: md5(this.empCategory.password),
+      //   start_date: this.empCategory.start_date,
+      //   leave_sick: this.empCategory.leave_sick,
+      //   leave_activity: this.empCategory.leave_activity,
+      //   leave_vacation: this.empCategory.leave_vacation
+      // }
+      // const ss = this.empCategory.password
+      console.log((this.empCategory))
       axios.post('http://127.0.0.1:4000/emp/post-emp', this.empCategory).then(response => {
         console.log(response)
       }).catch(e => {
@@ -139,7 +158,7 @@ template {
   /* The image used */
   /* background-image: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(20).jpg"); */
   /* Full height */
-  height: 100%;
+  /* height: 100%; */
 
   /* Center and scale the image nicely */
   background-position: center;
