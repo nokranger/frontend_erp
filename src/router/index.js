@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+// import Home from '../views/Home.vue'
 import Signup from '../views/Signup.vue'
 import Login from '../views/login.vue'
 import Dashboard from '../views/dashboard.vue'
@@ -17,9 +17,9 @@ Vue.use(Meta)
 
 const routes = [
   {
-    path: '/ss',
+    path: '/',
     name: 'Home',
-    component: Home
+    component: Login
   },
   {
     path: '/about',
@@ -40,7 +40,7 @@ const routes = [
     component: Login
   },
   {
-    path: '/',
+    path: '/dashboard',
     name: 'dashboard',
     component: Dashboard
   },

@@ -163,6 +163,13 @@ export default {
   updated () {
   },
   mounted () {
+    console.log(localStorage.getItem('iat'))
+    console.log(parseInt(localStorage.getItem('iat'), 10) + 600000)
+    if (Date.now() >= parseInt(localStorage.getItem('iat'), 10) + 600000) {
+      console.log('10min')
+    } else {
+      console.log('not expire')
+    }
     axios.all([axios.get('http://127.0.0.1:4000/emp/get-last-emp'), axios.get('http://127.0.0.1:4000/leavear/get-all-la_report'), axios.get('http://127.0.0.1:4000/trans/get-last-trans')]).then(axios.spread((resemp, reslar, restrans) => {
       // const vm = this
       this.employee_id = resemp.data.result.map((data, i) => {

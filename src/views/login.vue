@@ -11,7 +11,7 @@
             <strong style="text-align:center;font-weight:bolder;color: #4f4f4f!important;font-size:50px;color: #333;">LOGIN</strong>
             <br>
             <br>
-            <p v-if="error == 'USERNAME NOT FOUND'" style="color:red">{{error}}</p>
+            <p v-if="error == 'WRONG NAME AND PASSWORD'" style="color:red">{{error}}</p>
             <p v-if="error == 'IT CORRECTLY'" style="color:green">{{error}}</p>
           </div>
           <br>
@@ -61,6 +61,7 @@
 <script>
 import axios from 'axios'
 import md5 from 'md5'
+import VueJwtDecode from 'vue-jwt-decode'
 export default {
   data () {
     return {
@@ -92,16 +93,33 @@ export default {
       //     password: this.form.password
       //   }
       // }
+      this.form.employee_id = this.form.employee_id.toUpperCase()
       this.form.password = md5(this.form.password)
       // console.log(this.data)
       axios.post('http://localhost:4000/emp/login', this.form)
         .then(response => {
-          console.log(response.data.result)
-          if (response.data.result === 'success') {
+          console.log(VueJwtDecode.decode(response.data))
+          const jwt = VueJwtDecode.decode(response.data)
+          if (jwt.loginSuccessfull === true) {
             console.log('ss')
             this.error = 'IT CORRECTLY'
             this.error = this.error.toUpperCase()
+            localStorage.setItem('username', JSON.stringify(jwt.sub))
+            localStorage.setItem('role', JSON.stringify(jwt.role))
+            localStorage.setItem('iat', JSON.stringify(jwt.iat))
+            localStorage.setItem('jwt', JSON.stringify(response.data))
+            console.log(jwt.iat)
+            // console.log()
+            // localStorage.setItem('iat', JSON.stringify(jwt.iat))
+            // location.replace('/dashboard')
           }
+          // else if (response.data.result === 'wrong name and password') {
+          //   this.error = 'wrong name and password'
+          //   this.error = this.error.toUpperCase()
+          // } else {
+          //   this.error = 'wrong name and password'
+          //   this.error = this.error.toUpperCase()
+          // }
           //  else if (response.data.error_code === 0) {
           //   console.log('ssssss')
           //   this.error = 'it correctly'

@@ -6,17 +6,17 @@
           <b-col>
             <div>
               <div class="align-left">
-                TransID
+                Trans ID
               </div>
-              <b-form-input type="text" v-model="transportation.trans_id"></b-form-input>
+              <b-form-input type="text" v-model="transportation.trans_id" readonly=""></b-form-input>
             </div>
           </b-col>
           <b-col>
             <div>
               <div class="align-left">
-                EmpID
+                Employee ID
               </div>
-              <b-form-input type="text" v-model="transportation.employee_id"></b-form-input>
+              <b-form-input type="text" v-model="transportation.employee_id" readonly=""></b-form-input>
             </div>
           </b-col>
         </b-row>
@@ -128,6 +128,9 @@ export default {
       //   trans_values: ''
       // }
     }
+  },
+  mounted () {
+    this.transportation.employee_id = JSON.parse(localStorage.getItem('username'))
   },
   methods: {
     send () {

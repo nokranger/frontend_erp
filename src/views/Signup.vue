@@ -45,7 +45,7 @@
             <div class="align-left">ตำแหน่งพนักงาน</div>
             <!-- <b-form-input type="text"> -->
             <b-form-select name="" id="" v-model="empCategory.job_position_id">
-              <option value="0">ผู้จัดการ</option>
+              <option value="1">ผู้จัดการ</option>
             </b-form-select>
           </div>
         </b-col>
@@ -82,7 +82,7 @@
       </b-row>
     </b-container>
     <br>
-    <b-button variant="outline-primary" v-on:click="send ()">อัพโหลด</b-button>
+    <b-button type="submit" variant="outline-primary" v-on:click="send ()">อัพโหลด</b-button>
     </b-container>
   </div>
 </template>
@@ -119,6 +119,7 @@ export default {
     send () {
       // console.log('test')
       // console.log(md5(this.empCategory.password))
+      this.empCategory.employee_id = this.empCategory.employee_id.toUpperCase()
       this.empCategory.password = md5(this.empCategory.password)
       // this.empCategory = {
       //   employee_pic: this.empCategory.employee_pic,
