@@ -11,7 +11,7 @@
             <strong style="text-align:center;font-weight:bolder;color: #4f4f4f!important;font-size:50px;color: #333;">LOGIN</strong>
             <br>
             <br>
-            <p v-if="error == 'WRONG NAME AND PASSWORD'" style="color:red">{{error}}</p>
+            <p v-if="error == 'WRONG USERNAME AND PASSWORD'" style="color:red">{{error}}</p>
             <p v-if="error == 'IT CORRECTLY'" style="color:green">{{error}}</p>
           </div>
           <br>
@@ -45,6 +45,7 @@
               </b-form-checkbox-group>
             </b-form-group> -->
             <div>
+            <!-- <b-button class="blue-gradient btn-block" type="submit" v-on:click="postLogin ()">LOGIN</b-button><br> -->
             <b-button class="blue-gradient btn-block" v-on:click="postLogin ()">LOGIN</b-button><br>
             </div>
             <div>
@@ -78,21 +79,30 @@ export default {
       data: []
     }
   },
-  mounted () {
-    console.log()
-    if (JSON.parse(sessionStorage.getItem('login')) === 'admin' || JSON.parse(sessionStorage.getItem('login')) === 'user') {
-      location.replace('/sale')
+  beforeCreate () {
+    var localjwt = localStorage.getItem('jwt')
+    if (localjwt !== null) {
+      location.replace('/dashboard')
+    } else {
+      console.log('re login')
     }
   },
+  mounted () {
+    console.log()
+    this.checkPermission()
+    // if (JSON.parse(sessionStorage.getItem('login')) === 'admin' || JSON.parse(sessionStorage.getItem('login')) === 'user') {
+    //   location.replace('/sale')
+    // }
+  },
   methods: {
-    postLogin () {
-      // this.data = {
-      //   session_id: '',
-      //   data: {
-      //     username: this.form.username,
-      //     password: this.form.password
-      //   }
+    checkPermission () {
+      // console.log(VueJwtDecode.decode(JSON.parse(localStorage.getItem('jwt'))))
+      // if (JSON.parse(localStorage.getItem('jwt')) !== 'null') {
+      // } else {
+      //   console.log('login agian')
       // }
+    },
+    postLogin () {
       this.form.employee_id = this.form.employee_id.toUpperCase()
       this.form.password = md5(this.form.password)
       // console.log(this.data)
@@ -109,40 +119,13 @@ export default {
             localStorage.setItem('iat', JSON.stringify(jwt.iat))
             localStorage.setItem('jwt', JSON.stringify(response.data))
             console.log(jwt.iat)
-            // console.log()
-            // localStorage.setItem('iat', JSON.stringify(jwt.iat))
-            // location.replace('/dashboard')
+            location.replace('/dashboard')
+          } else if (jwt.loginSuccessfull === false) {
+            console.log('xx')
+            this.error = 'WRONG USERNAME AND PASSWORD'
+            this.error = this.error.toUpperCase()
+            location.replace('/')
           }
-          // else if (response.data.result === 'wrong name and password') {
-          //   this.error = 'wrong name and password'
-          //   this.error = this.error.toUpperCase()
-          // } else {
-          //   this.error = 'wrong name and password'
-          //   this.error = this.error.toUpperCase()
-          // }
-          //  else if (response.data.error_code === 0) {
-          //   console.log('ssssss')
-          //   this.error = 'it correctly'
-          //   this.error = this.error.toUpperCase()
-          //   // localStorage.setItem('login', JSON.stringify('admin'))
-          //   // localStorage.setItem('jwt', JSON.stringify('admin'))
-          //   sessionStorage.setItem('login', JSON.stringify(response.data.data.session_id))
-          //   sessionStorage.setItem('level', JSON.stringify(response.data.data.level))
-          //   // localStorage.setItem('set', JSON.stringify('set'))
-          //   // location.replace('/' + JSON.parse(localStorage.getItem('login')) + '/sale')
-          //   location.replace('/sale')
-          //   console.log('cc')
-          // } else if (response.data.error_code === 0) {
-          //   // let is_admin = 0
-          //   this.error = 'it correctly'
-          //   this.error = this.error.toUpperCase()
-          //   // localStorage.setItem('login', JSON.stringify('user'))
-          //   // localStorage.setItem('jwt', JSON.stringify('user'))
-          //   sessionStorage.setItem('login', JSON.stringify(response.data.data.session_id))
-          //   sessionStorage.setItem('level', JSON.stringify(response.data.data.level))
-          //   // location.replace('/' + JSON.parse(localStorage.getItem('login')) + '/sale')
-          //   location.replace('/sale')
-          // }
         }).catch(e => {
           // this.error.push(e)
         })

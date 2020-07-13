@@ -20,7 +20,7 @@
           <b-col>
             <div class="align-left" id="idcustomer">
               <div>รหัสพนักงาน</div>
-              <b-form-input type="text" v-model="empCategory.employee_id"></b-form-input>
+              <b-form-input type="text" v-model="empCategory.employee_id" required></b-form-input>
             </div>
           </b-col>
           <b-col>
@@ -44,8 +44,10 @@
           <div>
             <div class="align-left">ตำแหน่งพนักงาน</div>
             <!-- <b-form-input type="text"> -->
-            <b-form-select name="" id="" v-model="empCategory.job_position_id">
-              <option value="1">ผู้จัดการ</option>
+            <b-form-select ref="jobId" name="" id="" v-model="selected" :options="options" value="selected">
+              <option value="1">Business Development Coordinator</option>
+              <option value="2">Junior IT Engineer</option>
+              <option value="3">Senior IT Engineer</option>
             </b-form-select>
           </div>
         </b-col>
@@ -82,7 +84,10 @@
       </b-row>
     </b-container>
     <br>
-    <b-button type="submit" variant="outline-primary" v-on:click="send ()">อัพโหลด</b-button>
+    <div>
+    <b-button variant="outline-primary" type="submit" v-on:click="send ()">Signup</b-button>
+    <!-- <b-button class="blue-gradient btn-block" type="submit" v-on:click="test ()">LOGIN</b-button><br> -->
+    </div>
     </b-container>
   </div>
 </template>
@@ -92,6 +97,11 @@ import md5 from 'md5'
 export default {
   data () {
     return {
+      show: true,
+      selected: null,
+      options: [
+        { value: null, text: 'Please select an option' }
+      ],
       cc: '#2c3e50',
       empCategory: {
         employee_pic: '/img/nok.jpg',
@@ -104,8 +114,8 @@ export default {
         password: '',
         start_date: '',
         leave_sick: '30',
-        leave_activity: '7',
-        leave_vacation: '14'
+        leave_activity: '6',
+        leave_vacation: '6'
       }
     }
   },
@@ -119,6 +129,7 @@ export default {
     send () {
       // console.log('test')
       // console.log(md5(this.empCategory.password))
+      this.empCategory.job_position_id = this.$refs.jobId.localValue
       this.empCategory.employee_id = this.empCategory.employee_id.toUpperCase()
       this.empCategory.password = md5(this.empCategory.password)
       // this.empCategory = {
@@ -142,6 +153,13 @@ export default {
       }).catch(e => {
         this.error.push(e)
       })
+      // location.reload()
+    },
+    test () {
+      this.empCategory.job_position_id = this.$refs.jobId.localValue
+      console.log(this.empCategory.job_position_id)
+      console.log('test')
+      // location.reload()
     }
   }
 }

@@ -9,27 +9,27 @@
         <b-col>
           <div class="align-left">
             Date
-            <b-form-input type="date"></b-form-input>
+            <b-form-input type="date" v-model="prettycash.date"></b-form-input>
           </div>
         </b-col>
         <b-col>
           <div class="align-left">
             Request by
           </div>
-          <b-form-input type="text" placeholder="Request (EmpID)"></b-form-input>
+          <b-form-input type="text" v-model="prettycash.employee_id" placeholder="Request (EmpID)" readonly></b-form-input>
         </b-col>
         <b-col>
           <b-row>
           <b-col>
             <div class="align-left">
-              Net Expense
-              <b-form-input type="text"></b-form-input>
+              Amount
+              <b-form-input type="text" v-model="prettycash.amount"></b-form-input>
             </div>
           </b-col>
           <b-col>
             <div class="align-left">
-              Remaining
-              <b-form-input type="text"></b-form-input>
+              Service charge
+              <b-form-input type="text" v-model="prettycash.service_charge"></b-form-input>
             </div>
           </b-col>
           </b-row>
@@ -45,6 +45,7 @@
               placeholder="Enter something..."
               rows="3"
               max-rows="6"
+              v-model="prettycash.detail"
             ></b-form-textarea>
            </div>
         </b-col>
@@ -55,7 +56,7 @@
         <b-col>
           <br>
           <div>
-            <b-button style="width:20%" variant="outline-primary" v-on:click="send ()"><i class="fas fa-upload"></i></b-button>
+            <b-button style="width:20%" variant="outline-primary" type="submit" v-on:click="send ()"><i class="fas fa-upload"></i></b-button>
           </div>
         </b-col>
       </b-row>
@@ -63,13 +64,33 @@
   </div>
 </template>
 <script>
+import VueJwtDecode from 'vue-jwt-decode'
+import axios from 'axios'
 export default {
   data () {
-    return {}
+    return {
+      prettycash: {
+        date: '',
+        employee_id: '',
+        amount: '',
+        service_charge: '',
+        detail: '',
+        picture: 'img/nok.jpg'
+      }
+    }
+  },
+  mounted () {
+    const jwt = VueJwtDecode.decode(JSON.parse(localStorage.getItem('jwt')))
+    console.log(jwt)
+    this.prettycash.employee_id = jwt.sub
   },
   methods: {
     send () {
       console.log('send')
+      console.log(this.prettycash)
+      axios.post('http://localhost:4000/cash/post-prettycash', this.prettycash).then(respone => {
+        console.log(respone)
+      })
     }
   }
 }

@@ -136,7 +136,7 @@
   </div>
 </template>
 <script>
-
+// import VueJwtDecode from 'vue-jwt-decode'
 import axios from 'axios'
 import Chart from 'chart.js'
 export default {
@@ -157,45 +157,99 @@ export default {
       titleTemplate: '%s - LPTT'
     }
   },
+  beforeCreate () {
+    // this.checkPermission()
+    // console.log(VueJwtDecode.decode(JSON.parse(localStorage.getItem('jwt'))))
+    var localjwt = localStorage.getItem('jwt')
+    // console.log(localjwt)
+    if (localjwt !== null) {
+      axios.all([axios.get('http://127.0.0.1:4000/emp/get-last-emp'), axios.get('http://127.0.0.1:4000/leavear/get-all-la_report'), axios.get('http://127.0.0.1:4000/trans/get-last-trans')]).then(axios.spread((resemp, reslar, restrans) => {
+      // const vm = this
+        this.employee_id = resemp.data.result.map((data, i) => {
+          return {
+            id: data.employee_id
+          }
+        })
+        // vm.getData(res)
+        this.event = reslar.data.result.map((data, i) => {
+          return {
+            id: data.reason_for_leave
+          }
+        })
+        this.approve = restrans.data.result.map((data, i) => {
+          return {
+            id: data.approve_id
+          }
+        })
+      })).catch(e => {
+        this.error.push(e)
+      })
+    } else {
+      location.replace('/')
+    }
+    // if (localStorage.getItem('jwt') !== null) {
+    //   // console.log(localStorage.getItem('jwt'))
+    // } else {
+    //   console.log(localStorage.getItem('jwt'))
+    // }
+  },
   created () {
-    console.log('test')
+    // console.log('test')
   },
   updated () {
   },
   mounted () {
-    console.log(localStorage.getItem('iat'))
-    console.log(parseInt(localStorage.getItem('iat'), 10) + 600000)
-    if (Date.now() >= parseInt(localStorage.getItem('iat'), 10) + 600000) {
-      console.log('10min')
-    } else {
-      console.log('not expire')
-    }
-    axios.all([axios.get('http://127.0.0.1:4000/emp/get-last-emp'), axios.get('http://127.0.0.1:4000/leavear/get-all-la_report'), axios.get('http://127.0.0.1:4000/trans/get-last-trans')]).then(axios.spread((resemp, reslar, restrans) => {
-      // const vm = this
-      this.employee_id = resemp.data.result.map((data, i) => {
-        return {
-          id: data.employee_id
-        }
-      })
-      // vm.getData(res)
-      this.event = reslar.data.result.map((data, i) => {
-        return {
-          id: data.reason_for_leave
-        }
-      })
-      this.approve = restrans.data.result.map((data, i) => {
-        return {
-          id: data.approve_id
-        }
-      })
-    })).catch(e => {
-      this.error.push(e)
-    })
+    // console.log(localStorage.getItem('iat'))
+    // console.log(parseInt(localStorage.getItem('iat'), 10) + 600000)
+    setInterval(this.checkExpire, 150000)
+    // axios.all([axios.get('http://127.0.0.1:4000/emp/get-last-emp'), axios.get('http://127.0.0.1:4000/leavear/get-all-la_report'), axios.get('http://127.0.0.1:4000/trans/get-last-trans')]).then(axios.spread((resemp, reslar, restrans) => {
+    //   // const vm = this
+    //   this.employee_id = resemp.data.result.map((data, i) => {
+    //     return {
+    //       id: data.employee_id
+    //     }
+    //   })
+    //   // vm.getData(res)
+    //   this.event = reslar.data.result.map((data, i) => {
+    //     return {
+    //       id: data.reason_for_leave
+    //     }
+    //   })
+    //   this.approve = restrans.data.result.map((data, i) => {
+    //     return {
+    //       id: data.approve_id
+    //     }
+    //   })
+    // })).catch(e => {
+    //   this.error.push(e)
+    // })
     // console.log(this.info.length)
     this.pie()
     this.line()
   },
   methods: {
+    checkPermission () {
+      // console.log(VueJwtDecode.decode(JSON.parse(localStorage.getItem('jwt'))))
+      if (JSON.parse(localStorage.getItem('jwt')) !== 'null') {
+        console.log('login agian')
+      } else {
+        console.log('login agian 2')
+      }
+    },
+    checkExpire () {
+      console.log('check expire')
+      if (Date.now() >= parseInt(localStorage.getItem('iat'), 10) + 600000) {
+        console.log('10min')
+        console.log('logout')
+        localStorage.removeItem('iat')
+        localStorage.removeItem('username')
+        localStorage.removeItem('jwt')
+        localStorage.removeItem('role')
+        location.replace('/')
+      } else {
+        console.log('not expire')
+      }
+    },
     pie () {
       var ctx = document.getElementById('my-chartpie')
       Chart = new Chart(ctx, {

@@ -9,7 +9,7 @@
       <a class="align-left" href="/pettycash"><i class="fas fa-file-alt"></i> Petty Cash Record</a>
       <a class="align-left" href="/approveleave"><i class="fas fa-calendar-check"></i> Approve leave</a>
       <a class="align-left" href="/approvetrans"><i class="fas fa-calendar-check"></i> Approve Transportation</a>
-      <a class="align-left" href="/signup"><i class="fas fa-sign-in-alt"></i> Sign up</a>
+      <a v-if="permission === 0" class="align-left" href="/signup"><i class="fas fa-sign-in-alt"></i> Sign up</a>
       <a class="align-left" href="#" v-on:click="logOut"><i class="fas fa-sign-out-alt"></i> Log Out</a>
     </div>
     <div>
@@ -38,11 +38,13 @@
   </div>
 </template>
 <script>
+import VueJwtDecode from 'vue-jwt-decode'
 export default {
   data () {
     return {
       isTrue: true,
-      symbols: '&#9776;'
+      symbols: '&#9776;',
+      permission: ''
     }
   },
   metaInfo () {
@@ -69,10 +71,20 @@ export default {
     },
     logOut () {
       console.log('logout')
+      localStorage.removeItem('iat')
+      localStorage.removeItem('username')
+      localStorage.removeItem('jwt')
+      localStorage.removeItem('role')
+      location.replace('/')
     }
   },
   mounted () {
     document.getElementById('xx').innerHTML = '<i class="fas fa-align-justify"></i>'
+    // console.log(VueJwtDecode.decode(JSON.parse(localStorage.getItem('jwt'))))
+    const jwt = VueJwtDecode.decode(JSON.parse(localStorage.getItem('jwt')))
+    this.permission = JSON.parse(jwt.role)
+    // console.log(this.permission)
+    // this.permission = VueJwtDecode.decode(JSON.parse(localStorage.getItem('role')))
   }
 }
 </script>
