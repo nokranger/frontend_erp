@@ -195,6 +195,7 @@ export default {
   },
   created () {
     // console.log('test')
+    this.checkExpire()
   },
   updated () {
   },
