@@ -140,25 +140,34 @@ export default {
 
   },
   mounted () {
-    axios.all([axios.get('http://127.0.0.1:4000/leavear/get-all-la_report')]).then(axios.spread((reslar) => {
-      // const vm = this
-      // vm.getData(res)
-      this.event = reslar.data.result.map((data, i) => {
-        return {
-          id: data.employee_id,
-          actId: data.leave_activity_report_id,
-          reason: data.reason_for_leave,
-          approve: data.status
-        }
-      })
-    })).catch(e => {
-      this.error.push(e)
-    })
+    // axios.all([axios.get('http://127.0.0.1:4000/cash/get-month-prettycash')]).then(axios.spread((response) => {
+    //   // const vm = this
+    //   // vm.getData(res)
+    //   // this.event = reslar.data.result.map((data, i) => {
+    //   //   return {
+    //   //     id: data.employee_id,
+    //   //     actId: data.leave_activity_report_id,
+    //   //     reason: data.reason_for_leave,
+    //   //     approve: data.status
+    //   //   }
+    //   // })
+    //   console.log(response)
+    // })).catch(e => {
+    //   this.error.push(e)
+    // })
     // console.log(this.info.length)
+    // axios.post('http://127.0.0.1:4000/cash/get-month-prettycash', this.prettycash_month)
+    //   .then(response => {
+    //     console.log(response)
+    //   })
   },
   methods: {
     selectMonth () {
       console.log(this.prettycash_month)
+      axios.post('http://127.0.0.1:4000/cash/get-month-prettycash', this.prettycash_month)
+        .then(response => {
+          console.log(response)
+        })
     }
   }
 }
