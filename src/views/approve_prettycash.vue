@@ -38,7 +38,7 @@
     </div>
     <div>
       <b-container>
-        <table class="table">
+        <!-- <table class="table">
           <thead>
             <tr class="table-active">
               <th scope="col">#</th>
@@ -53,19 +53,40 @@
           <tbody>
             <tr v-for="(events, index) in event" :key="index" :class="index % 2 === 0 ? 'table-primary' : 'table-active'">
               <th>{{index}}</th>
-              <th>{{events.id}}</th>
-              <th>{{events.actId}}</th>
-              <th>{{events.reason}}</th>
-              <th>aa</th>
-              <th>aa</th>
-              <th v-if="localjwt === '0'">
-                <tr v-if="events.approve == '0'">Not approved</tr>
-                <tr v-else-if="events.approve == '1'">Approved</tr>
-                <tr v-else>-</tr>
+              <th>{{events.employee_id}}</th>
+              <th>{{events.date}}</th>
+              <th>{{events.detail}}</th>
+              <th>{{events.amount}}</th>
+              <th>{{events.service_charge}}</th>
+              <th style="text-align:center !important" v-if="localjwt === '0'">
+                <tr style="text-align:center" v-if="events.approve == '0'">Not approved</tr>
+                <tr style="text-align:center" v-else-if="events.approve == '1'">Approved</tr>
+                <tr style="text-align:center" v-else>-</tr>
               </th>
             </tr>
           </tbody>
-        </table>
+        </table> -->
+        <b-table :items="event" :fields="fields" class="mt-3" :busy="isBusy" hover responsive="sm">
+              <template v-slot:table-busy>
+                <div class="text-center text-danger my-2">
+                  <b-spinner class="align-middle"></b-spinner>
+                  <strong>Loading...</strong>
+                </div>
+              </template>
+            <template v-slot:cell(Approve)="data" v-if="localjwt === '0'">
+                <b-button v-if="localjwt === '0'" size="sm" v-on:click="test ()" class="mr-2">
+                  {{data.index}}
+                </b-button>
+                <b-button v-if="localjwt === '1'" size="sm" v-on:click="test ()" class="mr-2">
+                  aaaaaaabbbb
+                </b-button>
+            </template>
+                        <!-- <template v-slot:cell(Approve)="" v-if="localjwt === '0'">
+                <b-button v-if="localjwt === '0'" size="sm" v-on:click="test ()" class="mr-2">
+                  aaaaaaabbbb
+                </b-button>
+            </template> -->
+        </b-table>
       </b-container>
     </div>
       <!-- <div>
@@ -116,6 +137,7 @@ import axios from 'axios'
 export default {
   data () {
     return {
+      isBusy: false,
       employee_id: [],
       event: [],
       approve: [],
@@ -123,7 +145,9 @@ export default {
       prettycash_month: {
         from: '',
         to: ''
-      }
+      },
+      fields: ['Date', 'Request', 'Details', 'Amount', 'Remaining', 'Approve'],
+      remaining: 20000
     }
   },
   beforeCreate () {
@@ -132,6 +156,7 @@ export default {
   created () {
     this.localjwt = JSON.parse(localStorage.getItem('role'))
     console.log(this.localjwt)
+    this.isBusy = !this.isBusy
   },
   beforeUpdate () {
 
@@ -164,10 +189,34 @@ export default {
   methods: {
     selectMonth () {
       console.log(this.prettycash_month)
+      this.isBusy = !this.isBusy
       axios.post('http://127.0.0.1:4000/cash/get-month-prettycash', this.prettycash_month)
         .then(response => {
-          console.log(response)
+          console.log(response.data.result)
+          this.event = response.data.result.map((data, i) => {
+            this.remaining = this.remaining - data.amount
+            return {
+              Date: data.date,
+              Request: data.employee_id,
+              Details: data.detail,
+              Amount: data.amount,
+              Remaining: this.remaining,
+              Approve: 'Not approved'
+            }
+          })
+          // this.event = {
+          //   Date: this.event.date,
+          //   Request: this.event.employee_id,
+          //   Details: this.event.detail,
+          //   Amount: this.event.amount,
+          //   Remaining: 20000 - this.event.amount,
+          //   Approve: 'Not approved'
+          // }
+          console.log(this.event)
         })
+    },
+    test () {
+      console.log('test')
     }
   }
 }
@@ -179,6 +228,9 @@ export default {
 }
 .align-center {
   text-align: center;
+}
+.align-right {
+  text-align: right;
 }
 div {
   font-family: 'Kanit', sans-serif;
