@@ -75,7 +75,8 @@ export default {
         amount: '',
         service_charge: '',
         detail: '',
-        picture: 'img/nok.jpg'
+        picture: 'img/nok.jpg',
+        status: 0
       }
     }
   },

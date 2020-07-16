@@ -33,6 +33,12 @@ export default {
     if (window.location.pathname === '/') {
       this.pathname = 'login'
       console.log('login')
+    } else if (window.location.pathname === '/print') {
+      // var pp = window.location.pathname
+      // var res = pp.split(' / ')
+      // console.log(typeof(pp))
+      this.colorlptt = 'white'
+      console.log('login')
     }
   }
 }

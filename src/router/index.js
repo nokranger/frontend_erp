@@ -7,6 +7,7 @@ import Dashboard from '../views/dashboard.vue'
 import Approveleave from '../views/approve_leave.vue'
 import ApproveTransportation from '../views/approve_transportation.vue'
 import ApprovePrettycash from '../views/approve_prettycash.vue'
+import Printpdf from '../components/printpdf.vue'
 import LeaveReport from '../views/leave_report.vue'
 import TransportationReport from '../views/transportation_report.vue'
 import PettyCash from '../views/petty_cash.vue'
@@ -74,6 +75,11 @@ const routes = [
     path: '/pettycash',
     name: 'petty_cash',
     component: PettyCash
+  },
+  {
+    path: '/print/:id',
+    name: 'printpdf',
+    component: Printpdf
   },
   {
     path: '*',

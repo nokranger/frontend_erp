@@ -25,47 +25,16 @@
               <div  style="margin-top:-6px;">
                 <br>
               </div>
-              <b-button v-on:click="selectMonth ()">click</b-button>
+              <b-button v-on:click="selectMonth ()">Query</b-button>
             </div>
           </b-col>
         </b-row>
       </b-container>
-      <!-- <b-form-input type="date" v-model="prettycash_month.from"></b-form-input>
-      <b-form-input type="date" v-model="prettycash_month.to"></b-form-input> -->
-      <!-- <b-button v-on:click="selectMonth ()">click</b-button> -->
       <br>
       <br>
     </div>
     <div>
       <b-container>
-        <!-- <table class="table">
-          <thead>
-            <tr class="table-active">
-              <th scope="col">#</th>
-              <th scope="col">Employee</th>
-              <th scope="col">Date</th>
-              <th scope="col">Detail</th>
-              <th scope="col">Amount</th>
-              <th scope="col">Service charge</th>
-              <th v-if="localjwt === '0'" scope="col">Approve</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(events, index) in event" :key="index" :class="index % 2 === 0 ? 'table-primary' : 'table-active'">
-              <th>{{index}}</th>
-              <th>{{events.employee_id}}</th>
-              <th>{{events.date}}</th>
-              <th>{{events.detail}}</th>
-              <th>{{events.amount}}</th>
-              <th>{{events.service_charge}}</th>
-              <th style="text-align:center !important" v-if="localjwt === '0'">
-                <tr style="text-align:center" v-if="events.approve == '0'">Not approved</tr>
-                <tr style="text-align:center" v-else-if="events.approve == '1'">Approved</tr>
-                <tr style="text-align:center" v-else>-</tr>
-              </th>
-            </tr>
-          </tbody>
-        </table> -->
         <b-table :items="event" :fields="fields" class="mt-3" :busy="isBusy" hover responsive="sm">
               <template v-slot:table-busy>
                 <div class="text-center text-danger my-2">
@@ -74,66 +43,22 @@
                 </div>
               </template>
             <template v-slot:cell(Approve)="data" v-if="localjwt === '0'">
-                <b-button v-if="localjwt === '0'" size="sm" v-on:click="test ()" class="mr-2">
-                  {{data.index}}
+                <b-button v-if="event[data.index].Approve === 0" size="sm" v-on:click="Papprove (data.index)" class="mr-2" type="submit">
+                  Not Approve
                 </b-button>
-                <b-button v-if="localjwt === '1'" size="sm" v-on:click="test ()" class="mr-2">
-                  aaaaaaabbbb
+                <b-button v-if="event[data.index].Approve === 1" size="sm" v-on:click="Papprove (data.index)" class="mr-2" disabled="">
+                  Approved
                 </b-button>
             </template>
-                        <!-- <template v-slot:cell(Approve)="" v-if="localjwt === '0'">
-                <b-button v-if="localjwt === '0'" size="sm" v-on:click="test ()" class="mr-2">
-                  aaaaaaabbbb
-                </b-button>
-            </template> -->
         </b-table>
       </b-container>
+      <b-button v-on:click="printPDF ()">Print report</b-button>
     </div>
-      <!-- <div>
-        <b-row>
-          <b-col>
-            รหัสพนักงาน
-            <ul style="list-style-type: none;margin:0;padding:0;">
-              <li v-for="(events, index) in event" :key="index">
-                {{events.id}}
-              </li>
-            </ul>
-          </b-col>
-          <b-col>
-            รหัสใบลา
-            <ul style="list-style-type: none;margin:0;padding:0;">
-              <li v-for="(events, index) in event" :key="index">
-                {{events.actId}}
-              </li>
-            </ul>
-          </b-col>
-          <b-col>
-            ประเภทวันลา
-            <ul style="list-style-type: none;margin:0;padding:0;">
-              <li v-for="(events, index) in event" :key="index">
-                {{events.reason}}
-              </li>
-            </ul>
-          </b-col>
-          <b-col>
-            สถานะ
-            <ul style="list-style-type: none;margin:0;padding:0;">
-              <li v-for="(events, index) in event" :key="index">
-                <p v-if="events.approve == '0'">
-                  ยังไม่อนุมัติ
-                </p>
-                <p v-if="events.approve == '1'">
-                  อนุมัติแล้ว
-                </p>
-              </li>
-            </ul>
-          </b-col>
-        </b-row>
-      </div> -->
   </div>
 </template>
 <script>
 import axios from 'axios'
+import moment from 'moment'
 export default {
   data () {
     return {
@@ -146,7 +71,7 @@ export default {
         from: '',
         to: ''
       },
-      fields: ['Date', 'Request', 'Details', 'Amount', 'Remaining', 'Approve'],
+      fields: ['Id', 'Date', 'Request', 'Details', 'Amount', 'Remaining', 'Approve'],
       remaining: 20000
     }
   },
@@ -188,20 +113,21 @@ export default {
   },
   methods: {
     selectMonth () {
-      console.log(this.prettycash_month)
+      // console.log(this.prettycash_month)
       this.isBusy = !this.isBusy
       axios.post('http://127.0.0.1:4000/cash/get-month-prettycash', this.prettycash_month)
         .then(response => {
-          console.log(response.data.result)
+          // console.log(response.data.result)
           this.event = response.data.result.map((data, i) => {
             this.remaining = this.remaining - data.amount
             return {
-              Date: data.date,
+              Id: data.id,
+              Date: moment(data.date).format('MMM Do YY'),
               Request: data.employee_id,
               Details: data.detail,
               Amount: data.amount,
               Remaining: this.remaining,
-              Approve: 'Not approved'
+              Approve: data.status
             }
           })
           // this.event = {
@@ -215,8 +141,17 @@ export default {
           console.log(this.event)
         })
     },
-    test () {
+    Papprove (index) {
       console.log('test')
+      this.approve = {
+        id: this.event[index].Id,
+        status: 1
+      }
+      console.log(this.approve)
+      axios.patch('http://127.0.0.1:4000/cash/approve-prettycash', this.approve)
+    },
+    printPDF () {
+      location.replace('/print/' + this.prettycash_month.from + this.prettycash_month.to)
     }
   }
 }
