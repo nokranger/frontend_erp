@@ -37,7 +37,7 @@
               <div class="align-left">
                 ประเภทการลา
               </div>
-              <b-form-select v-model="leaveActivityReport.leave_category" :options="options"></b-form-select>
+              <b-form-select ref="leave_report" v-model="selected" :options="options"></b-form-select>
               <!-- <b-form-input type="text" v-model="leaveActivityReport.leave_category"></b-form-input> -->
             </div>
           </b-col>
@@ -101,10 +101,14 @@ export default {
         leave_category: '',
         approve_id: '',
         approve_date: '',
-        status: '',
-        file: ''
+        status: 0,
+        file: '/doc/nok.docs'
       },
+      selected: null,
       options: [
+        {
+          value: null, text: 'Please Select'
+        },
         {
           value: 1, text: 'ลากิจ'
         },
@@ -117,10 +121,14 @@ export default {
       ]
     }
   },
+  mounted () {
+    this.leaveActivityReport.employee_id = JSON.parse(localStorage.getItem('username'))
+  },
   methods: {
     send () {
       console.log('test')
       console.log(this.leaveActivityReport)
+      this.leaveActivityReport.leave_category = this.$refs.leave_report.localValue
       axios
         .post(
           'http://127.0.0.1:4000/leavear/post-la_report',

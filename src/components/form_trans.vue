@@ -3,20 +3,28 @@
       <b-container>
         <br>
         <b-row>
-          <b-col>
+          <!-- <b-col>
             <div>
               <div class="align-left">
                 Trans ID
               </div>
               <b-form-input type="text" v-model="transportation.trans_id" readonly=""></b-form-input>
             </div>
+          </b-col> -->
+          <b-col>
+            <div>
+              <div class="align-left">
+                Request By
+              </div>
+              <b-form-input type="text" v-model="transportation.employee_id" readonly=""></b-form-input>
+            </div>
           </b-col>
           <b-col>
             <div>
               <div class="align-left">
-                Employee ID
+                Date
               </div>
-              <b-form-input type="text" v-model="transportation.employee_id" readonly=""></b-form-input>
+              <b-form-input type="date" v-model="transportation.trans_date"></b-form-input>
             </div>
           </b-col>
         </b-row>
@@ -25,12 +33,12 @@
         <br>
         <b-row>
           <b-col>
-            <div>
+            <!-- <div>
               <div class="align-left">
-                วันที่
+                Date
               </div>
               <b-form-input type="date" v-model="transportation.trans_date"></b-form-input>
-            </div>
+            </div> -->
           </b-col>
           <b-col></b-col>
           <!-- <b-col></b-col> -->
@@ -47,7 +55,7 @@
             <b-col>
               <div>
                 <div class="align-left">
-                  เริ่ม
+                  From
                 </div>
                 <b-form-input type="text" v-model="transportation.trans_from"></b-form-input>
               </div>
@@ -55,7 +63,7 @@
             <b-col>
               <div>
                 <div class="align-left">
-                  ถึง
+                  To
                 </div>
                 <b-form-input type="text" v-model="transportation.trans_to"></b-form-input>
               </div>
@@ -63,13 +71,13 @@
             <b-col>
               <div>
                 <div class="align-left">
-                  โดยสาร
+                  Vehicle
                 </div>
                 <div>
-                  <b-form-select v-model="transportation.trans_vehicle" :options="options"></b-form-select>
+                  <b-form-select ref="trans_vehicle" v-model="selected" :options="options"></b-form-select>
                   <!-- <b-form-select v-model="selected" :options="options"></b-form-select> -->
                   <div class="align-left">
-                    ค่าใช้จ่าย
+                    Amount
                   </div>
                   <b-form-input type="text" v-model="transportation.trans_values"></b-form-input>
                 </div>
@@ -93,19 +101,20 @@ export default {
   data () {
     return {
       transportation: {
-        trans_id: '',
         employee_id: '',
         trans_date: '',
         trans_from: '',
         trans_to: '',
         trans_vehicle: '',
         approve_id: '',
-        trans_values: ''
+        trans_values: '',
+        status: 0
       },
+      selected: null,
       options: [
-        // {
-        //   value: null, text: 'Please Select'
-        // },
+        {
+          value: null, text: 'Please Select'
+        },
         {
           value: 1, text: 'BTS'
         },
@@ -135,7 +144,9 @@ export default {
   methods: {
     send () {
       console.log('test')
-      console.log(this.transportation)
+      // console.log(this.transportation)
+      // this.transportation.employee_id = JSON.parse(localStorage.getItem('username'))
+      this.transportation.trans_vehicle = this.$refs.trans_vehicle.localValue
       axios.post('http://127.0.0.1:4000/trans/post-trans', this.transportation).then(response => {
         console.log(response)
       }).catch(e => {

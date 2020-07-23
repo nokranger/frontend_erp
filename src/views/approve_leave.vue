@@ -141,7 +141,9 @@ export default {
       // console.log('test')
       this.approve = {
         id: this.event[index].actId,
-        status: 1
+        status: 1,
+        approve_id: JSON.parse(localStorage.getItem('username')),
+        approve_date: Date.now()
       }
       // console.log(this.prettycash_month)
       // axios.all([axios.patch('http://127.0.0.1:4000/cash/approve-prettycash', this.approve), axios.post('http://127.0.0.1:4000/cash/get-month-prettycash', this.prettycash_month)]).then(axios.spread((responseApp, response) => {
