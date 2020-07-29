@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import Signup from '../views/Signup.vue'
 import Login from '../views/login.vue'
 import Dashboard from '../views/dashboard.vue'
+import Approve from '../views/approvePage.vue'
 import Approveleave from '../views/approve_leave.vue'
 import ApproveTransportation from '../views/approve_transportation.vue'
 import ApprovePrettycash from '../views/approve_prettycash.vue'
@@ -45,6 +46,11 @@ const routes = [
     path: '/dashboard',
     name: 'dashboard',
     component: Dashboard
+  },
+  {
+    path: '/approve',
+    name: 'approve',
+    component: Approve
   },
   {
     path: '/approveleave',

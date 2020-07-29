@@ -7,10 +7,6 @@
     <div v-else>
       <app-header></app-header>
     </div>
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div> -->
     <router-view/>
   </div>
 </template>
@@ -24,6 +20,8 @@ export default {
     return {
       colorlptt: '#29265b',
       colors: 'radial-gradient(circle, rgba(20,94,238,0.6867121848739496) 0%, rgba(173,245,255,1) 100%)',
+      imagecolor: 'linear-gradient(to top, #051937, #0a4066, #006c96, #009cc3, #12cfeb)',
+      // background-image: linear-gradient(to bottom, #051937, #0a4066, #006c96, #009cc3, #12cfeb);
       heights: '1000px',
       pathname: ''
     }

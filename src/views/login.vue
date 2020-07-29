@@ -15,8 +15,8 @@
             <p v-if="error == 'IT CORRECTLY'" style="color:green">{{error}}</p>
           </div>
           <br>
-          <b-card>
-          <b-form v-if="show">
+          <b-card style="background-color: rgba(255, 255, 255, 0.4);-webkit-backdrop-filter: blur(10px);">
+          <b-form v-if="show" onsubmit="return false">
             <div>
               <b-form-group id="input-group-1">
                 <label class="forminput">Username</label>
@@ -39,14 +39,8 @@
                 placeholder="Enter password"
               ></b-form-input>
             </b-form-group>
-            <!-- <b-form-group id="input-group-4">
-              <b-form-checkbox-group v-model="form.checked" id="checkboxes-4">
-                <b-form-checkbox value="me">remember me</b-form-checkbox>
-              </b-form-checkbox-group>
-            </b-form-group> -->
             <div>
-            <!-- <b-button class="blue-gradient btn-block" type="submit" v-on:click="postLogin ()">LOGIN</b-button><br> -->
-            <b-button class="blue-gradient btn-block" v-on:click="postLogin ()">LOGIN</b-button><br>
+            <b-button class="success btn-block" variant="success" type="submit" v-on:click="postLogin ()">LOGIN</b-button><br>
             </div>
             <div>
             </div>
@@ -72,7 +66,6 @@ export default {
       },
       show: true,
       error: '',
-      aa: 55,
       login: [],
       jwt: [],
       set: [],
@@ -87,21 +80,14 @@ export default {
       console.log('re login')
     }
   },
+  created () {},
+  beforeUpdate () {},
+  updated () {},
+  beforeMount () {},
   mounted () {
-    console.log()
     this.checkPermission()
-    // if (JSON.parse(sessionStorage.getItem('login')) === 'admin' || JSON.parse(sessionStorage.getItem('login')) === 'user') {
-    //   location.replace('/sale')
-    // }
   },
   methods: {
-    checkPermission () {
-      // console.log(VueJwtDecode.decode(JSON.parse(localStorage.getItem('jwt'))))
-      // if (JSON.parse(localStorage.getItem('jwt')) !== 'null') {
-      // } else {
-      //   console.log('login agian')
-      // }
-    },
     postLogin () {
       this.form.employee_id = this.form.employee_id.toUpperCase()
       this.form.password = md5(this.form.password)
@@ -136,8 +122,6 @@ export default {
       title: 'Login',
       titleTemplate: '%s - LPTT'
     }
-  },
-  created () {
   }
 }
 </script>

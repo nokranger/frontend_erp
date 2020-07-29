@@ -3,55 +3,6 @@
     <div style="font-size:30px;">
       Dashboard
     </div>
-    <!-- <b-container fluid="xl">
-      <b-container>
-        <br>
-        <b-row>
-          <b-col>
-            <div>
-              รหัสพนักงาน
-              <b-col>
-                <ul style="list-style-type: none;margin:0;padding:0;">
-                  <li v-for="(employee_ids, index) in employee_id" :key="index">
-                    {{employee_ids.id}}
-                  </li>
-                </ul>
-              </b-col>
-            </div>
-          </b-col>
-          <b-col>
-            <div>
-              กิจกรรม
-              <b-col>
-                <ul style="list-style-type: none;margin:0;padding:0;">
-                  <li v-for="(events, index) in event" :key="index">
-                    {{events.id}}
-                  </li>
-                </ul>
-              </b-col>
-            </div>
-          </b-col>
-          <b-col>
-            <div>
-              สถานะ
-              <b-col>
-                <ul style="list-style-type: none;margin:0;padding:0;">
-                  <li v-for="(approves, index) in approve" :key="index">
-                    {{approve.id}}
-                    <p v-if="approves.id == '0'">
-                      ยังไม่อนุมัติ
-                    </p>
-                    <p v-else-if="approves.id == '1'">
-                      อนุมัติแล้ว
-                    </p>
-                  </li>
-                </ul>
-              </b-col>
-            </div>
-          </b-col>
-        </b-row>
-      </b-container>
-    </b-container> -->
     <b-container fluid="xl">
       <b-container>
         <br>
