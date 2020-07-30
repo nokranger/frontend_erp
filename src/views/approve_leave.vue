@@ -121,7 +121,6 @@ export default {
       this.totalRows = this.event.length
       this.$refs.table.refresh()
     })).catch(e => {
-      this.error.push(e)
     })
   },
   methods: {

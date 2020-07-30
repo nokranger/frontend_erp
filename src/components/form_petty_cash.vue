@@ -50,12 +50,31 @@
            </div>
         </b-col>
       </b-row>
+      <br>
+      <b-row>
+        <b-col>
+          <div>
+              <img style="width:400px;hieght:400px" :src="previewImage" class="uploading-image" />
+              <!-- <b-button type="button" v-on:click="sendFile ()">upload</b-button> -->
+          </div>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col>
+          <div>
+            <input ref="file" type="file" name="avatar" id="avatar" class="inputfile" accept="image/jpeg, image/png" @change=uploadImage />
+            <label for="avatar">Choose a file</label>
+            <!-- <b-form-file ref="file" type="file" placeholder="Choose a file or drop it here..." drop-placeholder="Drop file here..." accept="image/jpeg, image/png" @change=uploadImage></b-form-file> -->
+          </div>
+        </b-col>
+      </b-row>
       <b-row>
         <!-- <b-col></b-col>
         <b-col></b-col> -->
         <b-col>
           <br>
           <div>
+            <br>
             <b-button style="width:20%" variant="outline-primary" type="submit" v-on:click="send ()"><i class="fas fa-upload"></i></b-button>
           </div>
         </b-col>
@@ -64,7 +83,7 @@
   </div>
 </template>
 <script>
-import VueJwtDecode from 'vue-jwt-decode'
+// import VueJwtDecode from 'vue-jwt-decode'
 import axios from 'axios'
 export default {
   data () {
@@ -75,21 +94,33 @@ export default {
         amount: '',
         service_charge: '',
         detail: '',
-        picture: 'img/nok.jpg',
+        picture: null,
         status: 0
-      }
+      },
+      previewImage: null
     }
   },
   mounted () {
-    const jwt = VueJwtDecode.decode(JSON.parse(localStorage.getItem('jwt')))
-    console.log(jwt)
-    this.prettycash.employee_id = jwt.sub
+    this.prettycash.employee_id = JSON.parse(localStorage.getItem('username'))
   },
   methods: {
+    uploadImage (e) {
+      // this.previewImage = e.target.files[0]
+      this.prettycash.picture = this.$refs.file.files[0]
+      const reader = new FileReader()
+      reader.readAsDataURL(this.prettycash.picture)
+      reader.onload = e => {
+        this.previewImage = e.target.result
+      }
+    },
     send () {
       console.log('send')
       console.log(this.prettycash)
-      axios.post('http://localhost:4000/cash/post-prettycash', this.prettycash).then(respone => {
+      const formData = new FormData()
+      formData.set('data', JSON.stringify(this.prettycash))
+      formData.append('file', this.prettycash.picture)
+      console.log(this.prettycash.picture)
+      axios.post('http://localhost:4000/cash/post-prettycash', formData).then(respone => {
         console.log(respone)
       })
     }
@@ -107,4 +138,23 @@ export default {
 div {
   font-family: 'Kanit', sans-serif;
 }
+.inputfile{
+width: 0.1px;
+height: 0.1px;
+opacity: 0;
+overflow: hidden;
+position: absolute;
+z-index: -1;
+}
+label {
+  cursor: pointer;
+}
+label:hover {
+  /* background: black; */
+  color: lightgray;
+  padding: 20;
+}
+/* .inputfile + label {
+  cursor: pointer;
+} */
 </style>

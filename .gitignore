@@ -1,5 +1,6 @@
 .DS_Store
 node_modules
+lptt_erp
 /dist
 
 # local env files

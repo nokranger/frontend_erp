@@ -12,6 +12,7 @@ import Printpdf from '../components/printpdf.vue'
 import LeaveReport from '../views/leave_report.vue'
 import TransportationReport from '../views/transportation_report.vue'
 import PettyCash from '../views/petty_cash.vue'
+// import aaa from '../../lptt_erp/public/uploads/prettycash'
 
 import Meta from 'vue-meta'
 
@@ -46,6 +47,11 @@ const routes = [
     path: '/dashboard',
     name: 'dashboard',
     component: Dashboard
+  },
+  {
+    path: '/record',
+    name: 'record',
+    component: () => import('../views/recordPage.vue')
   },
   {
     path: '/approve',

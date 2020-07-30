@@ -83,6 +83,22 @@
                   <strong>Loading...</strong>
                 </div>
               </template>
+            <template v-slot:cell(File)="data">
+              <p style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" v-b-modal="'modal-pic-cash' + data.item.Id">{{data.item.File}}</p>
+                <b-modal :id="'modal-pic-cash' + data.item.Id" :title="data.item.File" size="xl" hide-footer>
+                  <!-- <img :src="data.item.File" alt=""> -->
+                  <b-container>
+                    <b-row>
+                      <b-col></b-col>
+                      <b-col>
+                        <img style="width:480px;hieght:720px;" :src="require('../../lptt_erp/' + data.item.File)" alt="">
+                      </b-col>
+                      <b-col></b-col>
+                    </b-row>
+                  </b-container>
+                  <!-- <img src="../../lptt_erp/public/uploads/prettycash/LPTTPRETTYCASH-1596138818902.png" alt=""> -->
+                </b-modal>
+            </template>
             <template v-slot:cell(Approve)="data" v-if="localjwt === '0'">
                 <b-button v-if="event[data.index].Approve === 0" size="sm" v-on:click="Papprove (data.index)" class="mr-2" variant="success" type="submit">
                   Not Approve
@@ -121,7 +137,7 @@ export default {
       }, 'Request', 'Details', {
         key: 'Amount',
         sortable: true
-      }, 'Remaining', 'Approve'],
+      }, 'Remaining', 'File', 'Approve'],
       remaining: 20000,
       filter: null,
       totalRows: 1,
@@ -174,7 +190,7 @@ export default {
       this.isBusy = !this.isBusy
       axios.post('http://127.0.0.1:4000/cash/get-month-prettycash', this.prettycash_month)
         .then(response => {
-          console.log('selectedddd')
+          // console.log('selectedddd')
           // console.log(response.data.result)
           this.event = response.data.result.map((data, i) => {
             this.remaining = this.remaining - data.amount
@@ -185,9 +201,15 @@ export default {
               Details: data.detail,
               Amount: data.amount,
               Remaining: this.remaining,
+              File: data.picture.replace(/\\/g, '/'),
               Approve: data.status
             }
           })
+          // console.log(this.event[2].File)
+          let path = this.event[2].File
+          path = path.replace(/\\/g, '/')
+          // path = '../../lptt_erp/' + path
+          console.log(path)
           // this.event = {
           //   Date: this.event.date,
           //   Request: this.event.employee_id,
@@ -196,7 +218,13 @@ export default {
           //   Remaining: 20000 - this.event.amount,
           //   Approve: 'Not approved'
           // }
-          console.log(this.event)
+          // console.log(this.event)
+        }).catch(e => {
+          // if (e.response.status === 404) {
+          //   console.log('Not found')
+          // } else if (e.response.status === 500) {
+          //   console.log('internal error')
+          // }
         })
     },
     Papprove (index) {

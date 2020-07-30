@@ -1,33 +1,50 @@
 <template>
    <div>
-      <img :src="previewImage" class="uploading-image" />
-      <input type="file" accept="image/jpeg, image/png" @change=uploadImage>
-      <b-button type="button" v-on:click="onUpload()">upload</b-button>
+      <img style="width:200px;hieght:200px" :src="previewImage" class="uploading-image" />
+      <input name="avatar" ref="file" type="file" accept="image/jpeg, image/png" @change=uploadImage>
+      <b-button type="button" v-on:click="sendFile ()">upload</b-button>
    </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'imageUpload',
   data () {
     return {
-      previewImage: null
+      previewImage: null,
+      image: null
     }
   },
   methods: {
     uploadImage (e) {
-      this.previewImage = e.target.files[0]
-      // const reader = new FileReader()
-      // reader.readAsDataURL(image)
-      // reader.onload = e => {
-      //   this.previewImage = e.target.result
-      //   console.log(this.previewImage)
-      // }
+      // this.previewImage = e.target.files[0]
+      this.image = this.$refs.file.files[0]
+      const reader = new FileReader()
+      reader.readAsDataURL(this.image)
+      reader.onload = e => {
+        this.previewImage = e.target.result
+      }
+    },
+    sendFile () {
+      const formData = new FormData()
+      const aa = {
+        cc: 'aa'
+      }
+      formData.set('data', JSON.stringify(aa))
+      formData.append('file', this.image)
+      console.log(this.image)
+      axios.post('http://localhost:4000/leavear/upload', formData).then(response => {
+        console.log(response)
+      })
     },
     onUpload () {
       const fd = new FormData()
-      fd.append('image', this.previewImage, this.previewImage.name)
-      console.log(fd)
+      console.log(this.previewImage)
+      fd.append('image', this.previewImage)
+      axios.post('http://localhost:4000/leavear/upload', fd).then(response => {
+        console.log(response)
+      })
     }
   }
 } // missing closure added

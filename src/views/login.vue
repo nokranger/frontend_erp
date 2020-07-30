@@ -11,8 +11,9 @@
             <strong style="text-align:center;font-weight:bolder;color: #4f4f4f!important;font-size:50px;color: #333;">LOGIN</strong>
             <br>
             <br>
-            <p v-if="error == 'WRONG USERNAME AND PASSWORD'" style="color:red">{{error}}</p>
-            <p v-if="error == 'IT CORRECTLY'" style="color:green">{{error}}</p>
+            <p v-if="error == false" style="color:red">WRONG USERNAME AND PASSWORD</p>
+            <p v-else-if="error == 500" style="color:red">Internal Server Error</p>
+            <p v-else-if="error == true" style="color:green">IT CORRECTLY</p>
           </div>
           <br>
           <b-card style="background-color: rgba(255, 255, 255, 0.4);-webkit-backdrop-filter: blur(10px);">
@@ -65,7 +66,7 @@ export default {
         password: ''
       },
       show: true,
-      error: '',
+      error: null,
       login: [],
       jwt: [],
       set: [],
@@ -85,7 +86,6 @@ export default {
   updated () {},
   beforeMount () {},
   mounted () {
-    this.checkPermission()
   },
   methods: {
     postLogin () {
@@ -98,22 +98,22 @@ export default {
           const jwt = VueJwtDecode.decode(response.data)
           if (jwt.loginSuccessfull === true) {
             console.log('ss')
-            this.error = 'IT CORRECTLY'
-            this.error = this.error.toUpperCase()
+            this.error = true
             localStorage.setItem('username', JSON.stringify(jwt.sub))
             localStorage.setItem('role', JSON.stringify(jwt.role))
             localStorage.setItem('iat', JSON.stringify(jwt.iat))
             localStorage.setItem('jwt', JSON.stringify(response.data))
             console.log(jwt.iat)
             location.replace('/dashboard')
-          } else if (jwt.loginSuccessfull === false) {
-            console.log('xx')
-            this.error = 'WRONG USERNAME AND PASSWORD'
-            this.error = this.error.toUpperCase()
-            location.replace('/')
           }
         }).catch(e => {
-          // this.error.push(e)
+          if (e.response.status === 404) {
+            this.error = false
+            this.form.employee_id = ''
+            this.form.password = ''
+          } else if (e.response.status === 500) {
+            this.error = 500
+          }
         })
     }
   },
