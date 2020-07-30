@@ -90,6 +90,10 @@ const routes = [
   {
     path: '*',
     redirect: '/'
+  },
+  {
+    path: '/upload',
+    component: () => import(/* webpackChunkName: "about" */ '../views/uploadimage.vue')
   }
 ]
 

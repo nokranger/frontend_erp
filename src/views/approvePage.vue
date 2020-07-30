@@ -12,10 +12,10 @@
             <app-approveleave></app-approveleave>
           </b-tab>
           <b-tab title="Approve Transportation">
-            <app-approvecash></app-approvecash>
+            <app-approvetransport></app-approvetransport>
           </b-tab>
           <b-tab title="Approve prettycash">
-            <app-approvetransport></app-approvetransport>
+            <app-approvecash></app-approvecash>
           </b-tab>
         </b-tabs>
       </b-container>

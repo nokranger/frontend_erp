@@ -4,20 +4,10 @@
     <div id="mySidenav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" v-on:click="openNav ()">&times;</a>
       <a class="align-left" href="/dashboard"><i class="fas fa-home"></i> Home</a>
-      <!-- <b-dropdown id="dropdown-1" text="Dropdown Button" class="m-md-2" style="background-color:#29265b; !important">
-        <b-dropdown-item  href="/leavereport">First Action</b-dropdown-item>
-        <b-dropdown-item>Second Action</b-dropdown-item>
-        <b-dropdown-item>Third Action</b-dropdown-item>
-        <b-dropdown-divider></b-dropdown-divider>
-        <b-dropdown-item active>Active action</b-dropdown-item>
-        <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-      </b-dropdown> -->
       <a class="align-left" href="/leavereport"><i class="fas fa-file-alt"></i> Leave record</a>
       <a class="align-left" href="/transreport"><i class="fas fa-file-alt"></i> Transportation record</a>
       <a class="align-left" href="/pettycash"><i class="fas fa-file-alt"></i> Pettycash record</a>
-      <a class="align-left" href="/approveleave"><i class="fas fa-calendar-check"></i> Approve leave</a>
-      <a class="align-left" href="/approvetrans"><i class="fas fa-calendar-check"></i> Approve transportation</a>
-      <a class="align-left" href="/approveprettycash"><i class="fas fa-calendar-check"></i> Approve prettycash</a>
+      <a class="align-left" href="/approve"><i class="fas fa-calendar-check"></i> Approve</a>
       <a v-if="permission === 0" class="align-left" href="/signup"><i class="fas fa-sign-in-alt"></i> Sign up</a>
       <a class="align-left" href="#" v-on:click="logOut"><i class="fas fa-sign-out-alt"></i> Log out</a>
 
