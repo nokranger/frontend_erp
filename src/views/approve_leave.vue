@@ -74,6 +74,7 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
+// import aa from '../../../../../VueJS/LPTT/frontend_erp/src/img/upload'
 export default {
   data () {
     return {

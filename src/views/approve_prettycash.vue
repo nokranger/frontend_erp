@@ -91,7 +91,7 @@
                     <b-row>
                       <b-col></b-col>
                       <b-col>
-                        <img style="width:480px;hieght:720px;" :src="require('../../../../../NodeJS/LPTT/lptt_erp/' + data.item.File)" alt="">
+                        <img style="width:480px;hieght:720px;" :src="require('../img/uploads/prettycash/' + data.item.File)" alt="">
                       </b-col>
                       <b-col></b-col>
                     </b-row>
@@ -116,7 +116,7 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
-// import aa from '../../../../../NodeJS/LPTT/lptt_erp'
+// import aa from '../img/uploads/prettycash'
 export default {
   data () {
     return {
