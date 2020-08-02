@@ -100,6 +100,10 @@ const routes = [
   {
     path: '/upload',
     component: () => import(/* webpackChunkName: "about" */ '../views/uploadimage.vue')
+  },
+  {
+    path: '/pdf',
+    component: () => import(/* webpackChunkName: "about" */ '../views/testpdf.vue')
   }
 ]
 
