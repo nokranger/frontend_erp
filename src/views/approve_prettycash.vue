@@ -109,7 +109,8 @@
             </template>
         </b-table>
       </b-container>
-      <b-button v-on:click="printPDF ()">Print report</b-button>
+      <b-button style="margin:5px" v-on:click="pdfPreview ()">Preview PDF</b-button>
+      <b-button style="margin:5px" v-on:click="pdfPrint ()">Download PDF</b-button>
     </div>
   </div>
 </template>
@@ -117,6 +118,23 @@
 import axios from 'axios'
 import moment from 'moment'
 // import aa from '../img/uploads/prettycash'
+import pdfMake from 'pdfmake/build/pdfmake'
+import pdfFonts from 'pdfmake/build/vfs_fonts'
+pdfMake.vfs = pdfFonts.pdfMake.vfs
+pdfMake.fonts = {
+  THSarabunNew: {
+    normal: 'THSarabunNew.ttf',
+    bold: 'THSarabunNew-Bold.ttf',
+    italics: 'THSarabunNew-Italic.ttf',
+    bolditalics: 'THSarabunNew-BoldItalic.ttf'
+  },
+  Roboto: {
+    normal: 'Roboto-Regular.ttf',
+    bold: 'Roboto-Medium.ttf',
+    italics: 'Roboto-Italic.ttf',
+    bolditalics: 'Roboto-MediumItalic.ttf'
+  }
+}
 export default {
   data () {
     return {
@@ -291,8 +309,43 @@ export default {
           this.$refs.table.refresh()
         })
     },
-    printPDF () {
-      // location.replace('/print/' + this.prettycash_month.from + this.prettycash_month.to)
+    pdfPrint () {
+      var docDefinition = {
+        content: [
+          {
+            text: 'สวัสดี', fontSize: 50
+          }
+        ],
+        defaultStyle: {
+          font: 'THSarabunNew'
+        }
+      }
+      const today = new Date()
+      const date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear()
+      console.log(date)
+      pdfMake.createPdf(docDefinition).download('Prettycash' + '_' + date + '.pdf')
+    },
+    pdfPreview () {
+      var docDefinition = {
+        content: [
+          {
+            text: 'สวัสดีชาวโลก', fontSize: 50
+          },
+          {
+            style: 'tableExample',
+            table: {
+              body: [
+                ['Column 1', 'Column 2', 'Column 3'],
+                ['One value goes here', 'Another one here', 'OK?']
+              ]
+            }
+          }
+        ],
+        defaultStyle: {
+          font: 'THSarabunNew'
+        }
+      }
+      pdfMake.createPdf(docDefinition).open()
     }
   }
 }
