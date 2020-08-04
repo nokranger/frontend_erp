@@ -118,6 +118,7 @@
 import axios from 'axios'
 import moment from 'moment'
 // import aa from '../img/uploads/prettycash'
+// import convertNumberToReadableThaiText from 'thai-numberic-to-readable-text'
 import pdfMake from 'pdfmake/build/pdfmake'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
 pdfMake.vfs = pdfFonts.pdfMake.vfs
@@ -163,13 +164,7 @@ export default {
       filter: null,
       totalRows: 1,
       currentPage: 1,
-      perPage: 10,
-      items2: [
-        { _name: 'Dickerson', target: 1100, date: '2020-07-17' },
-        { _name: 'Larsen', target: 1200, date: '2020-07-17' },
-        { _name: 'Geneva', target: 1200, date: '2020-07-17' },
-        { _name: 'Jami', target: 1500, date: '2020-07-17' }
-      ]
+      perPage: 10
     }
   },
   beforeCreate () {
@@ -177,7 +172,6 @@ export default {
   },
   created () {
     this.localjwt = JSON.parse(localStorage.getItem('role'))
-    // console.log('local', (this.localjwt))
     if (this.localjwt === '0') {
       console.log('local', (this.localjwt))
     }
@@ -190,35 +184,16 @@ export default {
 
   },
   mounted () {
-    // axios.all([axios.get('http://127.0.0.1:4000/cash/get-month-prettycash')]).then(axios.spread((response) => {
-    //   // const vm = this
-    //   // vm.getData(res)
-    //   // this.event = reslar.data.result.map((data, i) => {
-    //   //   return {
-    //   //     id: data.employee_id,
-    //   //     actId: data.leave_activity_report_id,
-    //   //     reason: data.reason_for_leave,
-    //   //     approve: data.status
-    //   //   }
-    //   // })
-    //   console.log(response)
-    // })).catch(e => {
-    //   this.error.push(e)
-    // })
-    // console.log(this.info.length)
-    // axios.post('http://127.0.0.1:4000/cash/get-month-prettycash', this.prettycash_month)
-    //   .then(response => {
-    //     console.log(response)
-    //   })
+    // const { convertNumberToReadableThaiText } = require('thai-numberic-to-readable-text')
+    // const result = convertNumberToReadableThaiText(121)
+    // console.log(result)
+    console.log(this.ArabicNumberToText(1001.23))
   },
   methods: {
     selectMonth () {
-      // console.log(this.prettycash_month)
       this.isBusy = !this.isBusy
       axios.post('http://127.0.0.1:4000/cash/get-month-prettycash', this.prettycash_month)
         .then(response => {
-          // console.log('selectedddd')
-          // console.log(response.data.result)
           this.event = response.data.result.map((data, i) => {
             this.remaining = this.remaining - data.amount
             return {
@@ -232,55 +207,83 @@ export default {
               Approve: data.status
             }
           })
-          var aa = []
-          for (const i in response.data.result) {
-            aa += {
-              test: JSON.parse(response.data.result[i].id)
-            }
-          }
-          console.log('aaaaaaaaaaaaaa', aa)
           this.dataTotable2 = response.data.result
-          this.dataTotable = {
-            date: '',
-            employee_id: '',
-            detail: 'Total Net Expense',
-            amount: 243234,
-            approve_id: '',
-            id: '',
-            picture: '',
-            status: '',
-            service_charge: ''
+          if (this.dataTotable2.length < 25) {
+            for (var i = this.dataTotable2.length; i < 20; i++) {
+              this.dataTotable[i] = {
+                date: '',
+                employee_id: '3',
+                detail: '',
+                amount: '',
+                approve_id: '',
+                id: '',
+                picture: '',
+                status: '',
+                service_charge: ''
+              }
+              // this.dataTotable[21] = {
+              //   date: 'Total Net Expense',
+              //   employee_id: '',
+              //   detail: '',
+              //   amount: '',
+              //   approve_id: '',
+              //   id: '',
+              //   picture: '',
+              //   status: '',
+              //   service_charge: ''
+              // }
+              // this.dataTotable[22] = {
+              //   date: 'Cash left',
+              //   employee_id: '',
+              //   detail: '',
+              //   amount: '',
+              //   approve_id: '',
+              //   id: '',
+              //   picture: '',
+              //   status: '',
+              //   service_charge: ''
+              // }
+              // this.dataTotable[23] = {
+              //   date: this.ArabicNumberToText(3997.00),
+              //   employee_id: JSON.parse(['Sample value 1', { colSpan: 2, rowSpan: 2, text: 'Both:\nrowSpan and colSpan\ncan be defined at the same time' }, '']),
+              //   detail: '',
+              //   amount: '',
+              //   approve_id: '',
+              //   id: '',
+              //   picture: '',
+              //   status: '',
+              //   service_charge: ''
+              // }
+            }
+            for (var k in this.dataTotable) {
+              this.dataTotable2.push(this.dataTotable[k])
+            }
+            // this.dataTotable[] = [{
+            //   date: '',
+            //   employee_id: '',
+            //   detail: 'Cash left',
+            //   amount: 243234,
+            //   approve_id: '',
+            //   id: '',
+            //   picture: '',
+            //   status: '',
+            //   service_charge: ''
+            // }, {
+            //   ate: '',
+            //   employee_id: '',
+            //   detail: 'Total Net Expense',
+            //   amount: 243234,
+            //   approve_id: '',
+            //   id: '',
+            //   picture: '',
+            //   status: '',
+            //   service_charge: ''
+            // }]
+            // for (var l in this.dataTotable) {
+            //   this.dataTotable2.push(this.dataTotable[l])
+            // }
+            // this.dataTotable2.push(this.dataTotable)
           }
-          var ss = []
-          ss = {
-            date: '',
-            employee_id: '',
-            detail: 'Cash left',
-            amount: 243234,
-            approve_id: '',
-            id: '',
-            picture: '',
-            status: '',
-            service_charge: ''
-          }
-          this.dataTotable2.push(this.dataTotable)
-          this.dataTotable2.push(ss)
-          console.log(this.event)
-          console.log(this.dataTotable2)
-          console.log(this.event[2].File)
-          let path = this.event[2].File
-          path = path.replace(/\\/g, '/')
-          // path = '../../lptt_erp/' + path
-          console.log(path)
-          // this.event = {
-          //   Date: this.event.date,
-          //   Request: this.event.employee_id,
-          //   Details: this.event.detail,
-          //   Amount: this.event.amount,
-          //   Remaining: 20000 - this.event.amount,
-          //   Approve: 'Not approved'
-          // }
-          // console.log(this.event)
         }).catch(e => {
           // if (e.response.status === 404) {
           //   console.log('Not found')
@@ -353,6 +356,27 @@ export default {
         })
     },
     pdfPrint () {
+      var column = []
+      column.push({ text: 'A', style: 'tableHeader' })
+      column.push({ text: 'B', style: 'tableHeader' })
+
+      var value = []
+      value.push({ text: 'Asda', style: 'tableHeader' })
+      value.push({ text: 'Bsa', style: 'tableHeader' })
+      var docDefinition = {
+        content: [{
+          table: {
+            headerRows: 1,
+            body: [[
+              'dasdsadasd', 'dasdsadsad'
+            ], [
+              'dsadsadas', 'dsadsadsa'
+            ]]
+          }
+        }
+
+        ]
+      }
       // var docDefinition = {
       //   content: [
       //     {
@@ -367,76 +391,36 @@ export default {
       // const date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear()
       // console.log(date)
       // pdfMake.createPdf(docDefinition).download('Prettycash' + '_' + date + '.pdf')
+      pdfMake.createPdf(docDefinition).open()
     },
     pdfPreview () {
-      // console.log(this.test = this.event.map((data, i) => {
-      //   return {
-      //     date: data.Date
-      //   }
-      // }))
-      // this.test = this.event.map((data, i) => {
-      //   return {
-      //     date: data.Date
-      //   }
-      // })
-      // for (const i in this.event) {
-      //   // this.test += this.event.Date[i]
-      //   for (const j in this.event[i].Date) {
-      //     this.test += this.event[i].Date[j]
-      //   }
-      // }
-      // console.log(this.test)
-      // console.log(Object.keys(JSON.stringify(this.event)))
-    //   var docDefinition = {
-    //     content: [
-    //       {
-    //         text: 'สวัสดีชาวโลก', fontSize: 50
-    //       },
-    //       {
-    //         style: 'tableExample',
-    //         table: {
-    //           body: [
-    //             ['Date', 'Request', 'Detail'],
-    //             [this.test = this.event.map((data, i) => {
-    //               return {
-    //                 date: data.Date
-    //               }
-    //             }), 2, 3]
-    //           ]
-    //         }
-    //       }
-    //     ],
-    //     defaultStyle: {
-    //       font: 'THSarabunNew'
-    //     }
-    //   }
-    //   pdfMake.createPdf(JSON.stringify(docDefinition)).open()
-      // var externalDataRetrievedFromServer = [
-      //   { name: 'Bartek', age: 34 },
-      //   { name: 'John', age: 27 },
-      //   { name: 'Elizabeth', age: 30 }
-      // ]
-      // console.log(externalDataRetrievedFromServer)
-      // console.log(this.event)
       function buildTableBody (data, columns) {
         var body = []
 
         body.push(columns)
         data.forEach(function (row) {
+          console.log(row)
           var dataRow = []
           columns.forEach(function (column) {
             dataRow.push(row[column].toString())
+            console.log(row[column])
           })
           body.push(dataRow)
+          // console.log(row[column])
+          // var test = [
+          //   'date', { colSpan: 4, rowSpan: 2, text: 'test\n' }
+          // ]
+          // body.push(test)
         })
         return body
       }
 
       function table (data, columns) {
-        console.log(data)
-        console.log(columns)
+        // console.log(data)
+        // console.log(columns)
         return {
           table: {
+            widths: ['auto', 'auto', '*', 'auto', 'auto'],
             headerRows: 1,
             body: buildTableBody(data, columns)
           }
@@ -446,13 +430,125 @@ export default {
         content: [
           { text: 'Logiprotech (Thailand) Co., Ltd.', style: 'header', alignment: 'center', fontSize: 30 },
           { text: 'Internal Petty Cash Record\n', alignment: 'center', fontSize: 25 },
-          table(this.dataTotable2, ['date', 'employee_id', 'detail', 'amount', 'status'])
+          table(this.dataTotable2, ['date', 'employee_id', 'detail', 'amount', 'status']),
+          {
+            table: {
+              widths: [450, 'auto', 'auto', 'auto', 'auto'],
+              headerRows: 1,
+              body: [[
+                { text: 'Total Net Expense', colSpan: 3 }, {}, {}, { text: 'test', colSpan: 2 }, {}
+              ], [
+                { text: 'Cash left', colSpan: 3 }, {}, {}, { text: 'test', colSpan: 2 }, {}
+              ], [
+                { text: 'สามพันอิอิ', colSpan: 5 }, {}, {}, {}, {}
+              ]]
+            }
+          },
+          { text: '\nขอรับรองว่าค่าใช้จ่ายดังกล่าวใช้เพื่อกิจการของบริษัท ฯ\n', alignment: 'right', fontSize: 16 },
+          { text: '.....................................\n', alignment: 'right', fontSize: 16 },
+          { text: '(นายธนัตถ์ รัตนโกสุมภ์)\n', alignment: 'right', fontSize: 16 },
+          { text: 'ผู้จัดการฝ่ายพัฒนา IT\n\n', alignment: 'right', fontSize: 16 },
+          { text: 'หมายเหตุ: เคลียร์เงิน pretty cash เบิกเงินคืน', alignment: 'left', fontSize: 16 }
         ],
         defaultStyle: {
           font: 'THSarabunNew'
         }
       }
       pdfMake.createPdf(docDefinition).open()
+    },
+    // eslint-disable-next-line no-unused-vars
+    ThaiNumberToText (Numbers) {
+      Numbers = Numbers.replace(/๐/gi, '0')
+      Numbers = Numbers.replace(/๑/gi, '1')
+      Numbers = Numbers.replace(/๒/gi, '2')
+      Numbers = Numbers.replace(/๓/gi, '3')
+      Numbers = Numbers.replace(/๔/gi, '4')
+      Numbers = Numbers.replace(/๕/gi, '5')
+      Numbers = Numbers.replace(/๖/gi, '6')
+      Numbers = Numbers.replace(/๗/gi, '7')
+      Numbers = Numbers.replace(/๘/gi, '8')
+      Numbers = Numbers.replace(/๙/gi, '9')
+      // eslint-disable-next-line no-undef
+      return ArabicNumberToText(Numbers)
+    },
+    ArabicNumberToText (Numbers) {
+      // eslint-disable-next-line no-redeclare
+      // eslint-disable-next-line no-undef
+      Numbers = this.CheckNumber(Numbers)
+      // eslint-disable-next-line no-array-constructor
+      var NumberArray = new Array('ศูนย์', 'หนึ่ง', 'สอง', 'สาม', 'สี่', 'ห้า', 'หก', 'เจ็ด', 'แปด', 'เก้า', 'สิบ')
+      // eslint-disable-next-line no-array-constructor
+      var DigitArray = new Array('', 'สิบ', 'ร้อย', 'พัน', 'หมื่น', 'แสน', 'ล้าน')
+      var BahtText = ''
+      if (isNaN(Numbers)) {
+        return 'ข้อมูลนำเข้าไม่ถูกต้อง'
+      } else {
+        if ((Numbers - 0) > 9999999.9999) {
+          return 'ข้อมูลนำเข้าเกินขอบเขตที่ตั้งไว้'
+        } else {
+          Numbers = Numbers.split('.')
+          if (Numbers[1].length > 0) {
+            Numbers[1] = Numbers[1].substring(0, 2)
+          }
+          var NumberLen = Numbers[0].length - 0
+          for (var i = 0; i < NumberLen; i++) {
+            var tmp = Numbers[0].substring(i, i + 1) - 0
+            if (tmp !== 0) {
+              if ((i === (NumberLen - 1)) && (tmp === 1)) {
+                BahtText += 'เอ็ด'
+              } else
+              if ((i === (NumberLen - 2)) && (tmp === 2)) {
+                BahtText += 'ยี่'
+              } else
+              if ((i === (NumberLen - 2)) && (tmp === 1)) {
+                BahtText += ''
+              } else {
+                BahtText += NumberArray[tmp]
+              }
+              BahtText += DigitArray[NumberLen - i - 1]
+            }
+          }
+          BahtText += 'บาท'
+          if ((Numbers[1] === '0') || (Numbers[1] === '00')) {
+            BahtText += 'ถ้วน'
+          } else {
+            var DecimalLen = Numbers[1].length - 0
+            for (i = 0; i < DecimalLen; i++) {
+              tmp = Numbers[1].substring(i, i + 1) - 0
+              if (tmp !== 0) {
+                if ((i === (DecimalLen - 1)) && (tmp === 1)) {
+                  BahtText += 'เอ็ด'
+                } else
+                if ((i === (DecimalLen - 2)) && (tmp === 2)) {
+                  BahtText += 'ยี่'
+                } else
+                if ((i === (DecimalLen - 2)) && (tmp === 1)) {
+                  BahtText += ''
+                } else {
+                  BahtText += NumberArray[tmp]
+                }
+                BahtText += DigitArray[DecimalLen - i - 1]
+              }
+            }
+            BahtText += 'สตางค์'
+          }
+          return BahtText
+        }
+      }
+    },
+    CheckNumber (Numbers) {
+      var decimal = false
+      Numbers = Numbers.toString()
+      Numbers = Numbers.replace(/ |,|บาท|฿/gi, '')
+      for (var i = 0; i < Numbers.length; i++) {
+        if (Numbers[i] === '.') {
+          decimal = true
+        }
+      }
+      if (decimal === false) {
+        Numbers = Numbers + '.00'
+      }
+      return Numbers
     }
   }
 }

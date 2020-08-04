@@ -17,6 +17,7 @@
     "mdbvue": "^6.5.0",
     "moment": "^2.27.0",
     "pdfmake": "^0.1.68",
+    "thai-numberic-to-readable-text": "0.0.3",
     "vue": "^2.6.11",
     "vue-google-charts": "^0.3.2",
     "vue-jwt-decode": "^0.1.0",
