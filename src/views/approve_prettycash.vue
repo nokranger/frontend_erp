@@ -141,6 +141,8 @@ export default {
       isBusy: false,
       employee_id: [],
       event: [],
+      dataTotable: [],
+      dataTotable2: [],
       approve: [],
       localjwt: '',
       prettycash_month: {
@@ -161,7 +163,13 @@ export default {
       filter: null,
       totalRows: 1,
       currentPage: 1,
-      perPage: 10
+      perPage: 10,
+      items2: [
+        { _name: 'Dickerson', target: 1100, date: '2020-07-17' },
+        { _name: 'Larsen', target: 1200, date: '2020-07-17' },
+        { _name: 'Geneva', target: 1200, date: '2020-07-17' },
+        { _name: 'Jami', target: 1500, date: '2020-07-17' }
+      ]
     }
   },
   beforeCreate () {
@@ -224,7 +232,42 @@ export default {
               Approve: data.status
             }
           })
-          // console.log(this.event[2].File)
+          var aa = []
+          for (const i in response.data.result) {
+            aa += {
+              test: JSON.parse(response.data.result[i].id)
+            }
+          }
+          console.log('aaaaaaaaaaaaaa', aa)
+          this.dataTotable2 = response.data.result
+          this.dataTotable = {
+            date: '',
+            employee_id: '',
+            detail: 'Total Net Expense',
+            amount: 243234,
+            approve_id: '',
+            id: '',
+            picture: '',
+            status: '',
+            service_charge: ''
+          }
+          var ss = []
+          ss = {
+            date: '',
+            employee_id: '',
+            detail: 'Cash left',
+            amount: 243234,
+            approve_id: '',
+            id: '',
+            picture: '',
+            status: '',
+            service_charge: ''
+          }
+          this.dataTotable2.push(this.dataTotable)
+          this.dataTotable2.push(ss)
+          console.log(this.event)
+          console.log(this.dataTotable2)
+          console.log(this.event[2].File)
           let path = this.event[2].File
           path = path.replace(/\\/g, '/')
           // path = '../../lptt_erp/' + path
@@ -310,36 +353,100 @@ export default {
         })
     },
     pdfPrint () {
-      var docDefinition = {
-        content: [
-          {
-            text: 'สวัสดี', fontSize: 50
-          }
-        ],
-        defaultStyle: {
-          font: 'THSarabunNew'
-        }
-      }
-      const today = new Date()
-      const date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear()
-      console.log(date)
-      pdfMake.createPdf(docDefinition).download('Prettycash' + '_' + date + '.pdf')
+      // var docDefinition = {
+      //   content: [
+      //     {
+      //       text: 'สวัสดี', fontSize: 50
+      //     }
+      //   ],
+      //   defaultStyle: {
+      //     font: 'THSarabunNew'
+      //   }
+      // }
+      // const today = new Date()
+      // const date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear()
+      // console.log(date)
+      // pdfMake.createPdf(docDefinition).download('Prettycash' + '_' + date + '.pdf')
     },
     pdfPreview () {
+      // console.log(this.test = this.event.map((data, i) => {
+      //   return {
+      //     date: data.Date
+      //   }
+      // }))
+      // this.test = this.event.map((data, i) => {
+      //   return {
+      //     date: data.Date
+      //   }
+      // })
+      // for (const i in this.event) {
+      //   // this.test += this.event.Date[i]
+      //   for (const j in this.event[i].Date) {
+      //     this.test += this.event[i].Date[j]
+      //   }
+      // }
+      // console.log(this.test)
+      // console.log(Object.keys(JSON.stringify(this.event)))
+    //   var docDefinition = {
+    //     content: [
+    //       {
+    //         text: 'สวัสดีชาวโลก', fontSize: 50
+    //       },
+    //       {
+    //         style: 'tableExample',
+    //         table: {
+    //           body: [
+    //             ['Date', 'Request', 'Detail'],
+    //             [this.test = this.event.map((data, i) => {
+    //               return {
+    //                 date: data.Date
+    //               }
+    //             }), 2, 3]
+    //           ]
+    //         }
+    //       }
+    //     ],
+    //     defaultStyle: {
+    //       font: 'THSarabunNew'
+    //     }
+    //   }
+    //   pdfMake.createPdf(JSON.stringify(docDefinition)).open()
+      // var externalDataRetrievedFromServer = [
+      //   { name: 'Bartek', age: 34 },
+      //   { name: 'John', age: 27 },
+      //   { name: 'Elizabeth', age: 30 }
+      // ]
+      // console.log(externalDataRetrievedFromServer)
+      // console.log(this.event)
+      function buildTableBody (data, columns) {
+        var body = []
+
+        body.push(columns)
+        data.forEach(function (row) {
+          var dataRow = []
+          columns.forEach(function (column) {
+            dataRow.push(row[column].toString())
+          })
+          body.push(dataRow)
+        })
+        return body
+      }
+
+      function table (data, columns) {
+        console.log(data)
+        console.log(columns)
+        return {
+          table: {
+            headerRows: 1,
+            body: buildTableBody(data, columns)
+          }
+        }
+      }
       var docDefinition = {
         content: [
-          {
-            text: 'สวัสดีชาวโลก', fontSize: 50
-          },
-          {
-            style: 'tableExample',
-            table: {
-              body: [
-                ['Column 1', 'Column 2', 'Column 3'],
-                ['One value goes here', 'Another one here', 'OK?']
-              ]
-            }
-          }
+          { text: 'Logiprotech (Thailand) Co., Ltd.', style: 'header', alignment: 'center', fontSize: 30 },
+          { text: 'Internal Petty Cash Record\n', alignment: 'center', fontSize: 25 },
+          table(this.dataTotable2, ['date', 'employee_id', 'detail', 'amount', 'status'])
         ],
         defaultStyle: {
           font: 'THSarabunNew'
