@@ -104,6 +104,7 @@ export default {
             localStorage.setItem('iat', JSON.stringify(jwt.iat))
             localStorage.setItem('jwt', JSON.stringify(response.data))
             console.log(jwt.iat)
+            console.log(jwt.sub)
             location.replace('/dashboard')
           }
         }).catch(e => {

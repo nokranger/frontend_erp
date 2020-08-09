@@ -37,15 +37,6 @@
       <b-container>
         <b-row>
           <b-col class="my-1">
-          <!-- <div style="margin-top:-9.5px;">
-            <b-form-select
-              v-model="perPage"
-              id="perPageSelect"
-              size="sm"
-              :options="pageOptions"
-            ></b-form-select>
-          </div> -->
-          <!-- <b-input></b-input> -->
           <b-pagination
             v-model="currentPage"
             :total-rows="totalRows"
@@ -56,14 +47,6 @@
           ></b-pagination>
         </b-col>
         <b-col class="my-1">
-          <!-- <b-pagination
-            v-model="currentPage"
-            :total-rows="totalRows"
-            :per-page="perPage"
-            align="fill"
-            size="sm"
-            class="my-0"
-          ></b-pagination> -->
         </b-col>
         <b-col class="my-1">
           <b-form-input
@@ -117,6 +100,7 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
+// import VueJwtDecode from 'vue-jwt-decode'
 // import aa from '../img/uploads/prettycash'
 // import convertNumberToReadableThaiText from 'thai-numberic-to-readable-text'
 import pdfMake from 'pdfmake/build/pdfmake'
@@ -187,6 +171,7 @@ export default {
     // const { convertNumberToReadableThaiText } = require('thai-numberic-to-readable-text')
     // const result = convertNumberToReadableThaiText(121)
     // console.log(result)
+    console.log('appid', this.appId)
     console.log(this.ArabicNumberToText(1001.23))
   },
   methods: {
@@ -207,83 +192,6 @@ export default {
               Approve: data.status
             }
           })
-          this.dataTotable2 = response.data.result
-          if (this.dataTotable2.length < 25) {
-            for (var i = this.dataTotable2.length; i < 20; i++) {
-              this.dataTotable[i] = {
-                date: '',
-                employee_id: '3',
-                detail: '',
-                amount: '',
-                approve_id: '',
-                id: '',
-                picture: '',
-                status: '',
-                service_charge: ''
-              }
-              // this.dataTotable[21] = {
-              //   date: 'Total Net Expense',
-              //   employee_id: '',
-              //   detail: '',
-              //   amount: '',
-              //   approve_id: '',
-              //   id: '',
-              //   picture: '',
-              //   status: '',
-              //   service_charge: ''
-              // }
-              // this.dataTotable[22] = {
-              //   date: 'Cash left',
-              //   employee_id: '',
-              //   detail: '',
-              //   amount: '',
-              //   approve_id: '',
-              //   id: '',
-              //   picture: '',
-              //   status: '',
-              //   service_charge: ''
-              // }
-              // this.dataTotable[23] = {
-              //   date: this.ArabicNumberToText(3997.00),
-              //   employee_id: JSON.parse(['Sample value 1', { colSpan: 2, rowSpan: 2, text: 'Both:\nrowSpan and colSpan\ncan be defined at the same time' }, '']),
-              //   detail: '',
-              //   amount: '',
-              //   approve_id: '',
-              //   id: '',
-              //   picture: '',
-              //   status: '',
-              //   service_charge: ''
-              // }
-            }
-            for (var k in this.dataTotable) {
-              this.dataTotable2.push(this.dataTotable[k])
-            }
-            // this.dataTotable[] = [{
-            //   date: '',
-            //   employee_id: '',
-            //   detail: 'Cash left',
-            //   amount: 243234,
-            //   approve_id: '',
-            //   id: '',
-            //   picture: '',
-            //   status: '',
-            //   service_charge: ''
-            // }, {
-            //   ate: '',
-            //   employee_id: '',
-            //   detail: 'Total Net Expense',
-            //   amount: 243234,
-            //   approve_id: '',
-            //   id: '',
-            //   picture: '',
-            //   status: '',
-            //   service_charge: ''
-            // }]
-            // for (var l in this.dataTotable) {
-            //   this.dataTotable2.push(this.dataTotable[l])
-            // }
-            // this.dataTotable2.push(this.dataTotable)
-          }
         }).catch(e => {
           // if (e.response.status === 404) {
           //   console.log('Not found')
@@ -298,26 +206,11 @@ export default {
         id: this.event[index].Id,
         status: 1,
         from: this.prettycash_month.from,
-        to: this.prettycash_month.to
+        to: this.prettycash_month.to,
+        approve_id: JSON.parse(localStorage.getItem('username'))
       }
-      // console.log(this.prettycash_month)
-      // axios.all([axios.patch('http://127.0.0.1:4000/cash/approve-prettycash', this.approve), axios.post('http://127.0.0.1:4000/cash/get-month-prettycash', this.prettycash_month)]).then(axios.spread((responseApp, response) => {
-      //   this.event = response.data.result.map((data, i) => {
-      //     // this.remaining = this.remaining - data.amount
-      //     return {
-      //       Id: data.id,
-      //       Date: moment(data.date).format('MMM Do YY'),
-      //       Request: data.employee_id,
-      //       Details: data.detail,
-      //       Amount: data.amount,
-      //       Remaining: this.remaining,
-      //       Approve: data.status
-      //     }
-      //   })
-      //   this.$refs.table.refresh()
-      // }))
       axios.patch('http://127.0.0.1:4000/cash/approve-prettycash', this.approve).then(response => {
-        this.remaining = 20000
+        // this.remaining = 20000
         this.event = response.data.result.map((data, i) => {
           this.remaining = this.remaining - data.amount
           return {
@@ -327,6 +220,7 @@ export default {
             Details: data.detail,
             Amount: data.amount,
             Remaining: this.remaining,
+            File: data.picture.replace(/\\/g, '/'),
             Approve: data.status
           }
         })
@@ -394,67 +288,164 @@ export default {
       pdfMake.createPdf(docDefinition).open()
     },
     pdfPreview () {
-      function buildTableBody (data, columns) {
-        var body = []
-
-        body.push(columns)
-        data.forEach(function (row) {
-          console.log(row)
-          var dataRow = []
-          columns.forEach(function (column) {
-            dataRow.push(row[column].toString())
-            console.log(row[column])
-          })
-          body.push(dataRow)
-          // console.log(row[column])
-          // var test = [
-          //   'date', { colSpan: 4, rowSpan: 2, text: 'test\n' }
-          // ]
-          // body.push(test)
+      axios.post('http://127.0.0.1:4000/cash/pdf', this.prettycash_month).then(response => {
+        this.dataTotable2 = response.data.result
+        console.log('response', response.data)
+        this.dataTotable2 = response.data.result.map((data, i) => {
+          return {
+            No: data._No,
+            Date: moment(data.date).format('MMM Do YY'),
+            Detail: data.detail,
+            Amount: data.amount,
+            Amounts: data._amounts
+          }
         })
-        return body
-      }
-
-      function table (data, columns) {
-        // console.log(data)
-        // console.log(columns)
-        return {
-          table: {
-            widths: ['auto', 'auto', '*', 'auto', 'auto'],
-            headerRows: 1,
-            body: buildTableBody(data, columns)
+        console.log('Amount', this.dataTotable2[this.dataTotable2.length - 1].Amounts)
+        if (this.dataTotable2.length < 20) {
+          for (var i = this.dataTotable2.length; i < 20; i++) {
+            this.dataTotable[i] = {
+              No: '\n',
+              Date: '',
+              Detail: '',
+              Amount: '',
+              Amounts: this.dataTotable2[this.dataTotable2.length - 1].Amounts
+            }
+            this.dataTotable[19] = {
+              No: '\n',
+              Date: '',
+              Detail: '',
+              Amount: this.dataTotable2[this.dataTotable2.length - 1].Amounts,
+              Amounts: this.dataTotable2[this.dataTotable2.length - 1].Amounts
+            }
+          }
+          for (var k in this.dataTotable) {
+            this.dataTotable2.push(this.dataTotable[k])
           }
         }
-      }
-      var docDefinition = {
-        content: [
-          { text: 'Logiprotech (Thailand) Co., Ltd.', style: 'header', alignment: 'center', fontSize: 30 },
-          { text: 'Internal Petty Cash Record\n', alignment: 'center', fontSize: 25 },
-          table(this.dataTotable2, ['date', 'employee_id', 'detail', 'amount', 'status']),
-          {
-            table: {
-              widths: [450, 'auto', 'auto', 'auto', 'auto'],
-              headerRows: 1,
-              body: [[
-                { text: 'Total Net Expense', colSpan: 3 }, {}, {}, { text: 'test', colSpan: 2 }, {}
-              ], [
-                { text: 'Cash left', colSpan: 3 }, {}, {}, { text: 'test', colSpan: 2 }, {}
-              ], [
-                { text: 'สามพันอิอิ', colSpan: 5 }, {}, {}, {}, {}
-              ]]
-            }
-          },
-          { text: '\nขอรับรองว่าค่าใช้จ่ายดังกล่าวใช้เพื่อกิจการของบริษัท ฯ\n', alignment: 'right', fontSize: 16 },
-          { text: '.....................................\n', alignment: 'right', fontSize: 16 },
-          { text: '(นายธนัตถ์ รัตนโกสุมภ์)\n', alignment: 'right', fontSize: 16 },
-          { text: 'ผู้จัดการฝ่ายพัฒนา IT\n\n', alignment: 'right', fontSize: 16 },
-          { text: 'หมายเหตุ: เคลียร์เงิน pretty cash เบิกเงินคืน', alignment: 'left', fontSize: 16 }
-        ],
-        defaultStyle: {
-          font: 'THSarabunNew'
+        this.dataTotable[this.dataTotable2.length + 1] = {
+          No: '\n',
+          Date: '',
+          Detail: '',
+          Amount: this.dataTotable2[this.dataTotable2.length - 1].Amounts,
+          Amounts: this.dataTotable2[this.dataTotable2.length - 1].Amounts
         }
-      }
-      pdfMake.createPdf(docDefinition).open()
+        for (var u in this.dataTotable) {
+          this.dataTotable2.push(this.dataTotable[u])
+        }
+        function buildTableBody (data, columns) {
+          var body = []
+
+          body.push(columns)
+          data.forEach(function (row) {
+            var dataRow = []
+            columns.forEach(function (column) {
+              dataRow.push(row[column].toString())
+            })
+            body.push(dataRow)
+          })
+          return body
+        }
+
+        function table (data, columns) {
+          // console.log(data)
+          // console.log(columns)
+          return {
+            table: {
+              widths: [20, 50, 370, 40],
+              headerRows: 1,
+              body: buildTableBody(data, columns)
+            }
+          }
+        }
+        var docDefinition = {
+          content: [
+            { text: 'Logiprotech (Thailand) Co., Ltd.', style: 'header', alignment: 'center', fontSize: 30 },
+            { text: 'Internal Petty Cash Record\n', alignment: 'center', fontSize: 25 },
+            table(this.dataTotable2, ['No', 'Date', 'Detail', 'Amount']),
+            {
+              table: {
+                widths: [507],
+                headerRows: 1,
+                body: [[
+                  { text: '(' + this.ArabicNumberToText(this.dataTotable2[this.dataTotable2.length - 1].Amounts) + ')', alignment: 'center' }
+                ]]
+              }
+            },
+            { text: '\nขอรับรองว่าค่าใช้จ่ายดังกล่าวใช้เพื่อกิจการของบริษัท ฯ\n', alignment: 'right', fontSize: 16 },
+            { text: '.....................................\n', alignment: 'right', fontSize: 16 },
+            { text: '(นายธนัตถ์ รัตนโกสุมภ์)\n', alignment: 'right', fontSize: 16 },
+            { text: 'ผู้จัดการฝ่ายพัฒนา IT\n\n', alignment: 'right', fontSize: 16 },
+            { text: 'หมายเหตุ: เคลียร์เงิน pretty cash เบิกเงินคืน', alignment: 'left', fontSize: 16 }
+          ],
+          defaultStyle: {
+            font: 'THSarabunNew'
+          }
+        }
+        pdfMake.createPdf(docDefinition).open()
+      })
+      // function buildTableBody (data, columns) {
+      //   console.log(data)
+      //   console.log(columns)
+      //   var body = []
+
+      //   body.push(columns)
+      //   data.forEach(function (row) {
+      //     console.log(row)
+      //     var dataRow = []
+      //     columns.forEach(function (column) {
+      //       dataRow.push(row[column].toString())
+      //       console.log(row[column])
+      //     })
+      //     body.push(dataRow)
+      //     // console.log(row[column])
+      //     // var test = [
+      //     //   'date', { colSpan: 4, rowSpan: 2, text: 'test\n' }
+      //     // ]
+      //     // body.push(test)
+      //   })
+      //   return body
+      // }
+
+      // function table (data, columns) {
+      //   console.log(data)
+      //   console.log(columns)
+      //   return {
+      //     table: {
+      //       widths: ['auto', 'auto', '*', 'auto'],
+      //       headerRows: 1,
+      //       body: buildTableBody(data, columns)
+      //     }
+      //   }
+      // }
+      // var docDefinition = {
+      //   content: [
+      //     { text: 'Logiprotech (Thailand) Co., Ltd.', style: 'header', alignment: 'center', fontSize: 30 },
+      //     { text: 'Internal Petty Cash Record\n', alignment: 'center', fontSize: 25 },
+      //     table(this.dataTotable2, ['_No', 'date', 'detail', 'amount']),
+      //     {
+      //       table: {
+      //         widths: [450, 'auto', 'auto', 'auto', 'auto'],
+      //         headerRows: 1,
+      //         body: [[
+      //           { text: 'Total Net Expense', colSpan: 3 }, {}, {}, { text: 'test', colSpan: 2 }, {}
+      //         ], [
+      //           { text: 'Cash left', colSpan: 3 }, {}, {}, { text: 'test', colSpan: 2 }, {}
+      //         ], [
+      //           { text: 'sadasdasda', colSpan: 5 }, {}, {}, {}, {}
+      //         ]]
+      //       }
+      //     },
+      //     { text: '\nขอรับรองว่าค่าใช้จ่ายดังกล่าวใช้เพื่อกิจการของบริษัท ฯ\n', alignment: 'right', fontSize: 16 },
+      //     { text: '.....................................\n', alignment: 'right', fontSize: 16 },
+      //     { text: '(นายธนัตถ์ รัตนโกสุมภ์)\n', alignment: 'right', fontSize: 16 },
+      //     { text: 'ผู้จัดการฝ่ายพัฒนา IT\n\n', alignment: 'right', fontSize: 16 },
+      //     { text: 'หมายเหตุ: เคลียร์เงิน pretty cash เบิกเงินคืน', alignment: 'left', fontSize: 16 }
+      //   ],
+      //   defaultStyle: {
+      //     font: 'THSarabunNew'
+      //   }
+      // }
+      // pdfMake.createPdf(docDefinition).open()
     },
     // eslint-disable-next-line no-unused-vars
     ThaiNumberToText (Numbers) {
