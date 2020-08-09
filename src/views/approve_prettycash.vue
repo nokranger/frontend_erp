@@ -321,16 +321,17 @@ export default {
           for (var k in this.dataTotable) {
             this.dataTotable2.push(this.dataTotable[k])
           }
-        }
-        this.dataTotable[this.dataTotable2.length + 1] = {
-          No: '\n',
-          Date: '',
-          Detail: '',
-          Amount: this.dataTotable2[this.dataTotable2.length - 1].Amounts,
-          Amounts: this.dataTotable2[this.dataTotable2.length - 1].Amounts
-        }
-        for (var u in this.dataTotable) {
-          this.dataTotable2.push(this.dataTotable[u])
+        } else {
+          this.dataTotable[this.dataTotable2.length + 1] = {
+            No: '\n',
+            Date: '',
+            Detail: '',
+            Amount: this.dataTotable2[this.dataTotable2.length - 1].Amounts,
+            Amounts: this.dataTotable2[this.dataTotable2.length - 1].Amounts
+          }
+          for (var u in this.dataTotable) {
+            this.dataTotable2.push(this.dataTotable[u])
+          }
         }
         function buildTableBody (data, columns) {
           var body = []
