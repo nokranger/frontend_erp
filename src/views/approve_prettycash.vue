@@ -100,6 +100,7 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
+// import numtotext from '../assets/js/numtotext'
 // import VueJwtDecode from 'vue-jwt-decode'
 // import aa from '../img/uploads/prettycash'
 // import convertNumberToReadableThaiText from 'thai-numberic-to-readable-text'
@@ -143,7 +144,7 @@ export default {
       }, 'Request', 'Details', {
         key: 'Amount',
         sortable: true
-      }, 'Remaining', 'File', 'Approve'],
+      }, 'File', 'Approve'],
       remaining: 20000,
       filter: null,
       totalRows: 1,

@@ -8,10 +8,11 @@ import Approve from '../views/approvePage.vue'
 import Approveleave from '../views/approve_leave.vue'
 import ApproveTransportation from '../views/approve_transportation.vue'
 import ApprovePrettycash from '../views/approve_prettycash.vue'
-import Printpdf from '../components/printpdf.vue'
+// import Printpdf from '../components/printpdf.vue'
 import LeaveReport from '../views/leave_report.vue'
 import TransportationReport from '../views/transportation_report.vue'
 import PettyCash from '../views/petty_cash.vue'
+import Profile from '../views/profile.vue'
 // import aaa from '../../lptt_erp/public/uploads/prettycash'
 
 import Meta from 'vue-meta'
@@ -89,9 +90,9 @@ const routes = [
     component: PettyCash
   },
   {
-    path: '/print/:id',
-    name: 'printpdf',
-    component: Printpdf
+    path: '/profile',
+    name: 'profile',
+    component: Profile
   },
   {
     path: '*',
