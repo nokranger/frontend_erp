@@ -1,20 +1,39 @@
 <template>
   <div>
-    profile
-    {{profile}}
+    Profile
+    <!-- {{profile}} -->
     <div v-for="(profiles, index) in profile" :key="index">
-      <p>ID: {{profiles.employee_id}}</p>
-      <p>Name: {{profiles.employee_name}}</p>
-      <p>Lastname: {{profiles.employee_lastname}}</p>
-      <p>Job: {{profiles.job_name}}</p>
-      <p>Email: {{profiles.employee_email}}</p>
-      <p>Tel. {{profiles.employee_tel}}</p>
-      <div style="width:50%">
-        <p>Start: <b-input ref="start_date" type="date" :value="profiles.start_date" /></p>
-      </div>
-      <p>Sick Leave: {{profiles.leave_sick}}</p>
-      <p>Personal Leave: {{profiles.leave_activity}}</p>
-      <p>Vacation Leave: {{profiles.leave_vacation}}</p>
+      <b-container>
+        <br>
+        <b-row>
+          <b-col cols="9">
+            <div style="display: flex;flex-direction: row;">
+              <div style="margin:5px">ID: <input type="text" v-model="profiles.employee_id" readonly></div>
+              <div style="margin:5px">Name: <input type="text" v-model="profiles.employee_name"></div>
+              <div style="margin:5px">Lastname: <input type="text" v-model="profiles.employee_lastname"></div>
+            </div>
+            <div style="display: flex;flex-direction: row;">
+              <div style="margin:5px">Job: <input type="text" v-model="profiles.job_name"></div>
+            </div>
+            <div class="align-left">
+              <div class="align-center">Address</div>
+              <div style="display: flex;flex-direction: row;">
+                <div style="margin:5px">Tel. <input type="text" v-model="profiles.employee_tel"></div>
+                <div style="margin:5px">Email: <input type="text" v-model="profiles.employee_email"></div>
+              </div>
+            </div>
+          </b-col>
+          <b-col cols="3">
+            <img style="width:170px;hieght:200px;border-radius:8px;" :src="require('../img/uploads/prettycash/LPTTPRETTYCASH-1596221571971.png')" alt="">
+          </b-col>
+        </b-row>
+                    <div style="display: flex;flex-direction: row;">
+              <div style="margin:5px">Start: <input ref="start_date" type="date" :value="profiles.start_date" /></div>
+                            <div style="margin:5px">Sick Leave: <input type="text" v-model="profiles.leave_sick"></div>
+              <div style="margin:5px">Personal Leave: <input type="text" v-model="profiles.leave_activity"></div>
+              <!-- <p>Vacation Leave: <input type="text" v-model="profiles.leave_vacation"></p> -->
+            </div>
+      </b-container>
     </div>
   </div>
 </template>
@@ -45,5 +64,14 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
+.align-left {
+  text-align: left;
+}
+.align-right {
+  text-align: right;
+}
+.align-center {
+  text-align: center;
+}
 </style>

@@ -8,7 +8,7 @@
       <!-- <a class="align-left" href="/transreport"><i class="fas fa-file-alt"></i> Transportation record</a>
       <a class="align-left" href="/pettycash"><i class="fas fa-file-alt"></i> Pettycash record</a> -->
       <a class="align-left" href="/approve"><i class="fas fa-calendar-check"></i> Approve</a>
-      <a class="align-left" href="/approve"><i class="fas fa-id-card"></i> Profile</a>
+      <a class="align-left" href="/profile"><i class="fas fa-id-card"></i> Profile</a>
       <a v-if="permission === 0" class="align-left" href="/signup"><i class="fas fa-sign-in-alt"></i> Sign up</a>
       <a class="align-left" href="#" v-on:click="logOut"><i class="fas fa-sign-out-alt"></i> Log out</a>
 
