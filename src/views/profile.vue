@@ -1,5 +1,8 @@
 <template>
-  <div>
+<div v-if="localjwt == 0">
+  <app-account></app-account>
+</div>
+  <div v-else-if="localjwt == 1">
     <div>
       <h1>Profile</h1>
     </div>
@@ -49,9 +52,14 @@
 </template>
 <script>
 import axios from 'axios'
+import account from '../components/profile_admin'
 export default {
+  components: {
+    'app-account': account
+  },
   data () {
     return {
+      localjwt: '',
       data: [],
       profile: [],
       updateprofile: []
@@ -59,6 +67,10 @@ export default {
   },
   beforeCreate () {},
   created () {
+    this.localjwt = JSON.parse(localStorage.getItem('role'))
+    if (this.localjwt === '0') {
+      console.log('local', (this.localjwt))
+    }
     this.data = {
       employee_id: JSON.parse(localStorage.getItem('username'))
     }
