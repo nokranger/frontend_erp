@@ -69,7 +69,6 @@
             <template v-slot:cell(File)="data">
               <p style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" v-b-modal="'modal-pic-cash' + data.item.Id">{{data.item.File}}</p>
                 <b-modal :id="'modal-pic-cash' + data.item.Id" :title="data.item.File" size="xl" hide-footer>
-                  <!-- <img :src="data.item.File" alt=""> -->
                   <b-container>
                     <b-row>
                       <b-col></b-col>
@@ -79,7 +78,6 @@
                       <b-col></b-col>
                     </b-row>
                   </b-container>
-                  <!-- <img src="../../lptt_erp/public/uploads/prettycash/LPTTPRETTYCASH-1596138818902.png" alt=""> -->
                 </b-modal>
             </template>
             <template v-slot:cell(Approve)="data" v-if="localjwt === '0'">
@@ -100,10 +98,6 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
-// import numtotext from '../assets/js/numtotext'
-// import VueJwtDecode from 'vue-jwt-decode'
-// import aa from '../img/uploads/prettycash'
-// import convertNumberToReadableThaiText from 'thai-numberic-to-readable-text'
 import pdfMake from 'pdfmake/build/pdfmake'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
 pdfMake.vfs = pdfFonts.pdfMake.vfs
@@ -169,9 +163,6 @@ export default {
 
   },
   mounted () {
-    // const { convertNumberToReadableThaiText } = require('thai-numberic-to-readable-text')
-    // const result = convertNumberToReadableThaiText(121)
-    // console.log(result)
     console.log('appid', this.appId)
     console.log(this.ArabicNumberToText(1001.23))
   },
@@ -202,7 +193,6 @@ export default {
         })
     },
     Papprove (index) {
-      // console.log('test')
       this.approve = {
         id: this.event[index].Id,
         status: 1,
@@ -272,20 +262,6 @@ export default {
 
         ]
       }
-      // var docDefinition = {
-      //   content: [
-      //     {
-      //       text: 'สวัสดี', fontSize: 50
-      //     }
-      //   ],
-      //   defaultStyle: {
-      //     font: 'THSarabunNew'
-      //   }
-      // }
-      // const today = new Date()
-      // const date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear()
-      // console.log(date)
-      // pdfMake.createPdf(docDefinition).download('Prettycash' + '_' + date + '.pdf')
       pdfMake.createPdf(docDefinition).open()
     },
     pdfPreview () {
@@ -385,69 +361,6 @@ export default {
         }
         pdfMake.createPdf(docDefinition).open()
       })
-      // function buildTableBody (data, columns) {
-      //   console.log(data)
-      //   console.log(columns)
-      //   var body = []
-
-      //   body.push(columns)
-      //   data.forEach(function (row) {
-      //     console.log(row)
-      //     var dataRow = []
-      //     columns.forEach(function (column) {
-      //       dataRow.push(row[column].toString())
-      //       console.log(row[column])
-      //     })
-      //     body.push(dataRow)
-      //     // console.log(row[column])
-      //     // var test = [
-      //     //   'date', { colSpan: 4, rowSpan: 2, text: 'test\n' }
-      //     // ]
-      //     // body.push(test)
-      //   })
-      //   return body
-      // }
-
-      // function table (data, columns) {
-      //   console.log(data)
-      //   console.log(columns)
-      //   return {
-      //     table: {
-      //       widths: ['auto', 'auto', '*', 'auto'],
-      //       headerRows: 1,
-      //       body: buildTableBody(data, columns)
-      //     }
-      //   }
-      // }
-      // var docDefinition = {
-      //   content: [
-      //     { text: 'Logiprotech (Thailand) Co., Ltd.', style: 'header', alignment: 'center', fontSize: 30 },
-      //     { text: 'Internal Petty Cash Record\n', alignment: 'center', fontSize: 25 },
-      //     table(this.dataTotable2, ['_No', 'date', 'detail', 'amount']),
-      //     {
-      //       table: {
-      //         widths: [450, 'auto', 'auto', 'auto', 'auto'],
-      //         headerRows: 1,
-      //         body: [[
-      //           { text: 'Total Net Expense', colSpan: 3 }, {}, {}, { text: 'test', colSpan: 2 }, {}
-      //         ], [
-      //           { text: 'Cash left', colSpan: 3 }, {}, {}, { text: 'test', colSpan: 2 }, {}
-      //         ], [
-      //           { text: 'sadasdasda', colSpan: 5 }, {}, {}, {}, {}
-      //         ]]
-      //       }
-      //     },
-      //     { text: '\nขอรับรองว่าค่าใช้จ่ายดังกล่าวใช้เพื่อกิจการของบริษัท ฯ\n', alignment: 'right', fontSize: 16 },
-      //     { text: '.....................................\n', alignment: 'right', fontSize: 16 },
-      //     { text: '(นายธนัตถ์ รัตนโกสุมภ์)\n', alignment: 'right', fontSize: 16 },
-      //     { text: 'ผู้จัดการฝ่ายพัฒนา IT\n\n', alignment: 'right', fontSize: 16 },
-      //     { text: 'หมายเหตุ: เคลียร์เงิน pretty cash เบิกเงินคืน', alignment: 'left', fontSize: 16 }
-      //   ],
-      //   defaultStyle: {
-      //     font: 'THSarabunNew'
-      //   }
-      // }
-      // pdfMake.createPdf(docDefinition).open()
     },
     // eslint-disable-next-line no-unused-vars
     ThaiNumberToText (Numbers) {

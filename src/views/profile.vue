@@ -70,14 +70,15 @@ export default {
     this.localjwt = JSON.parse(localStorage.getItem('role'))
     if (this.localjwt === '0') {
       console.log('local', (this.localjwt))
+    } else if (this.localjwt === '1') {
+      this.data = {
+        employee_id: JSON.parse(localStorage.getItem('username'))
+      }
+      console.log('username', this.data.employee_id)
+      axios.post('http://localhost:4000/emp/settingprofile', this.data).then(response => {
+        this.profile = response.data.result
+      })
     }
-    this.data = {
-      employee_id: JSON.parse(localStorage.getItem('username'))
-    }
-    console.log('username', this.data.employee_id)
-    axios.post('http://localhost:4000/emp/settingprofile', this.data).then(response => {
-      this.profile = response.data.result
-    })
   },
   beforeUpdate () {},
   updated () {},
