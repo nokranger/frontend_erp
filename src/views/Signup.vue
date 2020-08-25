@@ -85,7 +85,7 @@
     </b-container>
     <br>
     <div>
-    <b-button variant="outline-primary" type="submit" v-on:click="send ()">Signup</b-button>
+    <b-button variant="primary" type="submit" v-on:click="send ()">Signup</b-button>
     </div>
     </b-container>
   </div>
