@@ -14,7 +14,7 @@
               <div class="card-body">
                 <!-- <h5 class="card-title"><i class="fa fa-location-arrow" aria-hidden="true"></i> {{titleOA}}</h5> -->
                 <!-- <p class="card-text">{{detailOA}}</p><br> -->
-                <h5>Recently Activity</h5>
+                <h5>Recently Leave</h5>
                 <p>ลากิจ - อนุสรณ์ - ยังไม่อนุมัติ</p>
                 <div class="align-right">
                   <!-- <button class="button"><a class="linkmap" target="_blank" v-bind:href="linkOA"><img style="width:50px;height:50px;" src="https://i.imgur.com/JKjVDrz.png" alt="map ckb"></a></button> -->

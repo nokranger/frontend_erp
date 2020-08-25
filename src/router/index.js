@@ -13,6 +13,8 @@ import LeaveReport from '../views/leave_report.vue'
 import TransportationReport from '../views/transportation_report.vue'
 import PettyCash from '../views/petty_cash.vue'
 import Profile from '../views/profile.vue'
+import MenuRecord from '../views/menu_record.vue'
+import MenuApprove from '../views/menu_Approve.vue'
 // import aaa from '../../lptt_erp/public/uploads/prettycash'
 
 import Meta from 'vue-meta'
@@ -93,6 +95,16 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: Profile
+  },
+  {
+    path: '/menurecord',
+    name: 'menurecord',
+    component: MenuRecord
+  },
+  {
+    path: '/menuapprove',
+    name: 'menuapprove',
+    component: MenuApprove
   },
   {
     path: '*',
