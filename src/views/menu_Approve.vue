@@ -1,6 +1,6 @@
 <template>
   <div>
-    menu
+    <h1>Approve</h1>
     <b-container fluid="xl">
       <br>
       <b-container>
@@ -12,7 +12,7 @@
               <div class="card-body">
                 <!-- <h5 class="card-title"><i class="fa fa-location-arrow" aria-hidden="true"></i> {{titleOA}}</h5> -->
                 <!-- <p class="card-text">{{detailOA}}</p><br> -->
-                <h5>Leave</h5>
+                <a href="/approveleave"><h5>Leave</h5></a>
                 <!-- <p>ลากิจ - อนุสรณ์ - ยังไม่อนุมัติ</p> -->
                 <div class="align-right">
                   <!-- <button class="button"><a class="linkmap" target="_blank" v-bind:href="linkOA"><img style="width:50px;height:50px;" src="https://i.imgur.com/JKjVDrz.png" alt="map ckb"></a></button> -->
@@ -27,7 +27,7 @@
               <div class="card-body">
                 <!-- <h5 class="card-title"><i class="fa fa-location-arrow" aria-hidden="true"></i> {{titleOA}}</h5> -->
                 <!-- <p class="card-text">{{detailOA}}</p><br> -->
-                <h5>Transportation</h5>
+                <a href="/approvetrans"><h5>Transportation</h5></a>
                 <!-- <p>ลากิจ - อนุสรณ์ - ยังไม่อนุมัติ</p> -->
                 <div class="align-right">
                   <!-- <button class="button"><a class="linkmap" target="_blank" v-bind:href="linkOA"><img style="width:50px;height:50px;" src="https://i.imgur.com/JKjVDrz.png" alt="map ckb"></a></button> -->
@@ -42,7 +42,7 @@
               <div class="card-body">
                 <!-- <h5 class="card-title"><i class="fa fa-location-arrow" aria-hidden="true"></i> {{titleOA}}</h5> -->
                 <!-- <p class="card-text">{{detailOA}}</p><br> -->
-                <h5>Pretty cash</h5>
+                <a href="/approvepettycash"><h5>Petty cash</h5></a>
                 <!-- <p>ลากิจ - อนุสรณ์ - ยังไม่อนุมัติ</p> -->
                 <div class="align-right">
                   <!-- <button class="button"><a class="linkmap" target="_blank" v-bind:href="linkOA"><img style="width:50px;height:50px;" src="https://i.imgur.com/JKjVDrz.png" alt="map ckb"></a></button> -->

@@ -353,7 +353,7 @@ export default {
             { text: '.....................................\n', alignment: 'right', fontSize: 16 },
             { text: '(นายธนัตถ์ รัตนโกสุมภ์)\n', alignment: 'right', fontSize: 16 },
             { text: 'ผู้จัดการฝ่ายพัฒนา IT\n\n', alignment: 'right', fontSize: 16 },
-            { text: 'หมายเหตุ: เคลียร์เงิน pretty cash เบิกเงินคืน', alignment: 'left', fontSize: 16 }
+            { text: 'หมายเหตุ: เคลียร์เงิน petty cash เบิกเงินคืน', alignment: 'left', fontSize: 16 }
           ],
           defaultStyle: {
             font: 'THSarabunNew'

@@ -7,7 +7,7 @@ import Dashboard from '../views/dashboard.vue'
 import Approve from '../views/approvePage.vue'
 import Approveleave from '../views/approve_leave.vue'
 import ApproveTransportation from '../views/approve_transportation.vue'
-import ApprovePrettycash from '../views/approve_prettycash.vue'
+import ApprovePettycash from '../views/approve_prettycash.vue'
 // import Printpdf from '../components/printpdf.vue'
 import LeaveReport from '../views/leave_report.vue'
 import TransportationReport from '../views/transportation_report.vue'
@@ -72,9 +72,9 @@ const routes = [
     component: ApproveTransportation
   },
   {
-    path: '/approveprettycash',
-    name: 'approve_prettycash',
-    component: ApprovePrettycash
+    path: '/approvepettycash',
+    name: 'approve_pettycash',
+    component: ApprovePettycash
   },
   {
     path: '/leavereport',
