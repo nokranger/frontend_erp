@@ -42,12 +42,13 @@
                   <b-row>
                     <br>
                     <b-col>
-                      <div>Change Role and Password </div>
+                      <div>Change Password </div>
+                      <p style="color:red">{{checkpassword}}</p>
                       <div style="display: flex;flex-direction: row;" class="align-left">
-                        <div class="input-m">Old password<b-input type="password"></b-input></div>
-                        <div class="input-m">New password<b-input type="password"></b-input></div>
-                        <div class="input-m">Role<b-input type="text"></b-input></div>
-                        <div class="input-m"><br><b-button variant="success">Change password or Role</b-button></div>
+                        <div class="input-m">New password<b-input :ref="'password' + data.item.id" type="password" v-model="user.password"></b-input></div>
+                        <div class="input-m">Confirm password<b-input :ref="'cpassword' + data.item.id" type="password" v-model="user.cpassword"></b-input></div>
+                        <div class="input-m">Role<b-input :ref="'role' + data.item.id" type="text" v-model="data.item.role" readonly=""></b-input></div>
+                        <div class="input-m"><br><b-button variant="success" v-on:click="updatePassword ('password' + data.item.id, 'cpassword' + data.item.id, 'role' + data.item.id)">Change password</b-button></div>
                       </div>
                     </b-col>
                   </b-row>
@@ -78,7 +79,10 @@ export default {
       }, {
         key: 'role'
       }],
-      data: []
+      data: [],
+      updateProfile: [],
+      user: [],
+      updateuser: []
     }
   },
   beforeCreate () {},
@@ -104,6 +108,37 @@ export default {
         }
       })
     })
+  },
+  beforeUpdate () {},
+  updated () {},
+  mounted () {},
+  methods: {
+    updatePassword (password, cpassword, role) {
+      console.log(this.$refs[password].localValue, this.$refs[cpassword].localValue, this.$refs[role].localValue)
+      this.updateuser = {
+        approve_id: JSON.parse(localStorage.getItem('username')),
+        password: this.$refs[password].localValue,
+        cpassword: this.$refs[cpassword].localValue,
+        role: this.$refs.role
+      }
+      axios.patch('http://127.0.0.1:4000/emp/adminupdatepassword', this.updateuser).then(response => {
+        console.log(response)
+        this.$refs.table.refresh()
+        this.$refs[password].localValue = ''
+        this.$refs[cpassword].localValue = ''
+      })
+    }
+  },
+  computed: {
+    checkpassword () {
+      if (this.user.cpassword !== this.user.password) {
+        console.log('not same')
+        return '** Passwords not match.'
+      } else if (this.user.cpassword === this.user.password) {
+        return ''
+      }
+      return ''
+    }
   }
 }
 </script>
