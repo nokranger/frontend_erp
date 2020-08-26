@@ -14,16 +14,16 @@
                     <b-col>
                       <div>Personal Infomation</div>
                       <div style="display: flex;flex-direction: row;" class="align-left">
-                        <div class="input-m">ID <b-input type="text" v-model="data.item.id" readonly></b-input></div>
-                        <div class="input-m">Name<b-input type="text" v-model="data.item.name"></b-input></div>
-                        <div class="input-m">Lastname<b-input type="text" v-model="data.item.last_name"></b-input></div>
-                        <div class="input-m">Job<b-input type="text" v-model="data.item.job_name" readonly=""></b-input></div>
+                        <div class="input-m">ID <b-input :ref="'id' + data.item.id" type="text" v-model="data.item.id" readonly></b-input></div>
+                        <div class="input-m">Name<b-input :ref="'name' + data.item.id" type="text" v-model="data.item.name"></b-input></div>
+                        <div class="input-m">Lastname<b-input :ref="'lastname' + data.item.id" type="text" v-model="data.item.last_name"></b-input></div>
+                        <div class="input-m">Job<b-input :ref="'job' + data.item.id" type="text" v-model="data.item.job_name" readonly=""></b-input></div>
                       </div>
                       <div>
                         <div>Address</div>
                         <div style="display: flex;flex-direction: row;">
-                          <div class="input-m">Tel.<b-input type="text" v-model="data.item.tel"></b-input></div>
-                          <div class="input-m">Email<b-input type="text" v-model="data.item.email"></b-input></div>
+                          <div class="input-m">Tel.<b-input :ref="'tel' + data.item.id" type="text" v-model="data.item.tel"></b-input></div>
+                          <div class="input-m">Email<b-input :ref="'email' + data.item.id" type="text" v-model="data.item.email"></b-input></div>
                         </div>
                       </div>
                     </b-col>
@@ -48,7 +48,7 @@
                         <div class="input-m">New password<b-input :ref="'password' + data.item.id" type="password" v-model="user.password"></b-input></div>
                         <div class="input-m">Confirm password<b-input :ref="'cpassword' + data.item.id" type="password" v-model="user.cpassword"></b-input></div>
                         <div class="input-m">Role<b-input :ref="'role' + data.item.id" type="text" v-model="data.item.role" readonly=""></b-input></div>
-                        <div class="input-m"><br><b-button variant="success" v-on:click="updatePassword ('password' + data.item.id, 'cpassword' + data.item.id, 'role' + data.item.id)">Change password</b-button></div>
+                        <div class="input-m"><br><b-button variant="success" v-on:click="changePassword ('id' + data.item.id, 'password' + data.item.id, 'cpassword' + data.item.id, 'role' + data.item.id)">Change password</b-button></div>
                       </div>
                     </b-col>
                   </b-row>
@@ -113,10 +113,11 @@ export default {
   updated () {},
   mounted () {},
   methods: {
-    updatePassword (password, cpassword, role) {
+    changePassword (id, password, cpassword, role) {
       console.log(this.$refs[password].localValue, this.$refs[cpassword].localValue, this.$refs[role].localValue)
       this.updateuser = {
         approve_id: JSON.parse(localStorage.getItem('username')),
+        id: this.$refs[id].localValue,
         password: this.$refs[password].localValue,
         cpassword: this.$refs[cpassword].localValue,
         role: this.$refs.role
