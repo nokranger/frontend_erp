@@ -63,6 +63,7 @@
 </template>
 <script>
 import axios from 'axios'
+import md5 from 'md5'
 export default {
   data () {
     return {
@@ -118,12 +119,26 @@ export default {
       this.updateuser = {
         approve_id: JSON.parse(localStorage.getItem('username')),
         id: this.$refs[id].localValue,
-        password: this.$refs[password].localValue,
-        cpassword: this.$refs[cpassword].localValue,
-        role: this.$refs.role
+        password: md5(this.$refs[password].localValue),
+        role: this.$refs[role].localValue
       }
-      axios.patch('http://127.0.0.1:4000/emp/adminupdatepassword', this.updateuser).then(response => {
+      axios.patch('http://127.0.0.1:4000/emp/adminchangepassword', this.updateuser).then(response => {
         console.log(response)
+        this.profiles = response.data.result.map((data, i) => {
+          return {
+            id: data.employee_id,
+            name: data.employee_name,
+            last_name: data.employee_lastname,
+            role: data.permission,
+            email: data.employee_email,
+            tel: data.employee_tel,
+            start_date: data.start_date,
+            leave_sick: data.leave_sick,
+            annual_leave: data.leave_vacation,
+            pic: data.employee_pic,
+            job_name: data.job_name
+          }
+        })
         this.$refs.table.refresh()
         this.$refs[password].localValue = ''
         this.$refs[cpassword].localValue = ''
