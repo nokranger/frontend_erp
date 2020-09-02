@@ -15,7 +15,10 @@
                 <!-- <h5 class="card-title"><i class="fa fa-location-arrow" aria-hidden="true"></i> {{titleOA}}</h5> -->
                 <!-- <p class="card-text">{{detailOA}}</p><br> -->
                 <h5>Recently Leave</h5>
-                <p>ลากิจ - อนุสรณ์ - ยังไม่อนุมัติ</p>
+                <div v-for="(leaves, index) in leave" :key="index">
+                    <a href="/approveleave"><p v-if="leaves.status == 0">{{leaves.reason_for_leave}} - {{leaves.employee_name}} - ยังไม่อนุมัติ</p></a>
+                    <a href="/approveleave"><p v-if="leaves.status == 1">{{leaves.reason_for_leave}} - {{leaves.employee_name}} - อนุมัติแล้ว</p></a>
+                </div>
                 <div class="align-right">
                   <!-- <button class="button"><a class="linkmap" target="_blank" v-bind:href="linkOA"><img style="width:50px;height:50px;" src="https://i.imgur.com/JKjVDrz.png" alt="map ckb"></a></button> -->
                 </div>
@@ -30,7 +33,10 @@
                 <!-- <h5 class="card-title"><i class="fa fa-location-arrow" aria-hidden="true"></i> {{titleOA}}</h5> -->
                 <!-- <p class="card-text">{{detailOA}}</p><br> -->
                 <h5>Recently Transportation</h5>
-                <p>LPTT to Benz - อนุสรณ์ - ยังไม่อนุมัติ</p>
+                <div v-for="(transs, index) in trans" :key="index">
+                  <a href="/approvetrans"><p v-if="transs.trans_status == 0">{{transs.trans_from}} to {{transs.trans_to}} - {{transs.employee_name}} - ยังไม่อนุมัติ</p></a>
+                  <a href="/approvetrans"><p v-if="transs.trans_status == 1">{{transs.trans_from}} to {{transs.trans_to}} - {{transs.employee_name}} - ยังไม่อนุมัติ</p></a>
+                </div>
                 <div class="align-right">
                   <!-- <button class="button"><a class="linkmap" target="_blank" v-bind:href="linkOA"><img style="width:50px;height:50px;" src="https://i.imgur.com/JKjVDrz.png" alt="map ckb"></a></button> -->
                 </div>
@@ -45,7 +51,9 @@
                 <!-- <h5 class="card-title"><i class="fa fa-location-arrow" aria-hidden="true"></i> {{titleOA}}</h5> -->
                 <!-- <p class="card-text">{{detailOA}}</p><br> -->
                 <h5>Recently Employee</h5>
-                <p>อนุสรณ์ - Programer</p>
+                <div v-for="(employees, index) in employee" :key="index">
+                  <a href="/profile"><p>{{employees.employee_name}} - {{employees.job_name}}</p></a>
+                </div>
                 <div class="align-right">
                   <!-- <button class="button"><a class="linkmap" target="_blank" v-bind:href="linkOA"><img style="width:50px;height:50px;" src="https://i.imgur.com/JKjVDrz.png" alt="map ckb"></a></button> -->
                 </div>
@@ -63,23 +71,6 @@
           <b-col>
             Most Station
             <canvas style="width:100%;height:auto;" id="my-chartpie"></canvas>
-            <!-- <div>
-              <b-card
-                title="Card Title"
-                img-src="https://picsum.photos/600/300/?image=25"
-                img-alt="Image"
-                img-top
-                tag="article"
-                style="max-width: 20rem;"
-                class="mb-2"
-              >
-                <b-card-text>
-                  Some quick example text to build on the card title and make up the bulk of the card's content.
-                </b-card-text>
-
-                <b-button href="#" variant="primary">Go somewhere</b-button>
-              </b-card>
-            </div> -->
           </b-col>
         </b-row>
       </b-container>
@@ -96,10 +87,10 @@ export default {
       lpttcolor: 'white',
       isTrue: true,
       symbols: '&#9776;',
-      employee_id: [],
       aa: ['a', 'b', 'c', 'd'],
-      event: [],
-      approve: []
+      employee: [],
+      trans: [],
+      leave: []
     }
   },
   metaInfo () {
@@ -114,35 +105,27 @@ export default {
     var localjwt = localStorage.getItem('jwt')
     // console.log(localjwt)
     if (localjwt !== null) {
-      axios.all([axios.get('http://127.0.0.1:4000/emp/get-last-emp'), axios.get('http://127.0.0.1:4000/leavear/get-all-la_report'), axios.get('http://127.0.0.1:4000/trans/get-last-trans')]).then(axios.spread((resemp, reslar, restrans) => {
-      // const vm = this
-        this.employee_id = resemp.data.result.map((data, i) => {
-          return {
-            id: data.employee_id
-          }
-        })
+      axios.all([axios.get('http://127.0.0.1:4000/emp/get-last-emp'), axios.get('http://127.0.0.1:4000/leavear/get-last-record'), axios.get('http://127.0.0.1:4000/trans/get-last-trans')]).then(axios.spread((resulte, resultl, resultt) => {
+        // const vm = this
+        this.employee = resulte.data.result
         // vm.getData(res)
-        this.event = reslar.data.result.map((data, i) => {
-          return {
-            id: data.reason_for_leave
-          }
-        })
-        this.approve = restrans.data.result.map((data, i) => {
-          return {
-            id: data.approve_id
-          }
-        })
+        this.leave = resultl.data.result
+        // .map((data, i) => {
+        //   return {
+        //     reason: data.reason_for_leave,
+        //     name: data.employee_name,
+        //     status: data.status.reduce((one, two) => {
+        //       return one.status === 0 ? 'ยังไม่อนุมัติ' : 'อนุมัติแล้ว'
+        //     })
+        //   }
+        // })
+        this.trans = resultt.data.result
       })).catch(e => {
         this.error.push(e)
       })
     } else {
       location.replace('/')
     }
-    // if (localStorage.getItem('jwt') !== null) {
-    //   // console.log(localStorage.getItem('jwt'))
-    // } else {
-    //   console.log(localStorage.getItem('jwt'))
-    // }
   },
   created () {
     // console.log('test')
@@ -154,20 +137,20 @@ export default {
     // console.log(localStorage.getItem('iat'))
     // console.log(parseInt(localStorage.getItem('iat'), 10) + 600000)
     setInterval(this.checkExpire, 150000)
-    // axios.all([axios.get('http://127.0.0.1:4000/emp/get-last-emp'), axios.get('http://127.0.0.1:4000/leavear/get-all-la_report'), axios.get('http://127.0.0.1:4000/trans/get-last-trans')]).then(axios.spread((resemp, reslar, restrans) => {
+    // axios.all([axios.get('http://127.0.0.1:4000/emp/get-last-emp'), axios.get('http://127.0.0.1:4000/leavear/get-last-record'), axios.get('http://127.0.0.1:4000/trans/get-last-trans')]).then(axios.spread((result_e, result_l, result_t) => {
     //   // const vm = this
-    //   this.employee_id = resemp.data.result.map((data, i) => {
+    //   this.employee_id = result_e.data.result.map((data, i) => {
     //     return {
     //       id: data.employee_id
     //     }
     //   })
     //   // vm.getData(res)
-    //   this.event = reslar.data.result.map((data, i) => {
+    //   this.event = result_l.data.result.map((data, i) => {
     //     return {
     //       id: data.reason_for_leave
     //     }
     //   })
-    //   this.approve = restrans.data.result.map((data, i) => {
+    //   this.approve = result_t.data.result.map((data, i) => {
     //     return {
     //       id: data.approve_id
     //     }
