@@ -90,7 +90,8 @@ export default {
       aa: ['a', 'b', 'c', 'd'],
       employee: [],
       trans: [],
-      leave: []
+      leave: [],
+      test: []
     }
   },
   metaInfo () {
@@ -134,6 +135,12 @@ export default {
   updated () {
   },
   mounted () {
+    // var test = 'test'
+    axios.get('http://127.0.0.1:4000/trans/getstation').then(response => {
+      console.log(response)
+      this.test = response.data.result
+      console.log('res', this.test)
+    })
     // console.log(localStorage.getItem('iat'))
     // console.log(parseInt(localStorage.getItem('iat'), 10) + 600000)
     setInterval(this.checkExpire, 150000)
