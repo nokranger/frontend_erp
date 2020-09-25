@@ -127,6 +127,11 @@ export default {
     } else {
       location.replace('/')
     }
+    // axios.get('http://127.0.0.1:4000/trans/getstation').then(response => {
+    //   console.log(response)
+    //   this.test = response.data.result[0]._trans_to_benz
+    //   console.log('res', this.test)
+    // })
   },
   created () {
     // console.log('test')
@@ -138,7 +143,9 @@ export default {
     // var test = 'test'
     axios.get('http://127.0.0.1:4000/trans/getstation').then(response => {
       console.log(response)
-      this.test = response.data.result
+      this.test = response.data.result[0]._trans_to_benz
+      var tests = this.test
+      this.pie(tests)
       console.log('res', this.test)
     })
     // console.log(localStorage.getItem('iat'))
@@ -166,7 +173,7 @@ export default {
     //   this.error.push(e)
     // })
     // console.log(this.info.length)
-    this.pie()
+    // this.pie(tests)
     this.line()
   },
   methods: {
@@ -192,7 +199,8 @@ export default {
         console.log('not expire')
       }
     },
-    pie () {
+    pie (tests) {
+      console.log('pie', tests)
       var ctx = document.getElementById('my-chartpie')
       Chart = new Chart(ctx, {
         type: 'pie',
@@ -200,7 +208,7 @@ export default {
           labels: ['Benz', 'Toyota', 'LPTT'],
           datasets: [{
             label: 'Page A',
-            data: [10, 15, 30],
+            data: [tests, 2, 3],
             backgroundColor: ['#3e95cd', '#8e5ea2', '#3cba9f', '#e8c3b9']
           }]
         },
