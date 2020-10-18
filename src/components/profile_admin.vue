@@ -48,7 +48,27 @@
                         <div class="input-m">New password<b-input :ref="'password' + data.item.id" type="password" v-model="user.password"></b-input></div>
                         <div class="input-m">Confirm password<b-input :ref="'cpassword' + data.item.id" type="password" v-model="user.cpassword"></b-input></div>
                         <div class="input-m">Role<b-input :ref="'role' + data.item.id" type="text" v-model="data.item.role" readonly=""></b-input></div>
-                        <div class="input-m"><br><b-button variant="success" v-on:click="changePassword ('id' + data.item.id, 'password' + data.item.id, 'cpassword' + data.item.id, 'role' + data.item.id)">Change password</b-button></div>
+                        <div class="input-m"><br><b-button variant="success" @click="show=true">Change password</b-button></div>
+                          <b-modal v-model="show" size="sm" hide-footer>
+                            <p class="my-4">Do you want to change password</p>
+                            <b-row>
+                              <b-col>
+                                <b-button variant="danger" size="sm" v-on:click="changePassword ('id' + data.item.id, 'password' + data.item.id, 'cpassword' + data.item.id, 'role' + data.item.id)" @click="show=false">Yes</b-button>
+                              </b-col>
+                              <b-col>
+                              </b-col>
+                              <b-col>
+                                <b-button
+                                  variant="primary"
+                                  size="sm"
+                                  class="float-right"
+                                  @click="show=false"
+                                >
+                                  Close
+                                </b-button>
+                              </b-col>
+                            </b-row>
+                          </b-modal>
                       </div>
                     </b-col>
                   </b-row>
@@ -67,6 +87,7 @@ import md5 from 'md5'
 export default {
   data () {
     return {
+      show: false,
       profile: [],
       profiles: [],
       fields: [{

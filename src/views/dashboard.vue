@@ -91,7 +91,9 @@ export default {
       employee: [],
       trans: [],
       leave: [],
-      test: []
+      benz: [],
+      toyota: [],
+      lptt: []
     }
   },
   metaInfo () {
@@ -143,9 +145,8 @@ export default {
     // var test = 'test'
     axios.get('http://127.0.0.1:4000/trans/getstation').then(response => {
       console.log(response)
-      this.test = response.data.result[0]._trans_to_benz
-      var tests = this.test
-      this.pie(tests)
+      this.benz = response.data.result[0]._trans_to_benz
+      this.pie(this.benz)
       console.log('res', this.test)
     })
     // console.log(localStorage.getItem('iat'))
@@ -199,8 +200,8 @@ export default {
         console.log('not expire')
       }
     },
-    pie (tests) {
-      console.log('pie', tests)
+    pie (benz) {
+      console.log('pie', benz)
       var ctx = document.getElementById('my-chartpie')
       Chart = new Chart(ctx, {
         type: 'pie',
@@ -208,7 +209,7 @@ export default {
           labels: ['Benz', 'Toyota', 'LPTT'],
           datasets: [{
             label: 'Page A',
-            data: [tests, 2, 3],
+            data: [benz, 2, 3],
             backgroundColor: ['#3e95cd', '#8e5ea2', '#3cba9f', '#e8c3b9']
           }]
         },
