@@ -1,6 +1,6 @@
 <template>
   <div>
-    Account Setting
+    <h1>Account Setting</h1>
     <div>
       <b-container>
         <b-table ref="table" :items="profiles" :fields="fields" class="mt-3" responsive="sm" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
@@ -34,7 +34,27 @@
                       <div class="input-m">Start<b-input ref="start_date" type="date" :value="data.item.start_date" readonly></b-input></div>
                       <div class="input-m">Sick Leave<b-input type="text" v-model="data.item.leave_sick" readonly></b-input></div>
                       <div class="input-m">Personal Leave<b-input type="text" v-model="data.item.annual_leave" readonly></b-input></div>
-                      <div class="input-m"><br><b-button variant="success">Update Profile</b-button></div>
+                      <div class="input-m"><br><b-button variant="success" @click="showP=true">Update Profile</b-button></div>
+                          <b-modal v-model="showP" size="sm" hide-footer>
+                            <p class="my-4">Do you want to update infomation</p>
+                            <b-row>
+                              <b-col>
+                                <b-button variant="danger" size="sm" v-on:click="updateProfiles ('id' + data.item.id, 'name' + data.item.id, 'lastname' + data.item.id, 'tel' + data.item.id, 'email' + data.item.id)" @click="showP=false">Yes</b-button>
+                              </b-col>
+                              <b-col>
+                              </b-col>
+                              <b-col>
+                                <b-button
+                                  variant="primary"
+                                  size="sm"
+                                  class="float-right"
+                                  @click="showP=false"
+                                >
+                                  Close
+                                </b-button>
+                              </b-col>
+                            </b-row>
+                          </b-modal>
                     </div>
                     </b-col>
                   </b-row>
@@ -88,6 +108,7 @@ export default {
   data () {
     return {
       show: false,
+      showP: false,
       profile: [],
       profiles: [],
       fields: [{
@@ -135,6 +156,21 @@ export default {
   updated () {},
   mounted () {},
   methods: {
+    updateProfiles (id, name, lastname, tel, email) {
+      this.updateprofile = {
+        approve_id: JSON.parse(localStorage.getItem('username')),
+        id: this.$refs[id].localValue,
+        name: this.$refs[name].localValue,
+        lastname: this.$refs[lastname].localValue,
+        tel: this.$refs[tel].localValue,
+        email: this.$refs[email].localValue
+      }
+      console.log(this.updateprofile)
+      axios.patch('http://127.0.0.1:4000/emp/updateusersadmin', this.updateprofile).then(response => {
+        console.log(response)
+        this.profile = response.data.result
+      })
+    },
     changePassword (id, password, cpassword, role) {
       console.log(this.$refs[password].localValue, this.$refs[cpassword].localValue, this.$refs[role].localValue)
       this.updateuser = {

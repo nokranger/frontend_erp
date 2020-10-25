@@ -76,14 +76,25 @@
         </b-row>
         <b-table ref="table" :items="event" :filter="filter" :current-page="currentPage"
       :per-page="perPage" class="mt-3" responsive="sm" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
-            <template v-slot:cell(approve)="data" v-if="localjwt === '0'">
-                <b-button v-if="event[data.index].approve === 0" size="sm" v-on:click="Papprove (data.index)" class="mr-2" variant="success" type="submit">
-                  Not Approve
-                </b-button>
-                <b-button v-if="event[data.index].approve === 1" size="sm" v-on:click="Papprove (data.index)" class="mr-2" variant="primary" disabled="">
-                  Approved
-                </b-button>
-            </template>
+          <template v-slot:cell(approve)="data" v-if="localjwt === '0'">
+            <div>
+              <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item !== 2" size="sm" class="mr-2" variant="danger" v-on:click="Rejected (data.item.actId)">Reject</b-button>
+              <b-button style="margin:1px" v-else-if="data.item.approve === 1 || data.item.approve === 2" size="sm" class="mr-2" variant="danger" disabled>Reject</b-button>
+            </div>
+            <div>
+              <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item.approve !== 2" size="sm" class="mr-2" variant="success" v-on:click="Papprove (data.item.actId)">
+                Not Approve
+              </b-button>
+              <b-button style="margin:1px" v-else-if="data.item.approve === 1 || data.item.approve === 2 && data.item.approve !== 0" size="sm"  class="mr-2" variant="primary" disabled>
+                Approved
+              </b-button>
+            </div>
+          </template>
+          <template v-slot:cell(approve)="data" v-else-if="localjwt ==='1'">
+            <div v-if="data.item.approve === 0">Pending</div>
+            <div v-else-if="data.item.approve === 1">Approved</div>
+            <div v-else-if="data.item.approve === 2">Rejected</div>
+          </template>
         </b-table>
       </b-container>
       <!-- <b-container>

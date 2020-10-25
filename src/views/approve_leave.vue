@@ -126,6 +126,7 @@ export default {
   },
   methods: {
     Papprove (index) {
+      console.log(JSON.parse(localStorage.getItem('username')))
       this.approve = {
         id: index,
         status: 1,
@@ -144,7 +145,7 @@ export default {
           }
         })
         this.totalRows = this.event.length
-        this.$refs.table.refresh()
+        // this.$refs.table.refresh()
       })
     },
     Rejected (index) {

@@ -42,6 +42,26 @@
             <div style="margin:5px">Personal Leave<b-input type="text" v-model="profiles.leave_activity" readonly></b-input></div>
             <div style="margin:5px"><br><b-button variant="primary" v-on:click="updateProfile ()">Update</b-button></div>
               <!-- <p>Vacation Leave: <input type="text" v-model="profiles.leave_vacation"></p> -->
+                    <b-modal v-model="showpf" size="sm" hide-footer>
+                      <p class="my-4">Do you want to update your profile</p>
+                        <b-row>
+                          <b-col>
+                            <b-button variant="danger" size="sm" v-on:click="changePassword()" @click="showpf=false">Yes</b-button>
+                          </b-col>
+                          <b-col>
+                          </b-col>
+                          <b-col>
+                            <b-button
+                              variant="primary"
+                              size="sm"
+                              class="float-right"
+                              @click="showpf=false"
+                            >
+                            Close
+                          </b-button>
+                        </b-col>
+                    </b-row>
+                  </b-modal>
           </div>
           <div>
             <br>
@@ -93,6 +113,7 @@ export default {
   data () {
     return {
       showu: false,
+      showpf: false,
       localjwt: '',
       data: [],
       profile: [],
@@ -129,7 +150,7 @@ export default {
         email: this.profile[0].employee_email
       }
       console.log(this.updateprofile)
-      axios.patch('http://127.0.0.1:4000/emp/updateuserss', this.updateprofile).then(response => {
+      axios.patch('http://127.0.0.1:4000/emp/updateusers', this.updateprofile).then(response => {
         console.log(response)
         this.profile = response.data.result
       })

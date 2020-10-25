@@ -80,14 +80,25 @@
                   </b-container>
                 </b-modal>
             </template>
-            <template v-slot:cell(Approve)="data" v-if="localjwt === '0'">
-                <b-button v-if="event[data.index].Approve === 0" size="sm" v-on:click="Papprove (data.index)" class="mr-2" variant="success" type="submit">
-                  Not Approve
-                </b-button>
-                <b-button v-if="event[data.index].Approve === 1" size="sm" v-on:click="Papprove (data.index)" class="mr-2" variant="primary" disabled="">
-                  Approved
-                </b-button>
-            </template>
+            <template v-slot:cell(approve)="data" v-if="localjwt === '0'">
+            <div>
+              <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item !== 2" size="sm" class="mr-2" variant="danger" v-on:click="Rejected (data.item.actId)">Reject</b-button>
+              <b-button style="margin:1px" v-else-if="data.item.approve === 1 || data.item.approve === 2" size="sm" class="mr-2" variant="danger" disabled>Reject</b-button>
+            </div>
+            <div>
+              <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item.approve !== 2" size="sm" class="mr-2" variant="success" v-on:click="Papprove (data.item.actId)">
+                Not Approve
+              </b-button>
+              <b-button style="margin:1px" v-else-if="data.item.approve === 1 || data.item.approve === 2 && data.item.approve !== 0" size="sm"  class="mr-2" variant="primary" disabled>
+                Approved
+              </b-button>
+            </div>
+          </template>
+          <template v-slot:cell(approve)="data" v-else-if="localjwt ==='1'">
+            <div v-if="data.item.approve === 0">Pending</div>
+            <div v-else-if="data.item.approve === 1">Approved</div>
+            <div v-else-if="data.item.approve === 2">Rejected</div>
+          </template>
         </b-table>
       </b-container>
       <b-button style="margin:5px" v-on:click="pdfPreview ()">Preview PDF</b-button>
@@ -138,7 +149,7 @@ export default {
       }, 'Request', 'Details', {
         key: 'Amount',
         sortable: true
-      }, 'File', 'Approve'],
+      }, 'File', 'approve'],
       remaining: 20000,
       filter: null,
       totalRows: 1,
@@ -181,7 +192,7 @@ export default {
               Amount: data.amount,
               Remaining: this.remaining,
               File: data.picture.replace(/\\/g, '/'),
-              Approve: data.status
+              approve: data.status
             }
           })
         }).catch(e => {
