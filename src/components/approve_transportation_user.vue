@@ -32,21 +32,7 @@
         </b-row>
         <b-table ref="table" :items="event" :filter="filter" :current-page="currentPage"
       :per-page="perPage" class="mt-3" responsive="sm" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
-          <template v-slot:cell(approve)="data" v-if="localjwt === '0'">
-            <div>
-              <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item !== 2" size="sm" class="mr-2" variant="danger" v-on:click="Rejected (data.item.actId)">Reject</b-button>
-              <b-button style="margin:1px" v-else-if="data.item.approve === 1 || data.item.approve === 2" size="sm" class="mr-2" variant="danger" disabled>Reject</b-button>
-            </div>
-            <div>
-              <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item.approve !== 2" size="sm" class="mr-2" variant="success" v-on:click="Papprove (data.item.actId)">
-                Not Approve
-              </b-button>
-              <b-button style="margin:1px" v-else-if="data.item.approve === 1 || data.item.approve === 2 && data.item.approve !== 0" size="sm"  class="mr-2" variant="primary" disabled>
-                Approved
-              </b-button>
-            </div>
-          </template>
-          <template v-slot:cell(approve)="data" v-else-if="localjwt ==='1'">
+          <template v-slot:cell(approve)="data" v-if="localjwt ==='1'">
             <div v-if="data.item.approve === 0">Pending</div>
             <div v-else-if="data.item.approve === 1">Approved</div>
             <div v-else-if="data.item.approve === 2">Rejected</div>
@@ -63,6 +49,7 @@ export default {
     return {
       event: [],
       approve: [],
+      employee_id: [],
       filter: null,
       totalRows: 1,
       currentPage: 1,
@@ -79,8 +66,11 @@ export default {
   },
   updated () {},
   mounted () {
-    axios.all([axios.get('http://127.0.0.1:4000/trans/get-all-trans')]).then(axios.spread((restrans) => {
-      this.event = restrans.data.result.map((data, i) => {
+    this.employee_id = {
+      id: JSON.parse(localStorage.getItem('username'))
+    }
+    axios.post('http://127.0.0.1:4000/trans/get-all-trans-user', this.employee_id).then(response => {
+      this.event = response.data.result.map((data, i) => {
         return {
           trans_id: data.trans_id,
           id: data.employee_id,
@@ -90,40 +80,11 @@ export default {
           approve: data.trans_status
         }
       })
-      // console.log(this.event.approve)
-    })).catch(e => {
+    }).catch(e => {
       this.error.push(e)
     })
   },
   methods: {
-    Papprove (index) {
-      // console.log('test')
-      this.approve = {
-        trans_id: this.event[index].trans_id,
-        trans_status: 1,
-        approve_id: JSON.parse(localStorage.getItem('username'))
-      }
-      axios({
-        url: 'http://127.0.0.1:4000/trans/approve-transportation',
-        method: 'patch',
-        data: this.approve
-      }).then(response => {
-        console.log(response)
-        this.event = response.data.result.map((data, i) => {
-          return {
-            transId: data.trans_id,
-            id: data.employee_id,
-            from: data.trans_from,
-            to: data.trans_to,
-            prices: data.trans_values,
-            approve: data.trans_status
-          }
-        })
-        this.$refs.table.refresh()
-      })
-
-      // this.$refs.table.refresh()
-    }
   }
 }
 </script>

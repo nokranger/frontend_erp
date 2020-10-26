@@ -7,15 +7,6 @@
       <b-container>
         <b-row>
           <b-col class="my-1">
-          <!-- <div style="margin-top:-9.5px;">
-            <b-form-select
-              v-model="perPage"
-              id="perPageSelect"
-              size="sm"
-              :options="pageOptions"
-            ></b-form-select>
-          </div> -->
-          <!-- <b-input></b-input> -->
           <b-pagination
             v-model="currentPage"
             :total-rows="totalRows"
@@ -26,14 +17,6 @@
           ></b-pagination>
         </b-col>
         <b-col class="my-1">
-          <!-- <b-pagination
-            v-model="currentPage"
-            :total-rows="totalRows"
-            :per-page="perPage"
-            align="fill"
-            size="sm"
-            class="my-0"
-          ></b-pagination> -->
         </b-col>
         <b-col class="my-1">
           <b-form-input
@@ -47,20 +30,6 @@
         </b-row>
         <b-table :items="event" :fields="fields" :filter="filter" :current-page="currentPage"
       :per-page="perPage" class="mt-3" responsive="sm" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
-          <!-- <template v-slot:cell(approve)="data" v-if="localjwt === '0'">
-            <div>
-              <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item !== 2" size="sm" class="mr-2" variant="danger" v-on:click="Rejected (data.item.actId)">Reject</b-button>
-              <b-button style="margin:1px" v-else-if="data.item.approve === 1 || data.item.approve === 2" size="sm" class="mr-2" variant="danger" disabled>Reject</b-button>
-            </div>
-            <div>
-              <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item.approve !== 2" size="sm" class="mr-2" variant="success" v-on:click="Papprove (data.item.actId)">
-                Not Approve
-              </b-button>
-              <b-button style="margin:1px" v-else-if="data.item.approve === 1 || data.item.approve === 2 && data.item.approve !== 0" size="sm"  class="mr-2" variant="primary" disabled>
-                Approved
-              </b-button>
-            </div>
-          </template> -->
           <template v-slot:cell(approve)="data" v-if="localjwt ==='1'">
             <div v-if="data.item.approve === 0">Pending</div>
             <div v-else-if="data.item.approve === 1">Approved</div>
@@ -129,51 +98,6 @@ export default {
     })
   },
   methods: {
-    // Papprove (index) {
-    //   console.log(JSON.parse(localStorage.getItem('username')))
-    //   this.approve = {
-    //     id: index,
-    //     status: 1,
-    //     approve_id: JSON.parse(localStorage.getItem('username')),
-    //     approve_date: Date.now()
-    //   }
-    //   axios.patch('http://127.0.0.1:4000/leavear/approve-leave-report', this.approve).then(response => {
-    //     this.event = response.data.result.map((data, i) => {
-    //       return {
-    //         id: data.employee_id,
-    //         actId: data.leave_activity_report_id,
-    //         leaveStartDate: moment(data.start_time).format('MMM Do YY'),
-    //         leaveEndDate: moment(data.end_time).format('MMM Do YY'),
-    //         reason: data.reason_for_leave,
-    //         approve: data.status
-    //       }
-    //     })
-    //     this.totalRows = this.event.length
-    //     // this.$refs.table.refresh()
-    //   })
-    // },
-    // Rejected (index) {
-    //   this.reject = {
-    //     id: index,
-    //     status: 2,
-    //     approve_id: JSON.parse(localStorage.getItem('username')),
-    //     approve_date: Date.now()
-    //   }
-    //   axios.patch('http://127.0.0.1:4000/leavear/approve-leave-report', this.reject).then(response => {
-    //     this.event = response.data.result.map((data, i) => {
-    //       return {
-    //         id: data.employee_id,
-    //         actId: data.leave_activity_report_id,
-    //         leaveStartDate: moment(data.start_time).format('MMM Do YY'),
-    //         leaveEndDate: moment(data.end_time).format('MMM Do YY'),
-    //         reason: data.reason_for_leave,
-    //         approve: data.status
-    //       }
-    //     })
-    //     this.totalRows = this.event.length
-    //     this.$refs.table.refresh()
-    //   })
-    // }
   }
 }
 </script>
