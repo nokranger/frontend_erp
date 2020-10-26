@@ -47,7 +47,7 @@
         </b-row>
         <b-table :items="event" :fields="fields" :filter="filter" :current-page="currentPage"
       :per-page="perPage" class="mt-3" responsive="sm" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
-          <template v-slot:cell(approve)="data" v-if="localjwt === '0'">
+          <!-- <template v-slot:cell(approve)="data" v-if="localjwt === '0'">
             <div>
               <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item !== 2" size="sm" class="mr-2" variant="danger" v-on:click="Rejected (data.item.actId)">Reject</b-button>
               <b-button style="margin:1px" v-else-if="data.item.approve === 1 || data.item.approve === 2" size="sm" class="mr-2" variant="danger" disabled>Reject</b-button>
@@ -60,8 +60,8 @@
                 Approved
               </b-button>
             </div>
-          </template>
-          <template v-slot:cell(approve)="data" v-else-if="localjwt ==='1'">
+          </template> -->
+          <template v-slot:cell(approve)="data" v-if="localjwt ==='1'">
             <div v-if="data.item.approve === 0">Pending</div>
             <div v-else-if="data.item.approve === 1">Approved</div>
             <div v-else-if="data.item.approve === 2">Rejected</div>
@@ -129,51 +129,51 @@ export default {
     })
   },
   methods: {
-    Papprove (index) {
-      console.log(JSON.parse(localStorage.getItem('username')))
-      this.approve = {
-        id: index,
-        status: 1,
-        approve_id: JSON.parse(localStorage.getItem('username')),
-        approve_date: Date.now()
-      }
-      axios.patch('http://127.0.0.1:4000/leavear/approve-leave-report', this.approve).then(response => {
-        this.event = response.data.result.map((data, i) => {
-          return {
-            id: data.employee_id,
-            actId: data.leave_activity_report_id,
-            leaveStartDate: moment(data.start_time).format('MMM Do YY'),
-            leaveEndDate: moment(data.end_time).format('MMM Do YY'),
-            reason: data.reason_for_leave,
-            approve: data.status
-          }
-        })
-        this.totalRows = this.event.length
-        // this.$refs.table.refresh()
-      })
-    },
-    Rejected (index) {
-      this.reject = {
-        id: index,
-        status: 2,
-        approve_id: JSON.parse(localStorage.getItem('username')),
-        approve_date: Date.now()
-      }
-      axios.patch('http://127.0.0.1:4000/leavear/approve-leave-report', this.reject).then(response => {
-        this.event = response.data.result.map((data, i) => {
-          return {
-            id: data.employee_id,
-            actId: data.leave_activity_report_id,
-            leaveStartDate: moment(data.start_time).format('MMM Do YY'),
-            leaveEndDate: moment(data.end_time).format('MMM Do YY'),
-            reason: data.reason_for_leave,
-            approve: data.status
-          }
-        })
-        this.totalRows = this.event.length
-        this.$refs.table.refresh()
-      })
-    }
+    // Papprove (index) {
+    //   console.log(JSON.parse(localStorage.getItem('username')))
+    //   this.approve = {
+    //     id: index,
+    //     status: 1,
+    //     approve_id: JSON.parse(localStorage.getItem('username')),
+    //     approve_date: Date.now()
+    //   }
+    //   axios.patch('http://127.0.0.1:4000/leavear/approve-leave-report', this.approve).then(response => {
+    //     this.event = response.data.result.map((data, i) => {
+    //       return {
+    //         id: data.employee_id,
+    //         actId: data.leave_activity_report_id,
+    //         leaveStartDate: moment(data.start_time).format('MMM Do YY'),
+    //         leaveEndDate: moment(data.end_time).format('MMM Do YY'),
+    //         reason: data.reason_for_leave,
+    //         approve: data.status
+    //       }
+    //     })
+    //     this.totalRows = this.event.length
+    //     // this.$refs.table.refresh()
+    //   })
+    // },
+    // Rejected (index) {
+    //   this.reject = {
+    //     id: index,
+    //     status: 2,
+    //     approve_id: JSON.parse(localStorage.getItem('username')),
+    //     approve_date: Date.now()
+    //   }
+    //   axios.patch('http://127.0.0.1:4000/leavear/approve-leave-report', this.reject).then(response => {
+    //     this.event = response.data.result.map((data, i) => {
+    //       return {
+    //         id: data.employee_id,
+    //         actId: data.leave_activity_report_id,
+    //         leaveStartDate: moment(data.start_time).format('MMM Do YY'),
+    //         leaveEndDate: moment(data.end_time).format('MMM Do YY'),
+    //         reason: data.reason_for_leave,
+    //         approve: data.status
+    //       }
+    //     })
+    //     this.totalRows = this.event.length
+    //     this.$refs.table.refresh()
+    //   })
+    // }
   }
 }
 </script>
