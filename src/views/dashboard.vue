@@ -68,6 +68,10 @@
             Activity
             <canvas style="width:100%;height:auto;" id="my-chartline"></canvas>
           </b-col>
+        </b-row>
+        <br>
+        <br>
+        <b-row>
           <b-col>
             Most Station
             <canvas style="width:100%;height:auto;" id="my-chartpie"></canvas>

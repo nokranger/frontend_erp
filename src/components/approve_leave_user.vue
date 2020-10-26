@@ -1,8 +1,4 @@
 <template>
-<div v-if="localjwt == 1">
-  <app-leaveuser></app-leaveuser>
-</div>
-<div v-else-if="localjwt == 0">
   <div>
     <div style="font-size:30px;">
       Leave
@@ -74,17 +70,12 @@
       </b-container>
     </div>
   </div>
-</div>
 </template>
 <script>
 import axios from 'axios'
 import moment from 'moment'
-import leaveuser from '../components/approve_leave_user'
 // import aa from '../../../../../VueJS/LPTT/frontend_erp/src/img/upload'
 export default {
-  components: {
-    'app-leaveuser': leaveuser
-  },
   data () {
     return {
       employee_id: [],
@@ -107,7 +98,7 @@ export default {
     this.localjwt = JSON.parse(localStorage.getItem('role'))
     // console.log('local', (this.localjwt))
     if (this.localjwt === '0') {
-      console.log('localadmin', (this.localjwt))
+      console.log('localuser', (this.localjwt))
     }
   },
   beforeUpdate () {
@@ -117,8 +108,12 @@ export default {
 
   },
   mounted () {
-    axios.all([axios.get('http://127.0.0.1:4000/leavear/get-all-la_report')]).then(axios.spread((reslar) => {
-      this.event = reslar.data.result.map((data, i) => {
+    this.approve = {
+      id: JSON.parse(localStorage.getItem('username'))
+    }
+    console.log(this.employee_id)
+    axios.post('http://127.0.0.1:4000/leavear/get-all-la_report-user', this.approve).then(response => {
+      this.event = response.data.result.map((data, i) => {
         return {
           id: data.employee_id,
           actId: data.leave_activity_report_id,
@@ -130,7 +125,7 @@ export default {
       })
       this.totalRows = this.event.length
       this.$refs.table.refresh()
-    })).catch(e => {
+    }).catch(e => {
     })
   },
   methods: {

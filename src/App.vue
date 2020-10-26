@@ -22,7 +22,7 @@ export default {
       colors: 'radial-gradient(circle, rgba(20,94,238,0.6867121848739496) 0%, rgba(173,245,255,1) 100%)',
       imagecolor: 'linear-gradient(to top, #051937, #0a4066, #006c96, #009cc3, #12cfeb)',
       // background-image: linear-gradient(to bottom, #051937, #0a4066, #006c96, #009cc3, #12cfeb);
-      heights: '1000px',
+      heights: '1020px',
       pathname: ''
     }
   },
