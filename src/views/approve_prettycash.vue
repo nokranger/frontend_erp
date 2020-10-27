@@ -86,7 +86,7 @@
               <b-button style="margin:1px" v-else-if="data.item.approve === 1 || data.item.approve === 2" size="sm" class="mr-2" variant="danger" disabled>Reject</b-button>
             </div>
             <div>
-              <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item.approve !== 2" size="sm" class="mr-2" variant="success" v-on:click="Papprove (data.item.actId)">
+              <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item.approve !== 2" size="sm" class="mr-2" variant="success" v-on:click="Papprove (data.item.Id)">
                 Not Approve
               </b-button>
               <b-button style="margin:1px" v-else-if="data.item.approve === 1 || data.item.approve === 2 && data.item.approve !== 0" size="sm"  class="mr-2" variant="primary" disabled>
@@ -102,7 +102,7 @@
         </b-table>
       </b-container>
       <b-button style="margin:5px" v-on:click="pdfPreview ()">Preview PDF</b-button>
-      <b-button style="margin:5px" v-on:click="pdfPrint ()">Download PDF</b-button>
+      <!-- <b-button style="margin:5px" v-on:click="pdfPrint ()">Download PDF</b-button> -->
     </div>
   </div>
 </template>
@@ -174,7 +174,7 @@ export default {
 
   },
   mounted () {
-    console.log('appid', this.appId)
+    // console.log('appid', this.appId)
     console.log(this.ArabicNumberToText(1001.23))
   },
   methods: {
@@ -204,8 +204,9 @@ export default {
         })
     },
     Papprove (index) {
+      console.log('event', index)
       this.approve = {
-        id: this.event[index].Id,
+        id: index,
         status: 1,
         from: this.prettycash_month.from,
         to: this.prettycash_month.to,
@@ -223,7 +224,7 @@ export default {
             Amount: data.amount,
             Remaining: this.remaining,
             File: data.picture.replace(/\\/g, '/'),
-            Approve: data.status
+            approve: data.status
           }
         })
         this.$refs.table.refresh()
@@ -251,6 +252,7 @@ export default {
           this.$refs.table.refresh()
         })
     },
+    Rejected () {},
     pdfPrint () {
       var column = []
       column.push({ text: 'A', style: 'tableHeader' })
