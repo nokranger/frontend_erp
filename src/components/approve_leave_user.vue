@@ -80,7 +80,6 @@ export default {
     this.approve = {
       id: JSON.parse(localStorage.getItem('username'))
     }
-    console.log(this.employee_id)
     axios.post('http://127.0.0.1:4000/leavear/get-all-la_report-user', this.approve).then(response => {
       this.event = response.data.result.map((data, i) => {
         return {

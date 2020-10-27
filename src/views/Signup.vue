@@ -2,19 +2,23 @@
   <div class="bg">
     <br>
     <b-container>
-      <!-- <b-container>
+      <b-container>
         <b-row>
           <b-col>
             <div>
-              <img src="https://i.imgur.com/0cQYdwv.png" alt="">
-            </div>
-            <div>
-              <input type="file"><br>
-              Picture
+              <img style="width:400px;hieght:400px" :src="previewImage" class="uploading-image" />
             </div>
           </b-col>
         </b-row>
-      </b-container> -->
+        <b-row>
+          <b-col>
+            <div>
+              <input ref="file" type="file" name="avatar" id="avatar" class="inputfile" accept="image/jpeg, image/png" @change=uploadImage />
+              <label for="avatar">Choose a file</label>
+            </div>
+          </b-col>
+        </b-row>
+      </b-container>
       <b-container>
         <b-row>
           <b-col>
@@ -103,7 +107,7 @@ export default {
       ],
       cc: '#2c3e50',
       empCategory: {
-        employee_pic: '/img/nok.jpg',
+        employee_pic: null,
         employee_id: '',
         employee_name: '',
         employee_lastname: '',
@@ -115,7 +119,8 @@ export default {
         leave_sick: '30',
         leave_activity: '6',
         leave_vacation: '6'
-      }
+      },
+      previewImage: null
     }
   },
   metaInfo () {
@@ -125,12 +130,23 @@ export default {
     }
   },
   methods: {
+    uploadImage () {
+      this.empCategory.employee_pic = this.$refs.file.files[0]
+      const reader = new FileReader()
+      reader.readAsDataURL(this.empCategory.employee_pic)
+      reader.onload = e => {
+        this.previewImage = e.target.result
+      }
+    },
     send () {
       this.empCategory.job_position_id = this.$refs.jobId.localValue
       this.empCategory.employee_id = this.empCategory.employee_id.toUpperCase()
       this.empCategory.password = md5(this.empCategory.password)
+      const formData = new FormData()
+      formData.set('data', JSON.stringify(this.empCategory))
+      formData.append('file', this.empCategory.employee_pic)
       console.log((this.empCategory))
-      axios.post('http://127.0.0.1:4000/emp/post-emp', this.empCategory).then(response => {
+      axios.post('http://127.0.0.1:4000/emp/post-emp', formData).then(response => {
         console.log(response)
       }).catch(e => {
         this.error.push(e)
@@ -180,5 +196,21 @@ input {
 }
 select {
   width: 100%;
+}
+.inputfile{
+width: 0.1px;
+height: 0.1px;
+opacity: 0;
+overflow: hidden;
+position: absolute;
+z-index: -1;
+}
+label {
+  cursor: pointer;
+}
+label:hover {
+  /* background: black; */
+  color: lightgray;
+  padding: 20;
 }
 </style>

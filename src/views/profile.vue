@@ -12,7 +12,7 @@
         <br>
         <b-row>
           <div class="img-profile ">
-            <img style="width:250px;hieght:400px;border-radius:8px;" :src="require('../img/uploads/prettycash/LPTTPRETTYCASH-1596221571971.png')" alt="">
+            <img style="width:250px;hieght:400px;border-radius:8px;" :src="require('../img/uploads/signup/' + profiles.employee_pic)" alt="">
           </div>
           <b-col cols="12">
             <div style="display: flex;flex-direction: row;" class="align-left">
@@ -133,6 +133,7 @@ export default {
       console.log('username', this.data.employee_id)
       axios.post('http://localhost:4000/emp/settingprofile', this.data).then(response => {
         this.profile = response.data.result
+        console.log('pic', this.profile[0].employee_pic.replace(/\\/g, '/'))
       })
     }
   },
