@@ -23,19 +23,19 @@
         <b-row>
           <b-col>
             <div class="align-left" id="idcustomer">
-              <div>รหัสพนักงาน</div>
+              <div>Employee ID</div>
               <b-form-input type="text" v-model="empCategory.employee_id" required></b-form-input>
             </div>
           </b-col>
           <b-col>
             <div>
-              <div class="align-left">ชื่อ</div>
+              <div class="align-left">Name</div>
               <b-form-input type="text" v-model="empCategory.employee_name"></b-form-input>
             </div>
           </b-col>
           <b-col>
             <div>
-              <div class="align-left">นามสกุล</div>
+              <div class="align-left">Last name</div>
               <b-form-input type="text" v-model="empCategory.employee_lastname"></b-form-input>
             </div>
           </b-col>
@@ -46,7 +46,7 @@
       <b-row>
         <b-col>
           <div>
-            <div class="align-left">ตำแหน่งพนักงาน</div>
+            <div class="align-left">Position</div>
             <!-- <b-form-input type="text"> -->
             <b-form-select ref="jobId" name="" id="" v-model="selected" :options="options" value="selected">
               <option value="1">Business Development Coordinator</option>
@@ -57,13 +57,13 @@
         </b-col>
         <b-col>
           <div>
-            <div class="align-left">อีเมลล์</div>
+            <div class="align-left">Email</div>
             <b-form-input type="text" v-model="empCategory.employee_email"></b-form-input>
           </div>
         </b-col>
         <b-col>
           <div>
-            <div class="align-left">เบอร์โทรศัพท์</div>
+            <div class="align-left">Telephone number</div>
             <b-form-input type="text" v-model="empCategory.employee_tel"></b-form-input>
           </div>
         </b-col>
@@ -73,13 +73,13 @@
       <b-row>
         <b-col>
           <div>
-            <div class="align-left">รหัสผ่าน</div>
+            <div class="align-left">password</div>
             <b-form-input type="password" v-model="empCategory.password"></b-form-input>
           </div>
         </b-col>
         <b-col>
           <div>
-            <div class="align-left">วันเริ่มทำงาน</div>
+            <div class="align-left">Start</div>
             <b-form-input type="date" v-model="empCategory.start_date"></b-form-input>
           </div>
         </b-col>

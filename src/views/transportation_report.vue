@@ -3,7 +3,7 @@
     <div>
     <b-container fluid="xl">
       <div style="font-size:30px;">
-        ใบเบิกค่าใช้จ่ายสำหรับเดินทาง
+        Transportation Reimbursement Form
       </div>
       <app-trans></app-trans>
     </b-container>
@@ -18,6 +18,12 @@ export default {
   },
   data () {
     return {}
+  },
+  metaInfo () {
+    return {
+      title: 'Transportation Reimbursement Form',
+      titleTemplate: '%s - LPTT'
+    }
   }
 }
 </script>

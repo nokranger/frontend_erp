@@ -57,6 +57,13 @@
 </template>
 <script>
 export default {
+  data () {},
+  metaInfo () {
+    return {
+      title: 'Approve',
+      titleTemplate: '%s - LPTT'
+    }
+  }
 }
 </script>
 <style scoped>

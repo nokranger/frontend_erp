@@ -6,7 +6,7 @@
           <b-col>
             <div>
               <div class="align-left">
-                วันเริ่มต้น
+                Start
               </div>
               <b-form-input type="datetime-local" v-model="leaveActivityReport.start_time"></b-form-input>
             </div>
@@ -14,7 +14,7 @@
           <b-col>
             <div>
               <div class="align-left">
-                วันสิ้นสุด
+                End
               </div>
               <b-form-input type="datetime-local" v-model="leaveActivityReport.end_time"></b-form-input>
             </div>
@@ -22,7 +22,7 @@
           <b-col>
             <div>
               <div class="align-left">
-                จำนวนวันลา
+                Amount
               </div>
               <b-form-input type="text"></b-form-input>
             </div>
@@ -35,7 +35,7 @@
           <b-col>
             <div>
               <div class="align-left">
-                ประเภทการลา
+                Leave type
               </div>
               <b-form-select ref="leave_report" v-model="selected" :options="options"></b-form-select>
               <!-- <b-form-input type="text" v-model="leaveActivityReport.leave_category"></b-form-input> -->
@@ -44,7 +44,7 @@
           <b-col>
             <div>
               <div class="align-left">
-                เหตุผลในการลา
+                Reason
               </div>
               <b-form-input type="text" v-model="leaveActivityReport.reason_for_leave"></b-form-input>
             </div>
@@ -119,6 +119,12 @@ export default {
           value: 3, text: 'ลาพักร้อน'
         }
       ]
+    }
+  },
+  metaInfo () {
+    return {
+      title: 'Leave Report',
+      titleTemplate: '%s - LPTT'
     }
   },
   mounted () {

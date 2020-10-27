@@ -157,6 +157,12 @@ export default {
       perPage: 10
     }
   },
+  metaInfo () {
+    return {
+      title: 'Approve Petty Cash',
+      titleTemplate: '%s - LPTT'
+    }
+  },
   beforeCreate () {
 
   },

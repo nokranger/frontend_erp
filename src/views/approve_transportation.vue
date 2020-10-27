@@ -69,6 +69,12 @@ export default {
       perPage: 10
     }
   },
+  metaInfo () {
+    return {
+      title: 'Approve Transportation',
+      titleTemplate: '%s - LPTT'
+    }
+  },
   beforeCreate () {},
   created () {
     this.localjwt = JSON.parse(localStorage.getItem('role'))

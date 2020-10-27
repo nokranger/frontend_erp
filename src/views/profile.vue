@@ -121,6 +121,12 @@ export default {
       updatepassword: []
     }
   },
+  metaInfo () {
+    return {
+      title: 'Account' + ' ' + JSON.parse(localStorage.getItem('username')),
+      titleTemplate: '%s - LPTT'
+    }
+  },
   beforeCreate () {},
   created () {
     this.localjwt = JSON.parse(localStorage.getItem('role'))

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Record</h1>
+    <h1>Form</h1>
     <b-container fluid="xl">
       <br>
       <b-container>
@@ -57,6 +57,13 @@
 </template>
 <script>
 export default {
+  data () {},
+  metaInfo () {
+    return {
+      title: 'Form',
+      titleTemplate: '%s - LPTT'
+    }
+  }
 }
 </script>
 <style scoped>

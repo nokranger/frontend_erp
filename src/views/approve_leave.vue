@@ -100,6 +100,12 @@ export default {
       localjwt: ''
     }
   },
+  metaInfo () {
+    return {
+      title: 'Approve Leave',
+      titleTemplate: '%s - LPTT'
+    }
+  },
   beforeCreate () {
 
   },

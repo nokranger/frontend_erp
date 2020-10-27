@@ -3,7 +3,7 @@
     <div>
       <b-container fluid="xl">
         <div style="font-size:30px;">
-          ใบลา
+          Leave Form
         </div>
         <app-leave></app-leave>
       </b-container>
