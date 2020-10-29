@@ -9,7 +9,9 @@ export default {
   components: {
     'app-petty': pettycash
   },
-  data () {},
+  data () {
+    return {}
+  },
   metaInfo () {
     return {
       title: 'Petty Cash',

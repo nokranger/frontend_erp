@@ -144,6 +144,7 @@ export default {
   },
   methods: {
     send () {
+      this.selected = null
       console.log('test')
       this.trans = {
         employee_id: JSON.parse(localStorage.getItem('username')),
@@ -155,11 +156,18 @@ export default {
         trans_values: this.transportation.trans_values,
         status: 0
       }
-      // console.log(this.transportation)
-      // this.transportation.employee_id = JSON.parse(localStorage.getItem('username'))
-      // this.transportation.trans_vehicle = this.$refs.trans_vehicle.localValue
       axios.post('http://127.0.0.1:4000/trans/post-trans', this.trans).then(response => {
         console.log(response)
+        this.transportation = {
+          employee_id: JSON.parse(localStorage.getItem('username')),
+          trans_date: '',
+          trans_from: '',
+          trans_to: '',
+          trans_vehicle: '',
+          approve_id: '',
+          trans_values: '',
+          status: 0
+        }
       }).catch(e => {
         this.error.push(e)
       })

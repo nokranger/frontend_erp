@@ -114,14 +114,21 @@ export default {
       }
     },
     send () {
-      console.log('send')
-      console.log(this.prettycash)
       const formData = new FormData()
       formData.set('data', JSON.stringify(this.prettycash))
       formData.append('file', this.prettycash.picture)
       console.log(this.prettycash.picture)
       axios.post('http://localhost:4000/cash/post-prettycash', formData).then(respone => {
         console.log(respone)
+        this.prettycash = {
+          date: '',
+          employee_id: JSON.parse(localStorage.getItem('username')),
+          amount: '',
+          service_charge: '',
+          detail: '',
+          picture: '',
+          status: 0
+        }
       })
     }
   }

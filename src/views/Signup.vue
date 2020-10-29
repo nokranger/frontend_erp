@@ -139,6 +139,7 @@ export default {
       }
     },
     send () {
+      this.selected = null
       this.empCategory.job_position_id = this.$refs.jobId.localValue
       this.empCategory.employee_id = this.empCategory.employee_id.toUpperCase()
       this.empCategory.password = md5(this.empCategory.password)
@@ -148,10 +149,23 @@ export default {
       console.log((this.empCategory))
       axios.post('http://127.0.0.1:4000/emp/post-emp', formData).then(response => {
         console.log(response)
+        this.empCategory = {
+          employee_pic: null,
+          employee_id: '',
+          employee_name: '',
+          employee_lastname: '',
+          job_position_id: '',
+          employee_email: '',
+          employee_tel: '',
+          password: '',
+          start_date: '',
+          leave_sick: '30',
+          leave_activity: '6',
+          leave_vacation: '6'
+        }
       }).catch(e => {
         this.error.push(e)
       })
-      // location.reload()
     },
     test () {
       this.empCategory.job_position_id = this.$refs.jobId.localValue

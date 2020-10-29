@@ -142,6 +142,19 @@ export default {
         )
         .then(response => {
           console.log(response)
+          this.leaveActivityReport = {
+            employee_id: JSON.parse(localStorage.getItem('username')),
+            leave_activity_report_id: '',
+            start_time: '',
+            end_time: '',
+            reason_for_leave: '',
+            leave_category: '',
+            approve_id: '',
+            approve_date: '',
+            status: 0,
+            file: '/doc/nok.docs'
+          }
+          this.selected = null
         })
         .catch(e => {
           this.error.push(e)
