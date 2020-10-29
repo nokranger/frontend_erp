@@ -82,7 +82,7 @@
             </template>
             <template v-slot:cell(approve)="data" v-if="localjwt === '0'">
             <div>
-              <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item !== 2" size="sm" class="mr-2" variant="danger" v-on:click="Rejected (data.item.actId)">Reject</b-button>
+              <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item !== 2" size="sm" class="mr-2" variant="danger" v-on:click="Rejected (data.item.Id)">Reject</b-button>
               <b-button style="margin:1px" v-else-if="data.item.approve === 1 || data.item.approve === 2" size="sm" class="mr-2" variant="danger" disabled>Reject</b-button>
             </div>
             <div>
@@ -136,6 +136,7 @@ export default {
       dataTotable2: [],
       approve: [],
       localjwt: '',
+      reject: [],
       prettycash_month: {
         from: '',
         to: ''
@@ -258,7 +259,32 @@ export default {
           this.$refs.table.refresh()
         })
     },
-    Rejected () {},
+    Rejected (index) {
+      this.reject = {
+        id: index,
+        status: 2,
+        from: this.prettycash_month.from,
+        to: this.prettycash_month.to,
+        approve_id: JSON.parse(localStorage.getItem('username'))
+      }
+      axios.patch('http://127.0.0.1:4000/cash/reject-prettycash', this.reject).then(response => {
+        // this.remaining = 20000
+        this.event = response.data.result.map((data, i) => {
+          this.remaining = this.remaining - data.amount
+          return {
+            Id: data.id,
+            Date: moment(data.date).format('MMM Do YY'),
+            Request: data.employee_id,
+            Details: data.detail,
+            Amount: data.amount,
+            Remaining: this.remaining,
+            File: data.picture.replace(/\\/g, '/'),
+            approve: data.status
+          }
+        })
+        this.$refs.table.refresh()
+      })
+    },
     pdfPrint () {
       var column = []
       column.push({ text: 'A', style: 'tableHeader' })
