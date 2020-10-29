@@ -170,7 +170,7 @@ export default {
         approve_id: JSON.parse(localStorage.getItem('username')),
         approve_date: Date.now()
       }
-      axios.patch('http://127.0.0.1:4000/leavear/approve-leave-report', this.reject).then(response => {
+      axios.patch('http://127.0.0.1:4000/leavear/reject-leave-report', this.reject).then(response => {
         this.event = response.data.result.map((data, i) => {
           return {
             id: data.employee_id,

@@ -35,7 +35,7 @@
                 <h5>Recently Transportation</h5>
                 <div v-for="(transs, index) in trans" :key="index">
                   <a href="/approvetrans"><p v-if="transs.trans_status == 0">{{transs.trans_from}} to {{transs.trans_to}} - {{transs.employee_name}} - ยังไม่อนุมัติ</p></a>
-                  <a href="/approvetrans"><p v-if="transs.trans_status == 1">{{transs.trans_from}} to {{transs.trans_to}} - {{transs.employee_name}} - ยังไม่อนุมัติ</p></a>
+                  <a href="/approvetrans"><p v-if="transs.trans_status == 1">{{transs.trans_from}} to {{transs.trans_to}} - {{transs.employee_name}} - อนุมัติแล้ว</p></a>
                 </div>
                 <div class="align-right">
                   <!-- <button class="button"><a class="linkmap" target="_blank" v-bind:href="linkOA"><img style="width:50px;height:50px;" src="https://i.imgur.com/JKjVDrz.png" alt="map ckb"></a></button> -->

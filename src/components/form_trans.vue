@@ -110,6 +110,7 @@ export default {
         trans_values: '',
         status: 0
       },
+      trans: {},
       selected: null,
       options: [
         {
@@ -144,10 +145,20 @@ export default {
   methods: {
     send () {
       console.log('test')
+      this.trans = {
+        employee_id: JSON.parse(localStorage.getItem('username')),
+        trans_date: this.transportation.trans_date,
+        trans_from: this.transportation.trans_from,
+        trans_to: this.transportation.trans_to,
+        trans_vehicle: this.$refs.trans_vehicle.localValue,
+        approve_id: '',
+        trans_values: this.transportation.trans_values,
+        status: 0
+      }
       // console.log(this.transportation)
       // this.transportation.employee_id = JSON.parse(localStorage.getItem('username'))
-      this.transportation.trans_vehicle = this.$refs.trans_vehicle.localValue
-      axios.post('http://127.0.0.1:4000/trans/post-trans', this.transportation).then(response => {
+      // this.transportation.trans_vehicle = this.$refs.trans_vehicle.localValue
+      axios.post('http://127.0.0.1:4000/trans/post-trans', this.trans).then(response => {
         console.log(response)
       }).catch(e => {
         this.error.push(e)
