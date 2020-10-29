@@ -34,16 +34,19 @@
       :per-page="perPage" class="mt-3" responsive="sm" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
           <template v-slot:cell(approve)="data" v-if="localjwt === '0'">
             <div>
-              <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item !== 2" size="sm" class="mr-2" variant="danger" v-on:click="Rejected (data.item.actId)">Reject</b-button>
+              <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item !== 2" size="sm" class="mr-2" variant="danger" v-on:click="Reject (data.item.trans_id)">Reject</b-button>
               <b-button style="margin:1px" v-else-if="data.item.approve === 1 || data.item.approve === 2" size="sm" class="mr-2" variant="danger" disabled>Reject</b-button>
             </div>
             <div>
-              <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item.approve !== 2" size="sm" class="mr-2" variant="success" v-on:click="Papprove (data.item.actId)">
+              <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item.approve !== 2" size="sm" class="mr-2" variant="success" v-on:click="Papprove (data.item.trans_id)">
                 Not Approve
               </b-button>
-              <b-button style="margin:1px" v-else-if="data.item.approve === 1 || data.item.approve === 2 && data.item.approve !== 0" size="sm"  class="mr-2" variant="primary" disabled>
+              <b-button style="margin:1px" v-else-if="data.item.approve === 1 || data.item.approve !== 2 && data.item.approve !== 0" size="sm"  class="mr-2" variant="primary" disabled>
                 Approved
               </b-button>
+              <!-- <b-button style="margin:1px" v-else-if="data.item.approve === 2 || data.item.approve !== 1 && data.item.approve !== 0" size="sm"  class="mr-2" variant="danger" disabled>
+                Rejected
+              </b-button> -->
             </div>
           </template>
           <template v-slot:cell(approve)="data" v-else-if="localjwt ==='1'">
@@ -63,6 +66,7 @@ export default {
     return {
       event: [],
       approve: [],
+      rejects: [],
       filter: null,
       totalRows: 1,
       currentPage: 1,
@@ -102,10 +106,11 @@ export default {
     })
   },
   methods: {
+    // status 0 notapprove, 1 approve, 2 reject
     Papprove (index) {
       // console.log('test')
       this.approve = {
-        trans_id: this.event[index].trans_id,
+        trans_id: index,
         trans_status: 1,
         approve_id: JSON.parse(localStorage.getItem('username'))
       }
@@ -117,7 +122,7 @@ export default {
         console.log(response)
         this.event = response.data.result.map((data, i) => {
           return {
-            transId: data.trans_id,
+            trans_id: data.trans_id,
             id: data.employee_id,
             from: data.trans_from,
             to: data.trans_to,
@@ -129,6 +134,30 @@ export default {
       })
 
       // this.$refs.table.refresh()
+    },
+    Reject (index) {
+      this.rejects = {
+        trans_id: index,
+        trans_status: 2,
+        approve_id: JSON.parse(localStorage.getItem('username'))
+      }
+      axios({
+        url: 'http://127.0.0.1:4000/trans//reject-transportation',
+        method: 'patch',
+        data: this.rejects
+      }).then(response => {
+        this.event = response.data.result.map((data, i) => {
+          return {
+            trans_id: data.trans_id,
+            id: data.employee_id,
+            from: data.trans_from,
+            to: data.trans_to,
+            prices: data.trans_values,
+            approve: data.trans_status
+          }
+        })
+        this.$refs.table.refresh()
+      })
     }
   }
 }
