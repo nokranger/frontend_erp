@@ -8,13 +8,13 @@
       <b-row>
         <b-col>
           <div class="align-left">
-            Date
+          <label style="color:red;font-size:25px;">*</label>  Date
             <b-form-input type="date" v-model="prettycash.date"></b-form-input>
           </div>
         </b-col>
         <b-col>
           <div class="align-left">
-            Request by
+          <label style="color:red;font-size:25px;">*</label>  Request by
           </div>
           <b-form-input type="text" v-model="prettycash.employee_id" placeholder="Request (EmpID)" readonly></b-form-input>
         </b-col>
@@ -22,13 +22,13 @@
           <b-row>
           <b-col>
             <div class="align-left">
-              Amount
+            <label style="color:red;font-size:25px;">*</label>  Amount
               <b-form-input type="text" v-model="prettycash.amount"></b-form-input>
             </div>
           </b-col>
           <b-col>
             <div class="align-left">
-              Service charge
+            <label style="color:red;font-size:25px;"><br></label>  Service charge
               <b-form-input type="text" v-model="prettycash.service_charge"></b-form-input>
             </div>
           </b-col>
@@ -39,7 +39,7 @@
         <b-col>
           <br>
           <div class="align-left">
-            Detail
+          <label style="color:red;font-size:25px;">*</label>  Detail
             <b-form-textarea
               id="textarea"
               placeholder="Enter something..."
@@ -53,6 +53,7 @@
       <br>
       <b-row>
         <b-col>
+          <div>Attach file image</div>
           <div>
               <img style="width:400px;hieght:400px" :src="previewImage" class="uploading-image" />
               <!-- <b-button type="button" v-on:click="sendFile ()">upload</b-button> -->
@@ -63,7 +64,7 @@
         <b-col>
           <div>
             <input ref="file" type="file" name="avatar" id="avatar" class="inputfile" accept="image/jpeg, image/png" @change=uploadImage />
-            <label for="avatar">Choose a file</label>
+            <label for="avatar"><label style="color:red;font-size:25px;">*</label>Choose a file</label>
             <!-- <b-form-file ref="file" type="file" placeholder="Choose a file or drop it here..." drop-placeholder="Drop file here..." accept="image/jpeg, image/png" @change=uploadImage></b-form-file> -->
           </div>
         </b-col>

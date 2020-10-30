@@ -14,7 +14,7 @@
           <b-col>
             <div>
               <div class="align-left">
-                Request By
+              <label style="color:red;font-size:25px;">*</label>  Request By
               </div>
               <b-form-input type="text" v-model="transportation.employee_id" readonly=""></b-form-input>
             </div>
@@ -22,7 +22,7 @@
           <b-col>
             <div>
               <div class="align-left">
-                Date
+              <label style="color:red;font-size:25px;">*</label>  Date
               </div>
               <b-form-input type="date" v-model="transportation.trans_date"></b-form-input>
             </div>
@@ -55,7 +55,7 @@
             <b-col>
               <div>
                 <div class="align-left">
-                  From
+                <label style="color:red;font-size:25px;">*</label>  From
                 </div>
                 <b-form-input type="text" v-model="transportation.trans_from"></b-form-input>
               </div>
@@ -63,7 +63,7 @@
             <b-col>
               <div>
                 <div class="align-left">
-                  To
+                <label style="color:red;font-size:25px;">*</label>  To
                 </div>
                 <b-form-input type="text" v-model="transportation.trans_to"></b-form-input>
               </div>
@@ -71,13 +71,13 @@
             <b-col>
               <div>
                 <div class="align-left">
-                  Vehicle
+                <label style="color:red;font-size:25px;">*</label>  Vehicle
                 </div>
                 <div>
                   <b-form-select ref="trans_vehicle" v-model="selected" :options="options"></b-form-select>
                   <!-- <b-form-select v-model="selected" :options="options"></b-form-select> -->
                   <div class="align-left">
-                    Amount
+                  <label style="color:red;font-size:25px;">*</label>  Amount
                   </div>
                   <b-form-input type="text" v-model="transportation.trans_values"></b-form-input>
                 </div>

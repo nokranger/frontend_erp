@@ -5,6 +5,7 @@
       <b-container>
         <b-row>
           <b-col>
+            <div>Attach Picture</div>
             <div>
               <img style="width:400px;hieght:400px" :src="previewImage" class="uploading-image" />
             </div>
@@ -14,7 +15,7 @@
           <b-col>
             <div>
               <input ref="file" type="file" name="avatar" id="avatar" class="inputfile" accept="image/jpeg, image/png" @change=uploadImage />
-              <label for="avatar">Choose a file</label>
+              <label for="avatar"><label style="color:red;font-size:25px;">*</label>Choose a file</label>
             </div>
           </b-col>
         </b-row>
@@ -23,19 +24,19 @@
         <b-row>
           <b-col>
             <div class="align-left" id="idcustomer">
-              <div>Employee ID</div>
+              <div><label style="color:red;font-size:25px;">*</label>Employee ID</div>
               <b-form-input type="text" v-model="empCategory.employee_id" required></b-form-input>
             </div>
           </b-col>
           <b-col>
             <div>
-              <div class="align-left">Name</div>
+              <div class="align-left"><label style="color:red;font-size:25px;">*</label>Name</div>
               <b-form-input type="text" v-model="empCategory.employee_name"></b-form-input>
             </div>
           </b-col>
           <b-col>
             <div>
-              <div class="align-left">Last name</div>
+              <div class="align-left"><label style="color:red;font-size:25px;">*</label>Last name</div>
               <b-form-input type="text" v-model="empCategory.employee_lastname"></b-form-input>
             </div>
           </b-col>
@@ -46,7 +47,7 @@
       <b-row>
         <b-col>
           <div>
-            <div class="align-left">Position</div>
+            <div class="align-left"><label style="color:red;font-size:25px;">*</label>Position</div>
             <!-- <b-form-input type="text"> -->
             <b-form-select ref="jobId" name="" id="" v-model="selected" :options="options" value="selected">
               <option value="1">Business Development Coordinator</option>
@@ -57,13 +58,13 @@
         </b-col>
         <b-col>
           <div>
-            <div class="align-left">Email</div>
+            <div class="align-left"><label style="color:red;font-size:25px;">*</label>Email</div>
             <b-form-input type="text" v-model="empCategory.employee_email"></b-form-input>
           </div>
         </b-col>
         <b-col>
           <div>
-            <div class="align-left">Telephone number</div>
+            <div class="align-left"><label style="color:red;font-size:25px;">*</label>Telephone number</div>
             <b-form-input type="text" v-model="empCategory.employee_tel"></b-form-input>
           </div>
         </b-col>
@@ -73,13 +74,13 @@
       <b-row>
         <b-col>
           <div>
-            <div class="align-left">password</div>
+            <div class="align-left"><label style="color:red;font-size:25px;">*</label>password</div>
             <b-form-input type="password" v-model="empCategory.password"></b-form-input>
           </div>
         </b-col>
         <b-col>
           <div>
-            <div class="align-left">Start</div>
+            <div class="align-left"><label style="color:red;font-size:25px;"><br></label>Start</div>
             <b-form-input type="date" v-model="empCategory.start_date"></b-form-input>
           </div>
         </b-col>

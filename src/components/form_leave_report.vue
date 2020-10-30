@@ -6,7 +6,7 @@
           <b-col>
             <div>
               <div class="align-left">
-                Start
+               <label style="color:red;font-size:25px;">*</label> Start
               </div>
               <b-form-input type="datetime-local" v-model="leaveActivityReport.start_time"></b-form-input>
             </div>
@@ -14,7 +14,7 @@
           <b-col>
             <div>
               <div class="align-left">
-                End
+              <label style="color:red;font-size:25px;">*</label>  End
               </div>
               <b-form-input type="datetime-local" v-model="leaveActivityReport.end_time"></b-form-input>
             </div>
@@ -22,7 +22,7 @@
           <b-col>
             <div>
               <div class="align-left">
-                Amount
+              <label style="color:red;font-size:25px;">*</label>  Amount
               </div>
               <b-form-input type="text"></b-form-input>
             </div>
@@ -35,7 +35,7 @@
           <b-col>
             <div>
               <div class="align-left">
-                Leave type
+              <label style="color:red;font-size:25px;">*</label>  Leave type
               </div>
               <b-form-select ref="leave_report" v-model="selected" :options="options"></b-form-select>
               <!-- <b-form-input type="text" v-model="leaveActivityReport.leave_category"></b-form-input> -->
@@ -44,7 +44,7 @@
           <b-col>
             <div>
               <div class="align-left">
-                Reason
+              <label style="color:red;font-size:25px;">*</label>  Reason
               </div>
               <b-form-input type="text" v-model="leaveActivityReport.reason_for_leave"></b-form-input>
             </div>
