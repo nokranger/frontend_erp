@@ -183,8 +183,30 @@ export default {
   mounted () {
     // console.log('appid', this.appId)
     console.log(this.ArabicNumberToText(1001.23))
+    setInterval(this.checkExpire, 150000)
   },
   methods: {
+    checkPermission () {
+      if (JSON.parse(localStorage.getItem('jwt')) !== 'null') {
+        console.log('login agian')
+      } else {
+        console.log('login agian 2')
+      }
+    },
+    checkExpire () {
+      console.log('check expire')
+      if (Date.now() >= parseInt(localStorage.getItem('iat'), 10) + 600000) {
+        console.log('10min')
+        console.log('logout')
+        localStorage.removeItem('iat')
+        localStorage.removeItem('username')
+        localStorage.removeItem('jwt')
+        localStorage.removeItem('role')
+        location.replace('/')
+      } else {
+        console.log('not expire')
+      }
+    },
     selectMonth () {
       this.isBusy = !this.isBusy
       axios.post('http://127.0.0.1:4000/cash/get-month-prettycash', this.prettycash_month)

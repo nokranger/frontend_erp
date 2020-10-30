@@ -1,6 +1,7 @@
 .DS_Store
 node_modules
 lptt_erp
+runserve.bat
 /dist
 
 # local env files

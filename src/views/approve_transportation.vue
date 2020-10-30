@@ -104,8 +104,30 @@ export default {
     })).catch(e => {
       this.error.push(e)
     })
+    setInterval(this.checkExpire, 150000)
   },
   methods: {
+    checkPermission () {
+      if (JSON.parse(localStorage.getItem('jwt')) !== 'null') {
+        console.log('login agian')
+      } else {
+        console.log('login agian 2')
+      }
+    },
+    checkExpire () {
+      console.log('check expire')
+      if (Date.now() >= parseInt(localStorage.getItem('iat'), 10) + 600000) {
+        console.log('10min')
+        console.log('logout')
+        localStorage.removeItem('iat')
+        localStorage.removeItem('username')
+        localStorage.removeItem('jwt')
+        localStorage.removeItem('role')
+        location.replace('/')
+      } else {
+        console.log('not expire')
+      }
+    },
     // status 0 notapprove, 1 approve, 2 reject
     Papprove (index) {
       // console.log('test')
