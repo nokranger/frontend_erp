@@ -185,7 +185,6 @@ export default {
   },
   methods: {
     checkPermission () {
-      // console.log(VueJwtDecode.decode(JSON.parse(localStorage.getItem('jwt'))))
       if (JSON.parse(localStorage.getItem('jwt')) !== 'null') {
         console.log('login agian')
       } else {
