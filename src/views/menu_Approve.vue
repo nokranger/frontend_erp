@@ -57,7 +57,9 @@
 </template>
 <script>
 export default {
-  data () {},
+  data () {
+    return {}
+  },
   metaInfo () {
     return {
       title: 'Approve',

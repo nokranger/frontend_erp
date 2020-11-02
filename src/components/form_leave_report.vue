@@ -121,12 +121,6 @@ export default {
       ]
     }
   },
-  metaInfo () {
-    return {
-      title: 'Leave Report',
-      titleTemplate: '%s - LPTT'
-    }
-  },
   mounted () {
     this.leaveActivityReport.employee_id = JSON.parse(localStorage.getItem('username'))
   },
