@@ -57,7 +57,7 @@
               <b-button style="margin:1px" v-else-if="data.item.approve === 1 || data.item.approve === 2" size="sm" class="mr-2" variant="danger" disabled>Reject</b-button>
             </div>
             <div>
-              <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item.approve !== 2" size="sm" class="mr-2" variant="success" v-on:click="Papprove (data.item.actId)">
+              <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item.approve !== 2" size="sm" class="mr-2" variant="success" v-on:click="Papprove (data.item.actId, data.item.id, data.item.amount)">
                 Not Approve
               </b-button>
               <b-button style="margin:1px" v-else-if="data.item.approve === 1 || data.item.approve !== 2 && data.item.approve !== 0" size="sm"  class="mr-2" variant="primary" disabled>
@@ -130,6 +130,7 @@ export default {
           actId: data.leave_activity_report_id,
           leaveStartDate: moment(data.start_time).format('MMM Do YY'),
           leaveEndDate: moment(data.end_time).format('MMM Do YY'),
+          amount: data.amount,
           reason: data.reason_for_leave,
           approve: data.status
         }
@@ -141,14 +142,18 @@ export default {
     setInterval(this.checkExpire, 150000)
   },
   methods: {
-    Papprove (index) {
-      console.log(JSON.parse(localStorage.getItem('username')))
+    Papprove (index, empid, amount) {
+      // console.log(JSON.parse(localStorage.getItem('username')))
+      // console.log(amount)
       this.approve = {
         id: index,
+        emp_id: empid,
         status: 1,
         approve_id: JSON.parse(localStorage.getItem('username')),
+        amount: amount,
         approve_date: Date.now()
       }
+      console.log(this.approve)
       axios.patch('http://127.0.0.1:4000/leavear/approve-leave-report', this.approve).then(response => {
         this.event = response.data.result.map((data, i) => {
           return {
@@ -156,6 +161,7 @@ export default {
             actId: data.leave_activity_report_id,
             leaveStartDate: moment(data.start_time).format('MMM Do YY'),
             leaveEndDate: moment(data.end_time).format('MMM Do YY'),
+            amount: data.amount,
             reason: data.reason_for_leave,
             approve: data.status
           }
@@ -178,6 +184,7 @@ export default {
             actId: data.leave_activity_report_id,
             leaveStartDate: moment(data.start_time).format('MMM Do YY'),
             leaveEndDate: moment(data.end_time).format('MMM Do YY'),
+            amount: data.amount,
             reason: data.reason_for_leave,
             approve: data.status
           }
