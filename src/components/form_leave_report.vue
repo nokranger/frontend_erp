@@ -96,7 +96,7 @@
             <b-col>
               <br>
               <div>
-                <b-button id="send" style="width:30%" variant="primary" v-on:click="send ()"><i class="fas fa-upload"></i></b-button>
+                <b-button id="send" style="width:30%" variant="primary" v-on:click="test ()"><i class="fas fa-upload"></i></b-button>
               </div>
             </b-col>
           </b-row>
@@ -147,6 +147,23 @@ export default {
     this.check_leave()
   },
   methods: {
+    test () {
+      var minutes = 1000 * 60
+      var hours = minutes * 60
+      var days = hours * 24
+      // var years = days * 365
+      console.log('start', this.leaveActivityReport.start_time)
+      console.log('end', this.leaveActivityReport.end_time)
+      var st = new Date(this.leaveActivityReport.start_time).getTime()
+      var et = new Date(this.leaveActivityReport.end_time).getTime()
+      // var d1 = this.leaveActivityReport.start_time.getTime()
+      console.log('st', st)
+      console.log('et', et)
+      var diff = Math.abs(et - st)
+      console.log('diff', diff)
+      var timesubtract = parseInt(diff, 10)
+      console.log('timesubtract', timesubtract / days)
+    },
     send () {
       console.log('test')
       console.log(this.leaveActivityReport)
