@@ -57,7 +57,7 @@
               <b-button style="margin:1px" v-else-if="data.item.approve === 1 || data.item.approve === 2" size="sm" class="mr-2" variant="danger" disabled>Reject</b-button>
             </div>
             <div>
-              <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item.approve !== 2" size="sm" class="mr-2" variant="success" v-on:click="Papprove (data.item.actId, data.item.id, data.item.amount)">
+              <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item.approve !== 2" size="sm" class="mr-2" variant="success" v-on:click="Papprove (data.item.actId, data.item.id, data.item.amount, data.item.category )">
                 Not Approve
               </b-button>
               <b-button style="margin:1px" v-else-if="data.item.approve === 1 || data.item.approve !== 2 && data.item.approve !== 0" size="sm"  class="mr-2" variant="primary" disabled>
@@ -96,7 +96,7 @@ export default {
       currentPage: 1,
       perPage: 10,
       isBusy: false,
-      fields: [],
+      fields: ['id', 'actId', 'type', 'leaveStartDate', 'leaveEndDate', 'reason', 'approve'],
       localjwt: ''
     }
   },
@@ -128,11 +128,13 @@ export default {
         return {
           id: data.employee_id,
           actId: data.leave_activity_report_id,
+          type: data.leave_name,
           leaveStartDate: moment(data.start_time).format('MMM Do YY'),
           leaveEndDate: moment(data.end_time).format('MMM Do YY'),
           amount: data.amount,
           reason: data.reason_for_leave,
-          approve: data.status
+          approve: data.status,
+          category: data.leave_category
         }
       })
       this.totalRows = this.event.length
@@ -142,7 +144,7 @@ export default {
     setInterval(this.checkExpire, 150000)
   },
   methods: {
-    Papprove (index, empid, amount) {
+    Papprove (index, empid, amount, category) {
       // console.log(JSON.parse(localStorage.getItem('username')))
       // console.log(amount)
       this.approve = {
@@ -151,6 +153,7 @@ export default {
         status: 1,
         approve_id: JSON.parse(localStorage.getItem('username')),
         amount: amount,
+        category: category,
         approve_date: Date.now()
       }
       console.log(this.approve)
@@ -159,11 +162,13 @@ export default {
           return {
             id: data.employee_id,
             actId: data.leave_activity_report_id,
+            type: data.leave_name,
             leaveStartDate: moment(data.start_time).format('MMM Do YY'),
             leaveEndDate: moment(data.end_time).format('MMM Do YY'),
             amount: data.amount,
             reason: data.reason_for_leave,
-            approve: data.status
+            approve: data.status,
+            category: data.leave_category
           }
         })
         this.totalRows = this.event.length
@@ -182,11 +187,13 @@ export default {
           return {
             id: data.employee_id,
             actId: data.leave_activity_report_id,
+            type: data.leave_name,
             leaveStartDate: moment(data.start_time).format('MMM Do YY'),
             leaveEndDate: moment(data.end_time).format('MMM Do YY'),
             amount: data.amount,
             reason: data.reason_for_leave,
-            approve: data.status
+            approve: data.status,
+            category: data.leave_category
           }
         })
         this.totalRows = this.event.length

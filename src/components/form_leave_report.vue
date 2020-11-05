@@ -5,10 +5,15 @@
         <b-row>
           <b-col>
           </b-col>
-          <b-col></b-col>
           <b-col>
             <div class="align-left">
-              <label style="color:red;font-size:25px;">*</label>  วันลาที่เหลือ
+              <label style="color:red;font-size:25px;">*</label>  ลาป่วย
+            </div>
+            <div><b-input type="text" v-model="sick_leave" readonly></b-input></div>
+          </b-col>
+          <b-col>
+            <div class="align-left">
+              <label style="color:red;font-size:25px;">*</label>  ลากิจ
             </div>
             <div><b-input type="text" v-model="leaveCount" readonly></b-input></div>
           </b-col>
@@ -97,6 +102,7 @@ export default {
         status: 0
       },
       leaveCount: '',
+      sick_leave: '',
       selected: null,
       options: [
         {
@@ -107,9 +113,6 @@ export default {
         },
         {
           value: 2, text: 'ลาป่วย'
-        },
-        {
-          value: 3, text: 'ลาพักร้อน'
         }
       ]
     }
@@ -180,10 +183,11 @@ export default {
       }
       axios.post('http://127.0.0.1:4000/leavear/checkleave', emp).then(response => {
         this.leaveCount = response.data.result[0].leave_activity
+        this.sick_leave = response.data.result[0].leave_sick
         console.log('res', this.leaveCount)
-        if (this.leaveCount <= 0 || this.leaveCount === '') {
+        if ((this.leaveCount <= 0 && this.sick_leave <= 0) || this.leaveCount === '') {
           this.dis_form()
-        } else if (this.leaveCount > 0 || this.leaveCount !== '') {
+        } else if ((this.leaveCount > 0 && this.sick_leave >= 0) || this.leaveCount !== '') {
           this.en_form()
         }
       })
