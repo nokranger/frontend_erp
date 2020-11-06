@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-bind:style="{background: colors, width: '100%', height: heights}">
+  <div id="app" v-bind:style="cssProps">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" integrity="sha384-3AB7yXWz4OeoZcPbieVW64vVXEwADiYyAEhwilzWsLw+9FgqpyjjStpPnpBO8o8S" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <div v-if="pathname === 'login'">
@@ -23,7 +23,15 @@ export default {
       imagecolor: 'linear-gradient(to top, #051937, #0a4066, #006c96, #009cc3, #12cfeb)',
       // background-image: linear-gradient(to bottom, #051937, #0a4066, #006c96, #009cc3, #12cfeb);
       heights: '1020px',
-      pathname: ''
+      pathname: '',
+      cssProps: {
+        background: 'radial-gradient(circle, rgba(20,94,238,0.6867121848739496) 0%, rgba(173,245,255,1) 100%)',
+        width: '100%',
+        maxWidth: '100%',
+        backgroundPosition: 'center',
+        height: '1020px',
+        backgroundSize: 'cover'
+      }
     }
   },
   mounted () {
@@ -32,11 +40,14 @@ export default {
       this.pathname = 'login'
       console.log('login')
     } else if (window.location.pathname === '/print') {
-      // var pp = window.location.pathname
-      // var res = pp.split(' / ')
-      // console.log(typeof(pp))
       this.colorlptt = 'white'
       console.log('login')
+    } else if (window.location.pathname === '/approveleave') {
+      this.cssProps.height = '1270px'
+    } else if (window.location.pathname === '/approvetrans') {
+      this.cssProps.height = '1270px'
+    } else if (window.location.pathname === '/approvepettycash') {
+      this.cssProps.height = '1270px'
     }
   }
 }
