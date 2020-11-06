@@ -11,15 +11,6 @@
       <b-container>
         <b-row>
           <b-col class="my-1">
-          <!-- <div style="margin-top:-9.5px;">
-            <b-form-select
-              v-model="perPage"
-              id="perPageSelect"
-              size="sm"
-              :options="pageOptions"
-            ></b-form-select>
-          </div> -->
-          <!-- <b-input></b-input> -->
           <b-pagination
             v-model="currentPage"
             :total-rows="totalRows"
@@ -30,14 +21,6 @@
           ></b-pagination>
         </b-col>
         <b-col class="my-1">
-          <!-- <b-pagination
-            v-model="currentPage"
-            :total-rows="totalRows"
-            :per-page="perPage"
-            align="fill"
-            size="sm"
-            class="my-0"
-          ></b-pagination> -->
         </b-col>
         <b-col class="my-1">
           <b-form-input
@@ -100,7 +83,6 @@
 import axios from 'axios'
 import moment from 'moment'
 import leaveuser from '../components/approve_leave_user'
-// import aa from '../../../../../VueJS/LPTT/frontend_erp/src/img/upload'
 export default {
   components: {
     'app-leaveuser': leaveuser
@@ -131,7 +113,6 @@ export default {
   },
   created () {
     this.localjwt = JSON.parse(localStorage.getItem('role'))
-    // console.log('local', (this.localjwt))
     if (this.localjwt === '0') {
       console.log('localadmin', (this.localjwt))
     }
@@ -165,8 +146,6 @@ export default {
   },
   methods: {
     Papprove (index, empid, amount, category) {
-      // console.log(JSON.parse(localStorage.getItem('username')))
-      // console.log(amount)
       this.approve = {
         id: index,
         emp_id: empid,
