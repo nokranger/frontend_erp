@@ -71,6 +71,26 @@
             <div v-else-if="data.item.approve === 2">Rejected</div>
           </template>
         </b-table>
+        <div>
+          <b-modal id="modal-sick" size="sm" hide-footer>
+            <b-row>
+              <b-col>
+                <div class="d-block text-center">ลาป่วยหมด</div>
+              </b-col>
+            </b-row>
+          </b-modal>
+        </div>
+        <div>
+          <b-modal id="modal-leave" size="sm" hide-footer>
+            <b-row>
+              <b-col>
+                <div>
+                  <div class="d-block text-center">ลากิจหมด</div>
+                </div>
+              </b-col>
+            </b-row>
+          </b-modal>
+        </div>
       </b-container>
     </div>
   </div>
@@ -161,8 +181,10 @@ export default {
         console.log('res0', response.data.result)
         if (response.data.result === 1) {
           console.log('ลากิจหมด')
+          this.$root.$emit('bv::show::modal', 'modal-leave', '#btnShow')
         } else if (response.data.result === 2) {
           console.log('ลาป่วยหมด')
+          this.$root.$emit('bv::show::modal', 'modal-sick', '#btnShow')
         } else {
           console.log('ลาได้')
           this.event = response.data.result.map((data, i) => {
