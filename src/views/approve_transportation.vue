@@ -1,5 +1,8 @@
 <template>
-  <div>
+<div v-if="localjwt == 1">
+  <app-transuser></app-transuser>
+</div>
+  <div v-else-if="localjwt == 0">
     <div style="font-size:30px;">
       Transportation
       <br>
@@ -61,7 +64,11 @@
 </template>
 <script>
 import axios from 'axios'
+import transuser from '../components/approve_transportation_user'
 export default {
+  components: {
+    'app-transuser': transuser
+  },
   data () {
     return {
       event: [],
@@ -84,7 +91,7 @@ export default {
     this.localjwt = JSON.parse(localStorage.getItem('role'))
     // console.log('local', (this.localjwt))
     if (this.localjwt === '0') {
-      console.log('local', (this.localjwt))
+      console.log('localtrans', (this.localjwt))
     }
   },
   updated () {},
