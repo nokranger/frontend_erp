@@ -15,6 +15,7 @@ import PettyCash from '../views/petty_cash.vue'
 import Profile from '../views/profile.vue'
 import MenuRecord from '../views/menu_record.vue'
 import MenuApprove from '../views/menu_Approve.vue'
+import Working from '../components/working.vue'
 // import aaa from '../../lptt_erp/public/uploads/prettycash'
 
 import Meta from 'vue-meta'
@@ -105,6 +106,11 @@ const routes = [
     path: '/menuapprove',
     name: 'menuapprove',
     component: MenuApprove
+  },
+  {
+    path: '/working',
+    name: 'working',
+    component: Working
   },
   {
     path: '*',

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Form</h1>
+    <h1>Request Forms</h1>
     <b-container fluid="xl">
       <br>
       <b-container>
@@ -62,7 +62,7 @@ export default {
   },
   metaInfo () {
     return {
-      title: 'Form',
+      title: 'Request forms',
       titleTemplate: '%s - LPTT'
     }
   },

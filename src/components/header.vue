@@ -4,7 +4,7 @@
     <div id="mySidenav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" v-on:click="openNav ()">&times;</a>
       <a class="align-left" href="/dashboard"><i class="fas fa-home"></i> Home</a>
-      <a class="align-left" href="/menurecord"><i class="fas fa-file-alt"></i> Record</a>
+      <a class="align-left" href="/menurecord"><i class="fas fa-file-alt"></i> Request forms</a>
       <!-- <a class="align-left" href="/transreport"><i class="fas fa-file-alt"></i> Transportation record</a>
       <a class="align-left" href="/pettycash"><i class="fas fa-file-alt"></i> Pettycash record</a> -->
       <a class="align-left" href="/menuapprove"><i class="fas fa-calendar-check"></i> Approve</a>
