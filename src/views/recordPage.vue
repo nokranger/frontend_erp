@@ -49,7 +49,11 @@ export default {
     }
   },
   beforeCreate () {
-
+    var localjwt = localStorage.getItem('jwt')
+    if (localjwt !== null) {
+    } else {
+      location.replace('/')
+    }
   },
   created () {
     this.localjwt = JSON.parse(localStorage.getItem('role'))

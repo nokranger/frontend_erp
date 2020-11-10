@@ -165,7 +165,11 @@ export default {
     }
   },
   beforeCreate () {
-
+    var localjwt = localStorage.getItem('jwt')
+    if (localjwt !== null) {
+    } else {
+      location.replace('/')
+    }
   },
   created () {
     this.localjwt = JSON.parse(localStorage.getItem('role'))
@@ -224,6 +228,7 @@ export default {
               approve: data.status
             }
           })
+          this.isBusy = false
         }).catch(e => {
           // if (e.response.status === 404) {
           //   console.log('Not found')

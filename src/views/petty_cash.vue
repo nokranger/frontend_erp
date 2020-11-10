@@ -12,6 +12,14 @@ export default {
   data () {
     return {}
   },
+  beforeCreate () {
+    var localjwt = localStorage.getItem('jwt')
+    if (localjwt !== null) {
+    } else {
+      location.replace('/')
+    }
+  },
+  created () {},
   metaInfo () {
     return {
       title: 'Petty Cash',

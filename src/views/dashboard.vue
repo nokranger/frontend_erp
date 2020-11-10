@@ -119,7 +119,8 @@ export default {
       this.benz = response.data.result[0]._trans_to_benz
       this.lptt = response.data.result[0]._trans_to_lptt
       this.toyota = response.data.result[0]._trans_to_toyota
-      this.pie(this.benz, this.lptt, this.toyota)
+      this.tbs = response.data.result[0]._trans_to_tbs
+      this.pie(this.benz, this.lptt, this.toyota, this.tbs)
       console.log('res', this.test)
     })
     setInterval(this.checkExpire, 150000)
@@ -147,16 +148,16 @@ export default {
         console.log('not expire')
       }
     },
-    pie (benz, lptt, toyota) {
+    pie (benz, lptt, toyota, tbs) {
       console.log('pie', benz)
       var ctx = document.getElementById('my-chartpie')
       Chart = new Chart(ctx, {
         type: 'pie',
         data: {
-          labels: ['Benz', 'Toyota', 'LPTT'],
+          labels: ['Benz', 'LPTT', 'TBS'],
           datasets: [{
             label: 'Page A',
-            data: [benz, lptt, toyota],
+            data: [benz, lptt, tbs],
             backgroundColor: ['#3e95cd', '#8e5ea2', '#3cba9f', '#e8c3b9']
           }]
         },
@@ -183,13 +184,6 @@ export default {
             data: [5, 3, 10, 7],
             borderColor: '#B277DE',
             backgroundColor: '#B277DE',
-            fill: false
-          },
-          {
-            label: 'ลาพักร้อน',
-            data: [20, 25, 7, 12],
-            borderColor: '#3e95cd',
-            backgroundColor: '#3e95cd',
             fill: false
           }]
         },

@@ -19,6 +19,14 @@ export default {
   data () {
     return {}
   },
+  beforeCreate () {
+    var localjwt = localStorage.getItem('jwt')
+    if (localjwt !== null) {
+    } else {
+      location.replace('/')
+    }
+  },
+  created () {},
   mounted () {
     setInterval(this.checkExpire, 150000)
   },

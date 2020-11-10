@@ -127,7 +127,13 @@ export default {
       titleTemplate: '%s - LPTT'
     }
   },
-  beforeCreate () {},
+  beforeCreate () {
+    var localjwt = localStorage.getItem('jwt')
+    if (localjwt !== null) {
+    } else {
+      location.replace('/')
+    }
+  },
   created () {
     this.localjwt = JSON.parse(localStorage.getItem('role'))
     if (this.localjwt === '0') {
