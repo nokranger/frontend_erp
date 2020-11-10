@@ -73,9 +73,11 @@
 // import VueJwtDecode from 'vue-jwt-decode'
 import axios from 'axios'
 import Chart from 'chart.js'
+import apiURL from '../views/connectionAPI'
 export default {
   data () {
     return {
+      apiURL: apiURL,
       lpttcolor: 'white',
       isTrue: true,
       symbols: '&#9776;',
@@ -95,9 +97,23 @@ export default {
     }
   },
   beforeCreate () {
+    // var localjwt = localStorage.getItem('jwt')
+    // if (localjwt !== null) {
+    //   axios.all([axios.get('http://192.168.1.33:4000/emp/get-last-emp'), axios.get('http://192.168.1.33:4000/leavear/get-last-record'), axios.get('http://192.168.1.33:4000/trans/get-last-trans')]).then(axios.spread((resulte, resultl, resultt) => {
+    //     this.employee = resulte.data.result
+    //     this.leave = resultl.data.result
+    //     this.trans = resultt.data.result
+    //   })).catch(e => {
+    //     this.error.push(e)
+    //   })
+    // } else {
+    //   location.replace('/')
+    // }
+  },
+  created () {
     var localjwt = localStorage.getItem('jwt')
     if (localjwt !== null) {
-      axios.all([axios.get('http://127.0.0.1:4000/emp/get-last-emp'), axios.get('http://127.0.0.1:4000/leavear/get-last-record'), axios.get('http://127.0.0.1:4000/trans/get-last-trans')]).then(axios.spread((resulte, resultl, resultt) => {
+      axios.all([axios.get(this.apiURL + '/emp/get-last-emp'), axios.get(this.apiURL + '/leavear/get-last-record'), axios.get(this.apiURL + '/trans/get-last-trans')]).then(axios.spread((resulte, resultl, resultt) => {
         this.employee = resulte.data.result
         this.leave = resultl.data.result
         this.trans = resultt.data.result
@@ -107,21 +123,18 @@ export default {
     } else {
       location.replace('/')
     }
-  },
-  created () {
     this.checkExpire()
   },
   updated () {
   },
   mounted () {
-    axios.get('http://127.0.0.1:4000/trans/getstation').then(response => {
+    axios.get(this.apiURL + '/trans/getstation').then(response => {
       console.log(response)
       this.benz = response.data.result[0]._trans_to_benz
       this.lptt = response.data.result[0]._trans_to_lptt
       this.toyota = response.data.result[0]._trans_to_toyota
       this.tbs = response.data.result[0]._trans_to_tbs
       this.pie(this.benz, this.lptt, this.toyota, this.tbs)
-      console.log('res', this.test)
     })
     setInterval(this.checkExpire, 150000)
     this.line()

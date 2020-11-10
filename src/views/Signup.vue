@@ -97,10 +97,12 @@
 </template>
 <script>
 import axios from 'axios'
+import apiURL from '../views/connectionAPI'
 import md5 from 'md5'
 export default {
   data () {
     return {
+      apiURL: apiURL,
       show: true,
       selected: null,
       options: [
@@ -180,7 +182,7 @@ export default {
       formData.set('data', JSON.stringify(this.empCategory))
       formData.append('file', this.empCategory.employee_pic)
       console.log((this.empCategory))
-      axios.post('http://127.0.0.1:4000/emp/post-emp', formData).then(response => {
+      axios.post(this.apiURL + '/emp/post-emp', formData).then(response => {
         console.log(response)
         this.empCategory = {
           employee_pic: null,

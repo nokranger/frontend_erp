@@ -108,6 +108,7 @@
 </template>
 <script>
 import axios from 'axios'
+import apiURL from '../views/connectionAPI'
 import moment from 'moment'
 import pdfMake from 'pdfmake/build/pdfmake'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
@@ -129,6 +130,7 @@ pdfMake.fonts = {
 export default {
   data () {
     return {
+      apiURL: apiURL,
       isBusy: false,
       employee_id: [],
       event: [],
@@ -213,7 +215,7 @@ export default {
     },
     selectMonth () {
       this.isBusy = !this.isBusy
-      axios.post('http://127.0.0.1:4000/cash/get-month-prettycash', this.prettycash_month)
+      axios.post(this.apiURL + '/cash/get-month-prettycash', this.prettycash_month)
         .then(response => {
           this.event = response.data.result.map((data, i) => {
             this.remaining = this.remaining - data.amount
@@ -246,7 +248,7 @@ export default {
         to: this.prettycash_month.to,
         approve_id: JSON.parse(localStorage.getItem('username'))
       }
-      axios.patch('http://127.0.0.1:4000/cash/approve-prettycash', this.approve).then(response => {
+      axios.patch(this.apiURL + '/cash/approve-prettycash', this.approve).then(response => {
         // this.remaining = 20000
         this.event = response.data.result.map((data, i) => {
           this.remaining = this.remaining - data.amount
@@ -267,7 +269,7 @@ export default {
       // this.$refs.table.refresh()
     },
     updateApprove () {
-      axios.post('http://127.0.0.1:4000/cash/get-month-prettycash', this.prettycash_month)
+      axios.post(this.apiURL + '/cash/get-month-prettycash', this.prettycash_month)
       console.log('done select 2')
         .then(response => {
           // console.log(response.data.result)
@@ -294,7 +296,7 @@ export default {
         to: this.prettycash_month.to,
         approve_id: JSON.parse(localStorage.getItem('username'))
       }
-      axios.patch('http://127.0.0.1:4000/cash/reject-prettycash', this.reject).then(response => {
+      axios.patch(this.apiURL + '/cash/reject-prettycash', this.reject).then(response => {
         // this.remaining = 20000
         this.event = response.data.result.map((data, i) => {
           this.remaining = this.remaining - data.amount
@@ -337,7 +339,7 @@ export default {
       pdfMake.createPdf(docDefinition).open()
     },
     pdfPreview () {
-      axios.post('http://127.0.0.1:4000/cash/pdf', this.prettycash_month).then(response => {
+      axios.post(this.apiURL + '/cash/pdf', this.prettycash_month).then(response => {
         this.dataTotable2 = response.data.result
         console.log('response', response.data)
         this.dataTotable2 = response.data.result.map((data, i) => {

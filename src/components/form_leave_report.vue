@@ -85,9 +85,11 @@
 </template>
 <script>
 import axios from 'axios'
+import apiURL from '../views/connectionAPI'
 export default {
   data () {
     return {
+      apiURL: apiURL,
       file: null,
       leaveActivityReport: {
         employee_id: '',
@@ -127,7 +129,7 @@ export default {
     send () {
       // this.check_amount_leave()
       this.leaveActivityReport.leave_category = this.$refs.leave_report.localValue
-      axios.post('http://127.0.0.1:4000/leavear/post-la_report', this.leaveActivityReport).then(response => {
+      axios.post(this.apiURL + '/leavear/post-la_report', this.leaveActivityReport).then(response => {
         console.log(response)
         console.log('1')
         this.leaveActivityReport = {
@@ -181,7 +183,7 @@ export default {
       const emp = {
         id: JSON.parse(localStorage.getItem('username'))
       }
-      axios.post('http://127.0.0.1:4000/leavear/checkleave', emp).then(response => {
+      axios.post(this.apiURL + '/leavear/checkleave', emp).then(response => {
         this.leaveCount = response.data.result[0].leave_activity
         this.sick_leave = response.data.result[0].leave_sick
         console.log('res', this.leaveCount)

@@ -103,10 +103,12 @@
 </template>
 <script>
 import axios from 'axios'
+import apiURL from '../views/connectionAPI'
 import md5 from 'md5'
 export default {
   data () {
     return {
+      apiURL: apiURL,
       show: false,
       showP: false,
       profile: [],
@@ -133,7 +135,7 @@ export default {
     this.data = {
       employee_id: JSON.parse(localStorage.getItem('username'))
     }
-    axios.post('http://localhost:4000/emp/settingprofileadmin', this.data).then(response => {
+    axios.post(this.apiURL + '/emp/settingprofileadmin', this.data).then(response => {
       this.profile = response.data.result
       this.profiles = response.data.result.map((data, i) => {
         return {
@@ -166,7 +168,7 @@ export default {
         email: this.$refs[email].localValue
       }
       console.log(this.updateprofile)
-      axios.patch('http://127.0.0.1:4000/emp/updateusersadmin', this.updateprofile).then(response => {
+      axios.patch(this.apiURL + '/emp/updateusersadmin', this.updateprofile).then(response => {
         console.log(response)
         this.profile = response.data.result
       })
@@ -179,7 +181,7 @@ export default {
         password: md5(this.$refs[password].localValue),
         role: this.$refs[role].localValue
       }
-      axios.patch('http://127.0.0.1:4000/emp/adminchangepassword', this.updateuser).then(response => {
+      axios.patch(this.apiURL + '/emp/adminchangepassword', this.updateuser).then(response => {
         console.log(response)
         this.profiles = response.data.result.map((data, i) => {
           return {

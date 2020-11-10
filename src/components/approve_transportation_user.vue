@@ -44,9 +44,11 @@
 </template>
 <script>
 import axios from 'axios'
+import apiURL from '../views/connectionAPI'
 export default {
   data () {
     return {
+      apiURL: apiURL,
       event: [],
       approve: [],
       employee_id: [],
@@ -69,7 +71,7 @@ export default {
     this.employee_id = {
       id: JSON.parse(localStorage.getItem('username'))
     }
-    axios.post('http://127.0.0.1:4000/trans/get-all-trans-user', this.employee_id).then(response => {
+    axios.post(this.apiURL + '/trans/get-all-trans-user', this.employee_id).then(response => {
       this.event = response.data.result.map((data, i) => {
         return {
           trans_id: data.trans_id,

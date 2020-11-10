@@ -56,11 +56,13 @@
 
 <script>
 import axios from 'axios'
+import apiURL from '../views/connectionAPI'
 import md5 from 'md5'
 import VueJwtDecode from 'vue-jwt-decode'
 export default {
   data () {
     return {
+      apiURL: apiURL,
       form: {
         employee_id: '',
         password: ''
@@ -81,7 +83,8 @@ export default {
       console.log('re login')
     }
   },
-  created () {},
+  created () {
+  },
   beforeUpdate () {},
   updated () {},
   beforeMount () {},
@@ -92,7 +95,7 @@ export default {
       this.form.employee_id = this.form.employee_id.toUpperCase()
       this.form.password = md5(this.form.password)
       // console.log(this.data)
-      axios.post('http://localhost:4000/emp/login', this.form)
+      axios.post(this.apiURL + '/emp/login', this.form)
         .then(response => {
           console.log(VueJwtDecode.decode(response.data))
           const jwt = VueJwtDecode.decode(response.data)

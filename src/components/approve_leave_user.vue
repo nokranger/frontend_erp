@@ -42,11 +42,13 @@
 </template>
 <script>
 import axios from 'axios'
+import apiURL from '../views/connectionAPI'
 import moment from 'moment'
 // import aa from '../../../../../VueJS/LPTT/frontend_erp/src/img/upload'
 export default {
   data () {
     return {
+      apiURL: apiURL,
       employee_id: [],
       event: [],
       approve: [],
@@ -80,7 +82,7 @@ export default {
     this.approve = {
       id: JSON.parse(localStorage.getItem('username'))
     }
-    axios.post('http://127.0.0.1:4000/leavear/get-all-la_report-user', this.approve).then(response => {
+    axios.post(this.apiURL + '/leavear/get-all-la_report-user', this.approve).then(response => {
       this.event = response.data.result.map((data, i) => {
         return {
           id: data.employee_id,

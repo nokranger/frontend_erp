@@ -97,9 +97,11 @@
 </template>
 <script>
 import axios from 'axios'
+import apiURL from '../views/connectionAPI'
 export default {
   data () {
     return {
+      apiURL: apiURL,
       transportation: {
         employee_id: '',
         trans_date: '',
@@ -156,7 +158,7 @@ export default {
         trans_values: this.transportation.trans_values,
         status: 0
       }
-      axios.post('http://127.0.0.1:4000/trans/post-trans', this.trans).then(response => {
+      axios.post(this.apiURL + '/trans/post-trans', this.trans).then(response => {
         console.log(response)
         this.transportation = {
           employee_id: JSON.parse(localStorage.getItem('username')),

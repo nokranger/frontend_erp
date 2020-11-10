@@ -8,10 +8,12 @@
 
 <script>
 import axios from 'axios'
+import apiURL from '../views/connectionAPI'
 export default {
   name: 'imageUpload',
   data () {
     return {
+      apiURL: apiURL,
       previewImage: null,
       image: null
     }
@@ -34,7 +36,7 @@ export default {
       formData.set('data', JSON.stringify(aa))
       formData.append('file', this.image)
       console.log(this.image)
-      axios.post('http://localhost:4000/leavear/upload', formData).then(response => {
+      axios.post(this.apiURL + '/leavear/upload', formData).then(response => {
         console.log(response)
       })
     },
@@ -42,7 +44,7 @@ export default {
       const fd = new FormData()
       console.log(this.previewImage)
       fd.append('image', this.previewImage)
-      axios.post('http://localhost:4000/leavear/upload', fd).then(response => {
+      axios.post(this.apiURL + '/leavear/upload', fd).then(response => {
         console.log(response)
       })
     }

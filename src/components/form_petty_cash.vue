@@ -86,9 +86,11 @@
 <script>
 // import VueJwtDecode from 'vue-jwt-decode'
 import axios from 'axios'
+import apiURL from '../views/connectionAPI'
 export default {
   data () {
     return {
+      apiURL: apiURL,
       prettycash: {
         date: '',
         employee_id: '',
@@ -119,7 +121,7 @@ export default {
       formData.set('data', JSON.stringify(this.prettycash))
       formData.append('file', this.prettycash.picture)
       console.log(this.prettycash.picture)
-      axios.post('http://localhost:4000/cash/post-prettycash', formData).then(respone => {
+      axios.post(this.apiURL + '/cash/post-prettycash', formData).then(respone => {
         console.log(respone)
         this.prettycash = {
           date: '',

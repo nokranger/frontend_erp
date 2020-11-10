@@ -104,6 +104,7 @@
 </template>
 <script>
 import axios from 'axios'
+import apiURL from '../views/connectionAPI'
 import account from '../components/profile_admin'
 import md5 from 'md5'
 export default {
@@ -112,6 +113,7 @@ export default {
   },
   data () {
     return {
+      apiURL: apiURL,
       showu: false,
       showpf: false,
       localjwt: '',
@@ -143,7 +145,7 @@ export default {
         employee_id: JSON.parse(localStorage.getItem('username'))
       }
       console.log('username', this.data.employee_id)
-      axios.post('http://localhost:4000/emp/settingprofile', this.data).then(response => {
+      axios.post(this.apiURL + '/emp/settingprofile', this.data).then(response => {
         this.profile = response.data.result
         console.log('pic', this.profile[0].employee_pic.replace(/\\/g, '/'))
       })
@@ -186,7 +188,7 @@ export default {
         email: this.profile[0].employee_email
       }
       console.log(this.updateprofile)
-      axios.patch('http://127.0.0.1:4000/emp/updateusers', this.updateprofile).then(response => {
+      axios.patch(this.apiURL + '/emp/updateusers', this.updateprofile).then(response => {
         console.log(response)
         this.profile = response.data.result
       })
@@ -198,7 +200,7 @@ export default {
         id: JSON.parse(localStorage.getItem('username')),
         password: md5(this.$refs.cpassword[0].localValue)
       }
-      axios.patch('http://127.0.0.1:4000/emp/changepassword', this.updatepassword).then(response => {
+      axios.patch(this.apiURL + '/emp/changepassword', this.updatepassword).then(response => {
         console.log(response)
         this.profile = response.data.result
       })

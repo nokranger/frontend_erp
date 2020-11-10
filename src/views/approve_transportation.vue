@@ -64,6 +64,7 @@
 </template>
 <script>
 import axios from 'axios'
+import apiURL from '../views/connectionAPI'
 import transuser from '../components/approve_transportation_user'
 export default {
   components: {
@@ -71,6 +72,7 @@ export default {
   },
   data () {
     return {
+      apiURL: apiURL,
       event: [],
       approve: [],
       rejects: [],
@@ -102,7 +104,7 @@ export default {
   },
   updated () {},
   mounted () {
-    axios.all([axios.get('http://127.0.0.1:4000/trans/get-all-trans')]).then(axios.spread((restrans) => {
+    axios.all([axios.get(this.apiURL + '/trans/get-all-trans')]).then(axios.spread((restrans) => {
       this.event = restrans.data.result.map((data, i) => {
         return {
           trans_id: data.trans_id,
@@ -150,7 +152,7 @@ export default {
         approve_id: JSON.parse(localStorage.getItem('username'))
       }
       axios({
-        url: 'http://127.0.0.1:4000/trans/approve-transportation',
+        url: this.apiURL + '/trans/approve-transportation',
         method: 'patch',
         data: this.approve
       }).then(response => {
@@ -177,7 +179,7 @@ export default {
         approve_id: JSON.parse(localStorage.getItem('username'))
       }
       axios({
-        url: 'http://127.0.0.1:4000/trans//reject-transportation',
+        url: this.apiURL + '/trans//reject-transportation',
         method: 'patch',
         data: this.rejects
       }).then(response => {
