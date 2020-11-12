@@ -173,6 +173,56 @@
                     </div>
                   </div>
                 </div>
+                <div>
+                  <b-button style="width:90%;margin:5px;" v-b-modal.modal-lg>Add content</b-button>
+                  <b-modal id="modal-lg" size="lg" title="Extra Large Modal" hide-header hide-footer>
+                    <h5>
+                      Content
+                    </h5>
+                    <b-container>
+                      <b-row>
+                        <b-col>
+                          <div class="align-center" style="margin:5px;">
+                            Title
+                          </div>
+                        </b-col>
+                        <b-col>
+                          <div class="align-left">
+                            <b-input style="margin:5px;" placeholder="Title"></b-input>
+                          </div>
+                        </b-col>
+                        <b-col></b-col>
+                      </b-row>
+                      <b-row>
+                        <b-col>
+                          <div class="align-center" style="margin:5px;">
+                            Detail
+                          </div>
+                        </b-col>
+                        <b-col>
+                          <div class="align-left">
+                            <b-textarea style="margin:5px;" placeholder="Detail"></b-textarea>
+                          </div>
+                        </b-col>
+                        <b-col></b-col>
+                      </b-row>
+                      <b-row>
+                        <b-col>
+                          <div class="align-center" style="margin:5px;">
+                            Priority
+                          </div>
+                        </b-col>
+                        <b-col>
+                          <div class="align-left">
+                            <b-form-select style="margin:5px;" v-model="selected" :options="options"></b-form-select>
+                          </div>
+                        </b-col>
+                        <b-col></b-col>
+                      </b-row>
+                    </b-container>
+                  </b-modal>
+                </div>
+                <br>
               </div>
             </b-col>
             <b-col>
@@ -284,7 +334,15 @@
 <script>
 export default {
   data () {
-    return {}
+    return {
+      selected: null,
+      options: [
+        { value: null, text: 'Please select an option', disabled: true },
+        { value: '0', text: 'Low' },
+        { value: '1', text: 'Normal' },
+        { value: '2', text: 'High' }
+      ]
+    }
   },
   beforeCreate () {
     // var localjwt = localStorage.getItem('jwt')
