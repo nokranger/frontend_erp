@@ -64,9 +64,15 @@
                         <div style="display: inline-block;margin:5px;">
                           Reply
                         </div>
-                        <b-modal id="modal-1" title="BootstrapVue" size="lg" hide-footer>
+                        <b-modal id="modal-1" title="Content" size="lg" hide-footer>
                           <b-container>
                             <div>
+                              <div style="display: inline-block;border-radius: 5px;border: thin solid #888;width: 50px;height: 20px;margin:5px;margin-top:10px;background-color:#FF3A3A">
+                              </div>
+                              <div style="display: inline-block;border-radius: 5px;border: thin solid #888;width: 50px;height: 20px;margin:5px;margin-top:10px;background-color:#0091C7">
+                              </div>
+                              <div style="display: inline-block;border-radius: 5px;border: thin solid #888;width: 50px;height: 20px;margin:5px;margin-top:10px;background-color:#FDFF69">
+                              </div>
                               <h5>
                                 Detail
                               </h5>
@@ -219,6 +225,35 @@
                         </b-col>
                         <b-col></b-col>
                       </b-row>
+                      <b-row>
+                        <b-col>
+                          <div class="align-center" style="margin:5px;">
+                            Permission
+                          </div>
+                        </b-col>
+                        <b-col>
+                          <div class="align-left">
+                            <b-form-select style="margin:5px;" v-model="selected2" :options="options2"></b-form-select>
+                          </div>
+                        </b-col>
+                        <b-col></b-col>
+                      </b-row>
+                      <b-row>
+                        <b-col>
+                          <div class="align-center" style="margin:5px;">
+                            Member
+                          </div>
+                        </b-col>
+                        <b-col>
+                          <div class="align-left">
+                            <b-form-select style="margin:5px;" v-model="selected3" :options="options3"></b-form-select>
+                          </div>
+                        </b-col>
+                        <b-col></b-col>
+                      </b-row>
+                      <div class="align-center">
+                        <b-button>Add content</b-button>
+                      </div>
                     </b-container>
                   </b-modal>
                 </div>
@@ -341,6 +376,20 @@ export default {
         { value: '0', text: 'Low' },
         { value: '1', text: 'Normal' },
         { value: '2', text: 'High' }
+      ],
+      selected2: null,
+      options2: [
+        { value: null, text: 'Please select an option', disabled: true },
+        { value: '0', text: 'Only me' },
+        { value: '1', text: 'All people' },
+        { value: '2', text: 'Some People' }
+      ],
+      selected3: null,
+      options3: [
+        { value: null, text: 'Please select an option', disabled: true },
+        { value: '0', text: 'ADMIN' },
+        { value: '1', text: 'Anusorn' },
+        { value: '2', text: 'Kittanet' }
       ]
     }
   },
