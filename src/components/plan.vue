@@ -64,7 +64,7 @@
                         <div style="display: inline-block;margin:5px;">
                           Reply
                         </div>
-                        <b-modal id="modal-1" title="BootstrapVue" hide-footer>
+                        <b-modal id="modal-1" title="BootstrapVue" size="lg" hide-footer>
                           <b-container>
                             <div>
                               <h5>
@@ -95,7 +95,7 @@
                                     <div>12 November 2020</div>
                                   </div>
                                 </div>
-                                <div style="border-radius: 5px;border: thin solid #888;margin:5px;clear:both;float:left;">
+                                <div style="border-radius: 5px;border: thin solid #888;margin:5px;">
                                   <div style="margin:5px;">
                                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis voluptates molestiae error similique dignissimos nostrum quaerat commodi voluptate reiciendis doloremque veniam possimus aut, animi laborum repellendus deleniti. Cumque, non sapiente.
                                   </div>
@@ -113,7 +113,7 @@
                                     <div>11 November 2020</div>
                                   </div>
                                 </div>
-                                <div style="border-radius: 5px;border: thin solid #888;margin:5px;clear:both;float:left;">
+                                <div style="border-radius: 5px;border: thin solid #888;margin:5px;">
                                   <div style="margin:5px;">
                                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis voluptates molestiae error similique dignissimos nostrum quaerat commodi voluptate reiciendis doloremque veniam possimus aut, animi laborum repellendus deleniti. Cumque, non sapiente.
                                   </div>
@@ -131,7 +131,7 @@
                                     <div>10 November 2020</div>
                                   </div>
                                 </div>
-                                <div style="border-radius: 5px;border: thin solid #888;margin:5px;clear:both;float:left;">
+                                <div style="border-radius: 5px;border: thin solid #888;margin:5px;">
                                   <div style="margin:5px;">
                                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis voluptates molestiae error similique dignissimos nostrum quaerat commodi voluptate reiciendis doloremque veniam possimus aut, animi laborum repellendus deleniti. Cumque, non sapiente.
                                   </div>
