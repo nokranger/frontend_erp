@@ -42,7 +42,7 @@
                     Content
                   </div>
                   <div style="height: 150px;width:100%;overflow-y: scroll;">
-                    <div style="border-radius: 5px;border: thin solid #888;">
+                    <div style="border-radius: 5px;border: thin solid #888;cursor: pointer;"  v-b-modal.modal-1>
                       <div class="align-left">
                         <div style="display: inline-block;border-radius: 5px;border: thin solid #888;width: 50px;height: 20px;margin:5px;margin-top:10px;background-color:#FF3A3A">
                         </div>
@@ -54,8 +54,96 @@
                       <div class="align-left" style="margin:5px;text-indent: 30px;white-space: nowrap;width: 250px;overflow: hidden;text-overflow: ellipsis;">
                         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore ab nemo, qui doloremque sed assumenda ea illum voluptatum tempora saepe. Quisquam deleniti voluptates tenetur sint dicta explicabo quia dolore suscipit.
                       </div>
-                      <div class="align-right" style="margin:5px;"><div style="display: inline-block;margin:5px;">{{5}}</div><div style="display: inline-block;margin:5px;">Edit</div> Reply</div>
                       <div class="align-right">
+                        <div style="display: inline-block;margin:5px;">
+                          {{3}}
+                        </div>
+                        <div style="display: inline-block;margin:5px;">
+                          Edit
+                        </div>
+                        <div style="display: inline-block;margin:5px;">
+                          Reply
+                        </div>
+                        <b-modal id="modal-1" title="BootstrapVue" hide-footer>
+                          <b-container>
+                            <div>
+                              <h5>
+                                Detail
+                              </h5>
+                              <div style="margin:5px;">
+                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vitae magnam voluptas nemo necessitatibus quae nam expedita placeat neque iusto, tempora asperiores vel iste ipsa libero, quaerat officia eius illum animi!
+                              </div>
+                            </div>
+                            <br>
+                            <div>
+                              <h5>
+                                Event
+                              </h5>
+                              <div>
+                                <div style="margin:5px;">
+                                  <b-input placeholder="Comment"></b-input>
+                                </div>
+                                <div style="margin:5px;">
+                                  <b-button>Save</b-button>
+                                </div>
+                              </div>
+                              <div>
+                                <div style="border-radius: 5px;border: thin solid white;">
+                                  <img src="https://i.imgur.com/KPtSoGK.jpg" alt="">
+                                  <div class="align-left" style="margin:5px;margin-top:15px;">
+                                    <h5>Anusorn Thavornpon</h5>
+                                    <div>12 November 2020</div>
+                                  </div>
+                                </div>
+                                <div style="border-radius: 5px;border: thin solid #888;margin:5px;clear:both;float:left;">
+                                  <div style="margin:5px;">
+                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis voluptates molestiae error similique dignissimos nostrum quaerat commodi voluptate reiciendis doloremque veniam possimus aut, animi laborum repellendus deleniti. Cumque, non sapiente.
+                                  </div>
+                                </div>
+                                <div style="margin:5px;">
+                                  <div style="border-bottom: thin solid #888;display: inline-block;margin:5px;cursor:pointer;">Edit</div>
+                                  <div style="border-bottom: thin solid #888;display: inline-block;margin:5px;cursor:pointer;">Delete</div>
+                                </div>
+                              </div>
+                              <div>
+                                <div style="border-radius: 5px;border: thin solid white;">
+                                  <img src="https://i.imgur.com/KPtSoGK.jpg" alt="">
+                                  <div class="align-left" style="margin:5px;margin-top:15px;">
+                                    <h5>ADMIN LPTT</h5>
+                                    <div>11 November 2020</div>
+                                  </div>
+                                </div>
+                                <div style="border-radius: 5px;border: thin solid #888;margin:5px;clear:both;float:left;">
+                                  <div style="margin:5px;">
+                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis voluptates molestiae error similique dignissimos nostrum quaerat commodi voluptate reiciendis doloremque veniam possimus aut, animi laborum repellendus deleniti. Cumque, non sapiente.
+                                  </div>
+                                </div>
+                                <div style="margin:5px;">
+                                  <div style="border-bottom: thin solid #888;display: inline-block;margin:5px;cursor:pointer;">Edit</div>
+                                  <div style="border-bottom: thin solid #888;display: inline-block;margin:5px;cursor:pointer;">Delete</div>
+                                </div>
+                              </div>
+                              <div>
+                                <div style="border-radius: 5px;border: thin solid white;">
+                                  <img src="https://i.imgur.com/KPtSoGK.jpg" alt="">
+                                  <div class="align-left" style="margin:5px;margin-top:15px;">
+                                    <h5>Anusorn Thavornpon</h5>
+                                    <div>10 November 2020</div>
+                                  </div>
+                                </div>
+                                <div style="border-radius: 5px;border: thin solid #888;margin:5px;clear:both;float:left;">
+                                  <div style="margin:5px;">
+                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis voluptates molestiae error similique dignissimos nostrum quaerat commodi voluptate reiciendis doloremque veniam possimus aut, animi laborum repellendus deleniti. Cumque, non sapiente.
+                                  </div>
+                                </div>
+                                <div style="margin:5px;">
+                                  <div style="border-bottom: thin solid #888;display: inline-block;margin:5px;cursor:pointer;">Edit</div>
+                                  <div style="border-bottom: thin solid #888;display: inline-block;margin:5px;cursor:pointer;">Delete</div>
+                                </div>
+                              </div>
+                            </div>
+                          </b-container>
+                        </b-modal>
                       </div>
                     </div>
                     <br>
@@ -71,8 +159,16 @@
                       <div class="align-left" style="margin:5px;text-indent: 30px;white-space: nowrap;width: 250px;overflow: hidden;text-overflow: ellipsis;">
                         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore ab nemo, qui doloremque sed assumenda ea illum voluptatum tempora saepe. Quisquam deleniti voluptates tenetur sint dicta explicabo quia dolore suscipit.
                       </div>
-                      <div class="align-right" style="margin:5px;"><div style="display: inline-block;margin:5px;">{{5}}</div><div style="display: inline-block;margin:5px;">Edit</div> Reply</div>
                       <div class="align-right">
+                        <div style="display: inline-block;margin:5px;">
+                          {{5}}
+                        </div>
+                        <div style="display: inline-block;margin:5px;">
+                          Edit
+                        </div>
+                        <div style="display: inline-block;margin:5px;">
+                          Reply
+                        </div>
                       </div>
                     </div>
                   </div>
