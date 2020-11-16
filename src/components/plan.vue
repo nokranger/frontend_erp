@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>Plan</h1>
+    <!-- <div>{{emp.employee_id}}</div> -->
     <div>
       <div>
         <b-container>
@@ -194,7 +195,7 @@
                         </b-col>
                         <b-col>
                           <div class="align-left">
-                            <b-input style="margin:5px;" placeholder="Title"></b-input>
+                            <b-input style="margin:5px;" placeholder="Title" v-model="content.title"></b-input>
                           </div>
                         </b-col>
                         <b-col></b-col>
@@ -207,7 +208,7 @@
                         </b-col>
                         <b-col>
                           <div class="align-left">
-                            <b-textarea style="margin:5px;" placeholder="Detail"></b-textarea>
+                            <b-textarea style="margin:5px;" placeholder="Detail" v-model="content.detail"></b-textarea>
                           </div>
                         </b-col>
                         <b-col></b-col>
@@ -220,7 +221,7 @@
                         </b-col>
                         <b-col>
                           <div class="align-left">
-                            <b-form-select style="margin:5px;" v-model="selected" :options="options"></b-form-select>
+                            <b-form-select style="margin:5px;" ref="priority" v-model="selected" :options="options"></b-form-select>
                           </div>
                         </b-col>
                         <b-col></b-col>
@@ -233,7 +234,7 @@
                         </b-col>
                         <b-col>
                           <div class="align-left">
-                            <b-form-select style="margin:5px;" v-model="selected2" :options="options2"></b-form-select>
+                            <b-form-select style="margin:5px;" ref="permission" v-model="selected2" :options="options2"></b-form-select>
                           </div>
                         </b-col>
                         <b-col></b-col>
@@ -246,13 +247,18 @@
                         </b-col>
                         <b-col>
                           <div class="align-left">
-                            <b-form-select style="margin:5px;" v-model="selected3" :options="options3"></b-form-select>
+                            <!-- <b-form-select style="margin:5px;" v-model="selected3" :options="options3"></b-form-select> -->
+                            <b-form-tags style="margin:5px;" input-id="tags-basic" v-model="value" :input-attrs="{ list: 'tags-list' }"></b-form-tags>
+                              <b-form-datalist id="tags-list" :options="options4">
+                              </b-form-datalist>
+                            <p>{{value}}</p>
                           </div>
                         </b-col>
                         <b-col></b-col>
                       </b-row>
+                      <br>
                       <div class="align-center">
-                        <b-button>Add content</b-button>
+                        <b-button v-on:click="createContent">Add content</b-button>
                       </div>
                     </b-container>
                   </b-modal>
@@ -367,9 +373,22 @@
   </div>
 </template>
 <script>
+import axios from 'axios'
+import apiURL from '../views/connectionAPI'
 export default {
   data () {
     return {
+      apiURL: apiURL,
+      content: {
+        id: JSON.parse(localStorage.getItem('username')),
+        title: '',
+        detail: '',
+        priority: '',
+        permission: '',
+        member: ''
+      },
+      value: [],
+      emp: [],
       selected: null,
       options: [
         { value: null, text: 'Please select an option', disabled: true },
@@ -384,13 +403,7 @@ export default {
         { value: '1', text: 'All people' },
         { value: '2', text: 'Some People' }
       ],
-      selected3: null,
-      options3: [
-        { value: null, text: 'Please select an option', disabled: true },
-        { value: '0', text: 'ADMIN' },
-        { value: '1', text: 'Anusorn' },
-        { value: '2', text: 'Kittanet' }
-      ]
+      options4: []
     }
   },
   beforeCreate () {
@@ -400,7 +413,27 @@ export default {
     //   location.replace('/')
     // }
   },
-  created () {}
+  created () {
+    axios.get(this.apiURL + '/plan/get-plan').then(response => {
+      this.options4 = response.data.result.map((data, i) => {
+        return {
+          value: data.employee_id,
+          text: data.employee_name
+        }
+      })
+    })
+  },
+  methods: {
+    createContent () {
+      this.content.priority = this.$refs.priority.localValue
+      this.content.permission = this.$refs.permission.localValue
+      this.content.member = this.value.toString()
+      console.log(this.content)
+      axios.post(this.apiURL + '/plan/createplan', this.content).then(response => {
+        console.log(response)
+      })
+    }
+  }
 }
 </script>
 <style scoped>
