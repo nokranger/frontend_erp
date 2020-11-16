@@ -389,6 +389,8 @@ export default {
       },
       value: [],
       emp: [],
+      showcontent: [],
+      data: [],
       selected: null,
       options: [
         { value: null, text: 'Please select an option', disabled: true },
@@ -414,7 +416,7 @@ export default {
     // }
   },
   created () {
-    axios.get(this.apiURL + '/plan/get-plan').then(response => {
+    axios.get(this.apiURL + '/plan/get-emp-plan').then(response => {
       this.options4 = response.data.result.map((data, i) => {
         return {
           value: data.employee_id,
@@ -422,6 +424,17 @@ export default {
         }
       })
     })
+    this.showContents()
+    // axios.get(this.apiURL + '/plan/showcontent').then(response => {
+    //   this.showContent = response.data.result.map((data, i) => {
+    //     return {
+    //       id: data.title
+    //     }
+    //   })
+    //   console.log('content', this.showcontent)
+    // })
+  },
+  mounted () {
   },
   methods: {
     createContent () {
@@ -431,6 +444,12 @@ export default {
       console.log(this.content)
       axios.post(this.apiURL + '/plan/createplan', this.content).then(response => {
         console.log(response)
+      })
+    },
+    showContents () {
+      axios.get(this.apiURL + '/plan/showcontent').then(response => {
+        this.data = response.data.result
+        console.log('content', this.data)
       })
     }
   }
