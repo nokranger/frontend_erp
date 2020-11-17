@@ -30,7 +30,7 @@
           </b-row>
           <br>
           <b-row>
-            <b-col v-for="(showplan, index) in options4" :key="index">
+            <b-col v-for="(showplan, index) in new_emps" :key="index">
               <div class="card" style="background-color:#ebecf0;">
                 <div style="border-radius: 5px;border: thin solid #888;">
                   <img src="https://i.imgur.com/KPtSoGK.jpg" alt="">
@@ -43,7 +43,7 @@
                     Content
                   </div>
                   <div style="height: 150px;width:100%;overflow-y: scroll;">
-                    <div v-for="(datas, index) in data" :key="index">
+                    <div v-for="(datas, index) in showplan.con" :key="index">
                       <div style="border-radius: 5px;border: thin solid #888;cursor: pointer;"  v-b-modal="'modal-id' + datas.plan_id">
                         <div class="align-left">
                           <div v-if="datas.priority == 0" style="display: inline-block;border-radius: 5px;border: thin solid #888;width: 50px;height: 20px;margin:5px;margin-top:10px;background-color:#FF3A3A">
@@ -266,6 +266,7 @@ import apiURL from '../assets/js/connectionAPI'
 export default {
   data () {
     return {
+      new_emps: [],
       emps: [
         {
           id: '1',
@@ -284,7 +285,7 @@ export default {
         },
         {
           id: '2',
-          emp_id: '2',
+          emps_id: '2',
           con: 'bbbbbbbbbbbb'
         },
         {
@@ -332,9 +333,10 @@ export default {
   },
   created () {
     this.getEmp()
-    this.showContents()
+    // this.showContents()
   },
   mounted () {
+    this.showContents()
   },
   methods: {
     createContent () {
@@ -358,6 +360,26 @@ export default {
     showContents () {
       axios.get(this.apiURL + '/plan/showcontent').then(response => {
         this.data = response.data.result
+        // eslint-disable-next-line camelcase
+        const emp = this.options4
+        const con = this.data
+        // console.log(typeof (con))
+        // console.log(typeof (this.data))
+        console.log(this.con)
+        // eslint-disable-next-line camelcase
+        const con_dict = {}
+        // eslint-disable-next-line camelcase
+        con.forEach(({ plan_id, employee_id, title, detail, priority, permission, member }) => {
+          if (!con_dict[employee_id]) {
+            con_dict[employee_id] = []
+          }
+          con_dict[employee_id].push({ plan_id, title, detail, priority, permission, member })
+        })
+        // eslint-disable-next-line camelcase
+        const new_emp = emp.map((emp_item) => Object.assign({}, emp_item, { con: con_dict[emp_item.value] }))
+        // eslint-disable-next-line camelcase
+        this.new_emps = new_emp
+        console.log('newEmp', this.new_emps)
       })
     },
     getEmp () {
