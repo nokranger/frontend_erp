@@ -363,9 +363,6 @@ export default {
         // eslint-disable-next-line camelcase
         const emp = this.options4
         const con = this.data
-        // console.log(typeof (con))
-        // console.log(typeof (this.data))
-        console.log(this.con)
         // eslint-disable-next-line camelcase
         const con_dict = {}
         // eslint-disable-next-line camelcase
