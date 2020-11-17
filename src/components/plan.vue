@@ -30,12 +30,12 @@
           </b-row>
           <br>
           <b-row>
-            <b-col>
+            <b-col v-for="(showplan, index) in options4" :key="index">
               <div class="card" style="background-color:#ebecf0;">
                 <div style="border-radius: 5px;border: thin solid #888;">
                   <img src="https://i.imgur.com/KPtSoGK.jpg" alt="">
                   <div class="align-left" style="margin:5px;margin-top:15px;">
-                    <h5>Anusorn Thavornpon</h5>
+                    <h5>{{showplan.text}}</h5>
                   </div>
                 </div>
                 <div class="card-body">
@@ -165,8 +165,8 @@
                   </div>
                 </div>
                 <div>
-                  <b-button style="width:90%;margin:5px;" v-b-modal.modal-lg>Add content</b-button>
-                  <b-modal id="modal-lg" size="lg" title="Extra Large Modal" hide-header hide-footer>
+                  <b-button style="width:90%;margin:5px;" v-b-modal="'modal-id' + showplan.value">Add content</b-button>
+                  <b-modal :id="'modal-id' + showplan.value" size="lg" title="Extra Large Modal" hide-header hide-footer>
                     <h5>
                       Content
                     </h5>
@@ -251,104 +251,8 @@
               </div>
             </b-col>
             <b-col>
-              <!-- <div class="card" style="background-color:#ebecf0;">
-                <div style="border-radius: 5px;border: thin solid #888;">
-                  <img src="https://i.imgur.com/KPtSoGK.jpg" alt="">
-                  <div class="align-left" style="margin:5px;margin-top:15px;">
-                    <h5>Anusorn Thavornpon</h5>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div class="align-left">
-                    Content
-                  </div>
-                  <div style="height: 150px;width:100%;overflow-y: scroll;">
-                    <div style="border-radius: 5px;border: thin solid #888;">
-                      <div class="align-left">
-                        <div style="display: inline-block;border-radius: 5px;border: thin solid #888;width: 50px;height: 20px;margin:5px;margin-top:10px;background-color:#FF3A3A">
-                        </div>
-                        <div style="display: inline-block;border-radius: 5px;border: thin solid #888;width: 50px;height: 20px;margin:5px;margin-top:10px;background-color:#0091C7">
-                        </div>
-                        <div style="display: inline-block;border-radius: 5px;border: thin solid #888;width: 50px;height: 20px;margin:5px;margin-top:10px;background-color:#FDFF69">
-                        </div>
-                      </div>
-                      <div class="align-left" style="margin:5px;text-indent: 30px;white-space: nowrap;width: 250px;overflow: hidden;text-overflow: ellipsis;">
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore ab nemo, qui doloremque sed assumenda ea illum voluptatum tempora saepe. Quisquam deleniti voluptates tenetur sint dicta explicabo quia dolore suscipit.
-                      </div>
-                      <div class="align-right" style="margin:5px;"><div style="display: inline-block;margin:5px;">{{5}}</div><div style="display: inline-block;margin:5px;">Edit</div> Reply</div>
-                      <div class="align-right">
-                      </div>
-                    </div>
-                    <br>
-                    <div style="border-radius: 5px;border: thin solid #888;">
-                      <div class="align-left">
-                        <div style="display: inline-block;border-radius: 5px;border: thin solid #888;width: 50px;height: 20px;margin:5px;margin-top:10px;background-color:#FF3A3A">
-                        </div>
-                        <div style="display: inline-block;border-radius: 5px;border: thin solid #888;width: 50px;height: 20px;margin:5px;margin-top:10px;background-color:#0091C7">
-                        </div>
-                        <div style="display: inline-block;border-radius: 5px;border: thin solid #888;width: 50px;height: 20px;margin:5px;margin-top:10px;background-color:#FDFF69">
-                        </div>
-                      </div>
-                      <div class="align-left" style="margin:5px;text-indent: 30px;white-space: nowrap;width: 250px;overflow: hidden;text-overflow: ellipsis;">
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore ab nemo, qui doloremque sed assumenda ea illum voluptatum tempora saepe. Quisquam deleniti voluptates tenetur sint dicta explicabo quia dolore suscipit.
-                      </div>
-                      <div class="align-right" style="margin:5px;"><div style="display: inline-block;margin:5px;">{{5}}</div><div style="display: inline-block;margin:5px;">Edit</div> Reply</div>
-                      <div class="align-right">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
             </b-col>
             <b-col>
-              <!-- <div class="card" style="background-color:#ebecf0;">
-                <div style="border-radius: 5px;border: thin solid #888;">
-                  <img src="https://i.imgur.com/KPtSoGK.jpg" alt="">
-                  <div class="align-left" style="margin:5px;margin-top:15px;">
-                    <h5>Anusorn Thavornpon</h5>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div class="align-left">
-                    Content
-                  </div>
-                  <div style="height: 150px;width:100%;overflow-y: scroll;">
-                    <div style="border-radius: 5px;border: thin solid #888;">
-                      <div class="align-left">
-                        <div style="display: inline-block;border-radius: 5px;border: thin solid #888;width: 50px;height: 20px;margin:5px;margin-top:10px;background-color:#FF3A3A">
-                        </div>
-                        <div style="display: inline-block;border-radius: 5px;border: thin solid #888;width: 50px;height: 20px;margin:5px;margin-top:10px;background-color:#0091C7">
-                        </div>
-                        <div style="display: inline-block;border-radius: 5px;border: thin solid #888;width: 50px;height: 20px;margin:5px;margin-top:10px;background-color:#FDFF69">
-                        </div>
-                      </div>
-                      <div class="align-left" style="margin:5px;text-indent: 30px;white-space: nowrap;width: 250px;overflow: hidden;text-overflow: ellipsis;">
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore ab nemo, qui doloremque sed assumenda ea illum voluptatum tempora saepe. Quisquam deleniti voluptates tenetur sint dicta explicabo quia dolore suscipit.
-                      </div>
-                      <div class="align-right" style="margin:5px;"><div style="display: inline-block;margin:5px;">{{5}}</div><div style="display: inline-block;margin:5px;">Edit</div> Reply</div>
-                      <div class="align-right">
-                      </div>
-                    </div>
-                    <br>
-                    <div style="border-radius: 5px;border: thin solid #888;">
-                      <div class="align-left">
-                        <div style="display: inline-block;border-radius: 5px;border: thin solid #888;width: 50px;height: 20px;margin:5px;margin-top:10px;background-color:#FF3A3A">
-                        </div>
-                        <div style="display: inline-block;border-radius: 5px;border: thin solid #888;width: 50px;height: 20px;margin:5px;margin-top:10px;background-color:#0091C7">
-                        </div>
-                        <div style="display: inline-block;border-radius: 5px;border: thin solid #888;width: 50px;height: 20px;margin:5px;margin-top:10px;background-color:#FDFF69">
-                        </div>
-                      </div>
-                      <div class="align-left" style="margin:5px;text-indent: 30px;white-space: nowrap;width: 250px;overflow: hidden;text-overflow: ellipsis;">
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore ab nemo, qui doloremque sed assumenda ea illum voluptatum tempora saepe. Quisquam deleniti voluptates tenetur sint dicta explicabo quia dolore suscipit.
-                      </div>
-                      <div class="align-right" style="margin:5px;"><div style="display: inline-block;margin:5px;">{{5}}</div><div style="display: inline-block;margin:5px;">Edit</div> Reply</div>
-                      <div class="align-right">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
             </b-col>
           </b-row>
         </b-container>
@@ -362,6 +266,33 @@ import apiURL from '../assets/js/connectionAPI'
 export default {
   data () {
     return {
+      emps: [
+        {
+          id: '1',
+          name: 'bb'
+        },
+        {
+          id: '2',
+          name: 'cc'
+        }
+      ],
+      con: [
+        {
+          id: '1',
+          emps_id: '2',
+          con: 'aaaaaaaaaaa'
+        },
+        {
+          id: '2',
+          emp_id: '2',
+          con: 'bbbbbbbbbbbb'
+        },
+        {
+          id: '3',
+          emps_id: '1',
+          con: 'ccccccccccc'
+        }
+      ],
       apiURL: apiURL,
       content: {
         id: JSON.parse(localStorage.getItem('username')),
@@ -427,7 +358,6 @@ export default {
     showContents () {
       axios.get(this.apiURL + '/plan/showcontent').then(response => {
         this.data = response.data.result
-        console.log('content', this.data)
       })
     },
     getEmp () {
