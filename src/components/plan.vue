@@ -374,7 +374,7 @@
 </template>
 <script>
 import axios from 'axios'
-import apiURL from '../views/connectionAPI'
+import apiURL from '../assets/js/connectionAPI'
 export default {
   data () {
     return {
@@ -409,30 +409,10 @@ export default {
     }
   },
   beforeCreate () {
-    // var localjwt = localStorage.getItem('jwt')
-    // if (localjwt !== null) {
-    // } else {
-    //   location.replace('/')
-    // }
   },
   created () {
-    axios.get(this.apiURL + '/plan/get-emp-plan').then(response => {
-      this.options4 = response.data.result.map((data, i) => {
-        return {
-          value: data.employee_id,
-          text: data.employee_name
-        }
-      })
-    })
+    this.getEmp()
     this.showContents()
-    // axios.get(this.apiURL + '/plan/showcontent').then(response => {
-    //   this.showContent = response.data.result.map((data, i) => {
-    //     return {
-    //       id: data.title
-    //     }
-    //   })
-    //   console.log('content', this.showcontent)
-    // })
   },
   mounted () {
   },
@@ -450,6 +430,16 @@ export default {
       axios.get(this.apiURL + '/plan/showcontent').then(response => {
         this.data = response.data.result
         console.log('content', this.data)
+      })
+    },
+    getEmp () {
+      axios.get(this.apiURL + '/plan/get-emp-plan').then(response => {
+        this.options4 = response.data.result.map((data, i) => {
+          return {
+            value: data.employee_id,
+            text: data.employee_name
+          }
+        })
       })
     }
   }

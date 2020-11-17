@@ -104,7 +104,7 @@
 </template>
 <script>
 import axios from 'axios'
-import apiURL from '../views/connectionAPI'
+import apiURL from '../assets/js/connectionAPI'
 import account from '../components/profile_admin'
 import md5 from 'md5'
 export default {

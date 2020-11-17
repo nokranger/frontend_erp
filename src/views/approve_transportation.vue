@@ -64,7 +64,7 @@
 </template>
 <script>
 import axios from 'axios'
-import apiURL from '../views/connectionAPI'
+import apiURL from '../assets/js/connectionAPI'
 import transuser from '../components/approve_transportation_user'
 export default {
   components: {

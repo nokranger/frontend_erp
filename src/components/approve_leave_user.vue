@@ -42,7 +42,7 @@
 </template>
 <script>
 import axios from 'axios'
-import apiURL from '../views/connectionAPI'
+import apiURL from '../assets/js/connectionAPI'
 import moment from 'moment'
 // import aa from '../../../../../VueJS/LPTT/frontend_erp/src/img/upload'
 export default {

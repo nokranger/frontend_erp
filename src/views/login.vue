@@ -56,7 +56,7 @@
 
 <script>
 import axios from 'axios'
-import apiURL from '../views/connectionAPI'
+import apiURL from '../assets/js/connectionAPI'
 import md5 from 'md5'
 import VueJwtDecode from 'vue-jwt-decode'
 export default {

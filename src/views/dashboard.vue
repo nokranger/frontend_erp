@@ -73,7 +73,7 @@
 // import VueJwtDecode from 'vue-jwt-decode'
 import axios from 'axios'
 import Chart from 'chart.js'
-import apiURL from '../views/connectionAPI'
+import apiURL from '../assets/js/connectionAPI'
 export default {
   data () {
     return {
