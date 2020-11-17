@@ -95,10 +95,10 @@
                                 </h5>
                                 <div>
                                   <div style="margin:5px;">
-                                    <b-input placeholder="Comment"></b-input>
+                                    <b-input placeholder="Comment" v-model="comment.comment"></b-input>
                                   </div>
                                   <div style="margin:5px;">
-                                    <b-button>Save</b-button>
+                                    <b-button v-on:click="createComment (datas.plan_id)">Save</b-button>
                                   </div>
                                 </div>
                                 <div>
@@ -371,6 +371,11 @@ export default {
         permission: '',
         member: ''
       },
+      comment: {
+        id: '',
+        employee_id: JSON.parse(localStorage.getItem('username')),
+        comment: ''
+      },
       value: [],
       emp: [],
       showcontent: [],
@@ -409,6 +414,15 @@ export default {
       axios.post(this.apiURL + '/plan/createplan', this.content).then(response => {
         console.log(response)
       })
+    },
+    createComment (id) {
+      this.comment.id = id
+      console.log('comment', this.comment)
+      this.comment = {
+        id: '',
+        employee_id: JSON.parse(localStorage.getItem('username')),
+        comment: ''
+      }
     },
     showContents () {
       axios.get(this.apiURL + '/plan/showcontent').then(response => {
