@@ -1,7 +1,6 @@
 <template>
   <div>
     <h1>Plan</h1>
-    <!-- <div>{{emp.employee_id}}</div> -->
     <div>
       <div>
         <b-container>
@@ -66,7 +65,7 @@
                           <div style="display: inline-block;margin:5px;">
                             Reply
                           </div>
-                          <b-modal :id="'modal-id' + datas.plan_id" title="Content" size="lg" hide-footer>
+                          <b-modal :id="'modal-id' + datas.plan_id" :title="datas.title" size="lg" hide-footer>
                             <b-container>
                               <div>
                                 <div v-if="datas.priority == 0" style="display: inline-block;border-radius: 5px;border: thin solid #888;width: 50px;height: 20px;margin:5px;margin-top:10px;background-color:#FF3A3A">
@@ -95,59 +94,23 @@
                                 </h5>
                                 <div>
                                   <div style="margin:5px;">
-                                    <b-input placeholder="Comment" v-model="comment.comment"></b-input>
+                                    <b-input placeholder="Comment" v-model="comment.ccomment"></b-input>
                                   </div>
                                   <div style="margin:5px;">
                                     <b-button v-on:click="createComment (datas.plan_id)">Save</b-button>
                                   </div>
                                 </div>
-                                <div>
+                                <div v-for="(item, index) in datas.comments" :key="index">
                                   <div style="border-radius: 5px;border: thin solid white;">
                                     <img src="https://i.imgur.com/KPtSoGK.jpg" alt="">
                                     <div class="align-left" style="margin:5px;margin-top:15px;">
-                                      <h5>Anusorn Thavornpon</h5>
-                                      <div>12 November 2020</div>
+                                      <h5>{{item.employee_name + ' ' + item.employee_lastname}}</h5>
+                                      <div>{{item.reg_date}}</div>
                                     </div>
                                   </div>
                                   <div style="border-radius: 5px;border: thin solid #888;margin:5px;">
                                     <div style="margin:5px;">
-                                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis voluptates molestiae error similique dignissimos nostrum quaerat commodi voluptate reiciendis doloremque veniam possimus aut, animi laborum repellendus deleniti. Cumque, non sapiente.
-                                    </div>
-                                  </div>
-                                  <div style="margin:5px;">
-                                    <div style="border-bottom: thin solid #888;display: inline-block;margin:5px;cursor:pointer;">Edit</div>
-                                    <div style="border-bottom: thin solid #888;display: inline-block;margin:5px;cursor:pointer;">Delete</div>
-                                  </div>
-                                </div>
-                                <div>
-                                  <div style="border-radius: 5px;border: thin solid white;">
-                                    <img src="https://i.imgur.com/KPtSoGK.jpg" alt="">
-                                    <div class="align-left" style="margin:5px;margin-top:15px;">
-                                      <h5>ADMIN LPTT</h5>
-                                      <div>11 November 2020</div>
-                                    </div>
-                                  </div>
-                                  <div style="border-radius: 5px;border: thin solid #888;margin:5px;">
-                                    <div style="margin:5px;">
-                                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis voluptates molestiae error similique dignissimos nostrum quaerat commodi voluptate reiciendis doloremque veniam possimus aut, animi laborum repellendus deleniti. Cumque, non sapiente.
-                                    </div>
-                                  </div>
-                                  <div style="margin:5px;">
-                                    <div style="border-bottom: thin solid #888;display: inline-block;margin:5px;cursor:pointer;">Edit</div>
-                                    <div style="border-bottom: thin solid #888;display: inline-block;margin:5px;cursor:pointer;">Delete</div>
-                                  </div>
-                                </div>
-                                <div>
-                                  <div style="border-radius: 5px;border: thin solid white;">
-                                    <img src="https://i.imgur.com/KPtSoGK.jpg" alt="">
-                                    <div class="align-left" style="margin:5px;margin-top:15px;">
-                                      <h5>Anusorn Thavornpon</h5>
-                                      <div>10 November 2020</div>
-                                    </div>
-                                  </div>
-                                  <div style="border-radius: 5px;border: thin solid #888;margin:5px;">
-                                    <div style="margin:5px;">
-                                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis voluptates molestiae error similique dignissimos nostrum quaerat commodi voluptate reiciendis doloremque veniam possimus aut, animi laborum repellendus deleniti. Cumque, non sapiente.
+                                      {{item.comments}}
                                     </div>
                                   </div>
                                   <div style="margin:5px;">
@@ -267,33 +230,6 @@ export default {
   data () {
     return {
       new_emps: [],
-      emps: [
-        {
-          id: '1',
-          name: 'bb'
-        },
-        {
-          id: '2',
-          name: 'cc'
-        }
-      ],
-      con: [
-        {
-          id: '1',
-          emps_id: '2',
-          con: 'aaaaaaaaaaa'
-        },
-        {
-          id: '2',
-          emps_id: '2',
-          con: 'bbbbbbbbbbbb'
-        },
-        {
-          id: '3',
-          emps_id: '1',
-          con: 'ccccccccccc'
-        }
-      ],
       apiURL: apiURL,
       content: {
         id: JSON.parse(localStorage.getItem('username')),
@@ -306,8 +242,9 @@ export default {
       comment: {
         id: '',
         employee_id: JSON.parse(localStorage.getItem('username')),
-        comment: ''
+        ccomments: ''
       },
+      rescomment: [],
       value: [],
       emp: [],
       showcontent: [],
@@ -331,31 +268,31 @@ export default {
   },
   beforeCreate () {
   },
-  created () {
-    this.getEmp()
-    // this.showContents()
+  async created () {
+    await this.getEmp()
+    await this.showContents()
+    await this.showComment()
   },
   mounted () {
-    this.showContents()
   },
   methods: {
     createContent () {
       this.content.priority = this.$refs.priority.localValue
       this.content.permission = this.$refs.permission.localValue
       this.content.member = this.value.toString()
-      console.log(this.content)
       axios.post(this.apiURL + '/plan/createplan', this.content).then(response => {
-        console.log(response)
       })
     },
     createComment (id) {
       this.comment.id = id
-      console.log('comment', this.comment)
-      this.comment = {
-        id: '',
-        employee_id: JSON.parse(localStorage.getItem('username')),
-        comment: ''
-      }
+      axios.post(this.apiURL + '/plan/createcomment', this.comment).then(response => {
+        this.rescomment = response.data.result
+        this.comment = {
+          id: '',
+          employee_id: JSON.parse(localStorage.getItem('username')),
+          ccomment: ''
+        }
+      })
     },
     showContents () {
       axios.get(this.apiURL + '/plan/showcontent').then(response => {
@@ -363,8 +300,6 @@ export default {
         // eslint-disable-next-line camelcase
         const emp = this.options4
         const con = this.data
-        // console.log(emp)
-        // console.log(con)
         const result = emp.map(({ value, text }) => {
           // eslint-disable-next-line camelcase
           const cFilter = con.filter(({ employee_id }) => employee_id === value)
@@ -378,21 +313,52 @@ export default {
           }
         })
         this.new_emps = result
-        // console.log('newEMP', result)
-        // // eslint-disable-next-line camelcase
-        // const con_dict = {}
-        // // eslint-disable-next-line camelcase
-        // con.forEach(({ plan_id, employee_id, title, detail, priority, permission, member }) => {
-        //   if (!con_dict[employee_id]) {
-        //     con_dict[employee_id] = []
-        //   }
-        //   con_dict[employee_id].push({ plan_id, title, detail, priority, permission, member })
-        // })
-        // // eslint-disable-next-line camelcase
-        // const new_emp = emp.map((emp_item) => Object.assign({}, emp_item, { con: con_dict[emp_item.value] }))
-        // // eslint-disable-next-line camelcase
-        // this.new_emps = new_emp
-        // console.log('newEmp', this.new_emps)
+      })
+    },
+    showComment () {
+      // this.showContents()
+      axios.get(this.apiURL + '/plan/showcomment').then(response => {
+        // this.rescomment = response.data.result
+        const newcomment = response.data.result
+        console.log('newcom', newcomment)
+        // eslint-disable-next-line camelcase
+        const renew_emps = this.data
+        console.log('reemp', renew_emps)
+        // eslint-disable-next-line camelcase
+        const result2 = renew_emps.map(({ plan_id, employee_id, title, detail, priority, permission, member, reg_date, up_date }) => {
+          // eslint-disable-next-line camelcase
+          const cFilter = newcomment.filter(({ plans_id }) => plans_id === plan_id)
+          // eslint-disable-next-line camelcase
+          const c = cFilter.map(({ plans_id, employee_name, employee_lastname, employee_id, comments, reg_date, up_date }) => ({ plans_id, employee_name, employee_lastname, employee_id, comments, reg_date, up_date }))
+          return {
+            plan_id,
+            employee_id,
+            title,
+            detail,
+            priority,
+            permission,
+            member,
+            reg_date,
+            up_date,
+            comments: c
+          }
+        })
+        this.rescomment = result2
+        const emp = this.options4
+        const con = this.rescomment
+        const result = emp.map(({ value, text }) => {
+          // eslint-disable-next-line camelcase
+          const cFilter = con.filter(({ employee_id }) => employee_id === value)
+          // eslint-disable-next-line camelcase
+          const c = cFilter.map(({ plan_id, title, detail, priority, permission, member, comments }) => ({ plan_id, title, detail, priority, permission, member, comments }))
+
+          return {
+            value,
+            text,
+            con: c
+          }
+        })
+        this.new_emps = result
       })
     },
     getEmp () {
