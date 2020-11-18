@@ -97,7 +97,7 @@
                                     <b-input placeholder="Comment" v-model="comment.ccomment"></b-input>
                                   </div>
                                   <div style="margin:5px;">
-                                    <b-button v-on:click="createComment (datas.plan_id)">Save</b-button>
+                                    <b-button v-on:click="createComment (datas.plan_id, 'modal-id' + datas.plan_id)">Save</b-button>
                                   </div>
                                 </div>
                                 <div v-for="(item, index) in datas.comments" :key="index">
@@ -299,7 +299,7 @@ export default {
         this.$bvModal.hide(modal)
       })
     },
-    createComment (id) {
+    createComment (id, modal) {
       this.comment.id = id
       axios.post(this.apiURL + '/plan/createcomment', this.comment).then(response => {
         // console.log(response)
@@ -309,6 +309,7 @@ export default {
           employee_id: JSON.parse(localStorage.getItem('username')),
           ccomment: ''
         }
+        this.$bvModal.hide(modal)
       })
     },
     showContents () {
