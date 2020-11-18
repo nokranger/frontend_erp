@@ -39,6 +39,8 @@ export default {
     if (window.location.pathname === '/') {
       this.pathname = 'login'
       console.log('login')
+    } else if (window.location.pathname === '/dashboard') {
+      this.cssProps.height = 'auto'
     } else if (window.location.pathname === '/print') {
       this.colorlptt = 'white'
       console.log('login')

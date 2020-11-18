@@ -51,22 +51,24 @@
         </b-row>
         <br>
         <br>
-        <b-row>
-          <b-col>
-            Activity
-            <canvas style="width:100%;height:auto;" id="my-chartline"></canvas>
-          </b-col>
-        </b-row>
+        <div>
+          <h1>Activity</h1>
+          <b-row>
+            <b-col>
+              Activity
+              <canvas style="width:100%;height:auto;" id="my-chartline"></canvas>
+            </b-col>
+            <b-col>
+              Most Station
+              <canvas style="width:100%;height:auto;" id="my-chartpie"></canvas>
+            </b-col>
+          </b-row>
+        </div>
         <br>
         <br>
-        <b-row>
-          <b-col>
-            Most Station
-            <canvas style="width:100%;height:auto;" id="my-chartpie"></canvas>
-          </b-col>
-        </b-row>
       </b-container>
     </b-container>
+    <app-plan></app-plan>
   </div>
 </template>
 <script>
@@ -74,7 +76,11 @@
 import axios from 'axios'
 import Chart from 'chart.js'
 import apiURL from '../assets/js/connectionAPI'
+import plan from '../components/plan'
 export default {
+  components: {
+    'app-plan': plan
+  },
   data () {
     return {
       apiURL: apiURL,
