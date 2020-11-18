@@ -79,7 +79,7 @@
                                   Member
                                 </h5>
                                 <div style="margin:5px;">
-                                  {{datas.member}}
+                                  {{datas.member + showplan.text}}
                                 </div>
                                 <h5>
                                   Detail
@@ -363,20 +363,36 @@ export default {
         // eslint-disable-next-line camelcase
         const emp = this.options4
         const con = this.data
-        // eslint-disable-next-line camelcase
-        const con_dict = {}
-        // eslint-disable-next-line camelcase
-        con.forEach(({ plan_id, employee_id, title, detail, priority, permission, member }) => {
-          if (!con_dict[employee_id]) {
-            con_dict[employee_id] = []
+        // console.log(emp)
+        // console.log(con)
+        const result = emp.map(({ value, text }) => {
+          // eslint-disable-next-line camelcase
+          const cFilter = con.filter(({ employee_id }) => employee_id === value)
+          // eslint-disable-next-line camelcase
+          const c = cFilter.map(({ plan_id, title, detail, priority, permission, member }) => ({ plan_id, title, detail, priority, permission, member }))
+
+          return {
+            value,
+            text,
+            con: c
           }
-          con_dict[employee_id].push({ plan_id, title, detail, priority, permission, member })
         })
-        // eslint-disable-next-line camelcase
-        const new_emp = emp.map((emp_item) => Object.assign({}, emp_item, { con: con_dict[emp_item.value] }))
-        // eslint-disable-next-line camelcase
-        this.new_emps = new_emp
-        console.log('newEmp', this.new_emps)
+        this.new_emps = result
+        // console.log('newEMP', result)
+        // // eslint-disable-next-line camelcase
+        // const con_dict = {}
+        // // eslint-disable-next-line camelcase
+        // con.forEach(({ plan_id, employee_id, title, detail, priority, permission, member }) => {
+        //   if (!con_dict[employee_id]) {
+        //     con_dict[employee_id] = []
+        //   }
+        //   con_dict[employee_id].push({ plan_id, title, detail, priority, permission, member })
+        // })
+        // // eslint-disable-next-line camelcase
+        // const new_emp = emp.map((emp_item) => Object.assign({}, emp_item, { con: con_dict[emp_item.value] }))
+        // // eslint-disable-next-line camelcase
+        // this.new_emps = new_emp
+        // console.log('newEmp', this.new_emps)
       })
     },
     getEmp () {
