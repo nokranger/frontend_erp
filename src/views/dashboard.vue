@@ -7,7 +7,7 @@
       <b-container>
         <br>
         <b-row>
-          <b-col>
+          <b-col style="margin:5px;">
             <div class="card">
               <br>
               <div class="card-body">
@@ -21,7 +21,7 @@
               </div>
             </div>
           </b-col>
-          <b-col>
+          <b-col style="margin:5px;">
             <div class="card">
               <br>
               <div class="card-body">
@@ -35,7 +35,7 @@
               </div>
             </div>
           </b-col>
-          <b-col>
+          <b-col style="margin:5px;">
             <div class="card">
               <br>
               <div class="card-body">

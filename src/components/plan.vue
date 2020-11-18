@@ -246,8 +246,6 @@ export default {
       },
       rescomment: [],
       value: [],
-      emp: [],
-      showcontent: [],
       data: [],
       selected: null,
       options: [

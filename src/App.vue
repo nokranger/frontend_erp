@@ -45,11 +45,11 @@ export default {
       this.colorlptt = 'white'
       console.log('login')
     } else if (window.location.pathname === '/approveleave') {
-      this.cssProps.height = '1270px'
+      this.cssProps.height = '1400px'
     } else if (window.location.pathname === '/approvetrans') {
-      this.cssProps.height = '1270px'
+      this.cssProps.height = '1400px'
     } else if (window.location.pathname === '/approvepettycash') {
-      this.cssProps.height = '1270px'
+      this.cssProps.height = '1400px'
     }
   }
 }
