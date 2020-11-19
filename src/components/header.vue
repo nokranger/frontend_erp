@@ -3,6 +3,16 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" integrity="sha384-3AB7yXWz4OeoZcPbieVW64vVXEwADiYyAEhwilzWsLw+9FgqpyjjStpPnpBO8o8S" crossorigin="anonymous">
     <div id="mySidenav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" v-on:click="openNav ()">&times;</a>
+      <div class="align-left" style="color: white;border-radius: 5px;border: thin solid #888;" v-for="(showuserr, index) in showUsers" :key="index">
+        <div style="margin:5px;">
+          <img id="profile" style="width:40px;height:40px;border-radius:50%;" :src="require('../img/uploads/signup/' + showuserr.employee_pic)">
+          <!-- {{showUsers}} -->
+          <div style="display: inline-block;margin-left: 10px;">
+            {{showuserr.employee_name + ' ' + showuserr.employee_lastname}}
+          </div>
+        </div>
+
+      </div>
       <a class="align-left" href="/dashboard"><i class="fas fa-home"></i> Home</a>
       <a class="align-left" href="/menurequest"><i class="fas fa-file-alt"></i> Request forms</a>
       <!-- <a class="align-left" href="/transreport"><i class="fas fa-file-alt"></i> Transportation record</a>
@@ -40,12 +50,17 @@
 </template>
 <script>
 import VueJwtDecode from 'vue-jwt-decode'
+import axios from 'axios'
+import apiURL from '../assets/js/connectionAPI'
 export default {
   data () {
     return {
+      apiURl: apiURL,
       isTrue: true,
       symbols: '&#9776;',
-      permission: 0
+      permission: 0,
+      data: [],
+      showUsers: []
     }
   },
   metaInfo () {
@@ -77,6 +92,15 @@ export default {
       localStorage.removeItem('jwt')
       localStorage.removeItem('role')
       location.replace('/')
+    },
+    showuser () {
+      this.data = {
+        id: JSON.parse(localStorage.getItem('username'))
+      }
+      // await console.log('url', this.apiURL)
+      axios.post(this.apiURl + '/emp/get-all-emp', this.data).then(response => {
+        this.showUsers = response.data.result
+      })
     }
   },
   mounted () {
@@ -90,6 +114,7 @@ export default {
       console.log(this.permission)
       // this.permission = VueJwtDecode.decode(JSON.parse(localStorage.getItem('role')))
     }
+    this.showuser()
     // const jwt = VueJwtDecode.decode(JSON.parse(localStorage.getItem('jwt')))
     // this.permission = JSON.parse(jwt.role)
     // console.log(this.permission)

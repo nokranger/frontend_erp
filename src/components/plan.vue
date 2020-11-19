@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h1>Plan</h1>
     <div>
       <div>
-        <b-container>
+        <b-container style="border-radius: 5px;border: thin solid #888;">
+          <h1>Plan</h1>
           <b-row>
             <b-col></b-col>
             <b-col></b-col>

@@ -3,8 +3,7 @@
     <div style="font-size:30px;">
       Dashboard
     </div>
-    <b-container fluid="xl">
-      <b-container>
+    <b-container>
         <br>
         <b-row>
           <b-col style="margin:5px;">
@@ -51,22 +50,21 @@
         </b-row>
         <br>
         <br>
-        <div>
+        <div class="align-center" style="border-radius: 5px;border: thin solid #888;">
           <h1>Activity</h1>
-          <b-row>
-            <b-col>
+          <b-row class="justify-content-md-center">
+            <b-col cols="12" md="5" style="margin:10px;background-color:whitesmoke;border-radius: 5px;border: thin solid #888;">
               Activity
-              <canvas style="width:100%;height:auto;" id="my-chartline"></canvas>
+              <canvas style="width:100%;height:100%;" id="my-chartline"></canvas>
             </b-col>
-            <b-col>
+            <b-col cols="12" md="5" style="margin:10px;background-color:whitesmoke;border-radius: 5px;border: thin solid #888;">
               Most Station
-              <canvas style="width:100%;height:auto;" id="my-chartpie"></canvas>
+              <canvas style="width:100%;height:90%;" id="my-chartpie"></canvas>
             </b-col>
           </b-row>
         </div>
         <br>
         <br>
-      </b-container>
     </b-container>
     <app-plan></app-plan>
   </div>
