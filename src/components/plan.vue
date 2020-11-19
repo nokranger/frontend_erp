@@ -41,7 +41,7 @@
                   <div class="align-left">
                     Content
                   </div>
-                  <div style="height: 150px;width:100%;overflow-y: scroll;">
+                  <div style="height: 250px;width:100%;overflow-y: scroll;">
                     <div v-for="(datas, index) in showplan.con" :key="index">
                       <div style="border-radius: 5px;border: thin solid #888;cursor: pointer;"  v-b-modal="'modal-id' + datas.plan_id">
                         <div class="align-left">
@@ -128,7 +128,12 @@
                   </div>
                 </div>
                 <div>
-                  <b-button style="width:90%;margin:5px;" v-b-modal="'modal-id' + showplan.value">Add content</b-button>
+                  <div v-if="showplan.value == login">
+                    <b-button style="width:90%;margin:5px;" v-b-modal="'modal-id' + showplan.value">Add content</b-button>
+                  </div>
+                  <div v-else-if="showplan.value !== login">
+                    <b-button style="width:90%;margin:5px;" disabled>Add content</b-button>
+                  </div>
                   <b-modal :id="'modal-id' + showplan.value" size="lg" title="Extra Large Modal" hide-header hide-footer>
                     <h5>
                       Content
@@ -229,6 +234,7 @@ import apiURL from '../assets/js/connectionAPI'
 export default {
   data () {
     return {
+      login: JSON.parse(localStorage.getItem('username')),
       new_emps: [],
       apiURL: apiURL,
       content: {
@@ -244,7 +250,7 @@ export default {
         employee_id: JSON.parse(localStorage.getItem('username')),
         ccomments: ''
       },
-      rescomment: [],
+      new_comment: [],
       value: [],
       data: [],
       selected: null,
@@ -313,23 +319,6 @@ export default {
     showContents () {
       axios.get(this.apiURL + '/plan/showcontent').then(response => {
         this.data = response.data.result
-        // eslint-disable-next-line camelcase
-        const emp = this.options4
-        const con = this.data
-        const result = emp.map(({ value, text, lastname }) => {
-          // eslint-disable-next-line camelcase
-          const cFilter = con.filter(({ employee_id }) => employee_id === value)
-          // eslint-disable-next-line camelcase
-          const c = cFilter.map(({ plan_id, title, detail, priority, permission, member }) => ({ plan_id, title, detail, priority, permission, member }))
-
-          return {
-            value,
-            text,
-            lastname,
-            con: c
-          }
-        })
-        this.new_emps = result
       })
     },
     showComment () {
@@ -360,9 +349,9 @@ export default {
             comments: c
           }
         })
-        this.rescomment = result2
+        this.new_comment = result2
         const emp = this.options4
-        const con = this.rescomment
+        const con = this.new_comment
         const result = emp.map(({ value, text, lastname }) => {
           // eslint-disable-next-line camelcase
           const cFilter = con.filter(({ employee_id }) => employee_id === value)
