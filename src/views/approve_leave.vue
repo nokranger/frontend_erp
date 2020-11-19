@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-if="localjwt == 0">
   <b-tabs content-class="mt-3" align="center">
     <b-tab title="Pending">
       <app-approve></app-approve>
@@ -9,16 +9,21 @@
     </b-tab>
   </b-tabs>
 </div>
+<div v-else-if="localjwt == 1">
+  <app-user></app-user>
+</div>
 </template>
 <script>
 import apiURL from '../assets/js/connectionAPI'
 import approve from '../components/approve_leave'
 import history from '../components/history_approve_leave'
+import leaveuser from '../components/approve_leave_user'
 // import leaveuser from '../components/approve_leave_user'
 export default {
   components: {
     'app-approve': approve,
-    'app-history': history
+    'app-history': history,
+    'app-user': leaveuser
   },
   data () {
     return {

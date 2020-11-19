@@ -1,8 +1,12 @@
 <template>
-<div v-if="localjwt == 0">
-  <div>
+<div v-if="localjwt == 1">
+  <app-transuser></app-transuser>
+</div>
+  <div v-else-if="localjwt == 0">
     <div style="font-size:30px;">
-      Leave
+      Transportation
+      <br>
+      <br>
     </div>
     <div>
       <b-container>
@@ -29,20 +33,23 @@
           ></b-form-input>
         </b-col>
         </b-row>
-        <b-table :items="event" :fields="fields" :filter="filter" :current-page="currentPage"
+        <b-table ref="table" :items="event" :filter="filter" :current-page="currentPage"
       :per-page="perPage" class="mt-3" responsive="sm" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
           <template v-slot:cell(approve)="data" v-if="localjwt === '0'">
             <div>
-              <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item !== 2" size="sm" class="mr-2" variant="danger" v-on:click="Rejected (data.item.actId)">Reject</b-button>
+              <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item !== 2" size="sm" class="mr-2" variant="danger" v-on:click="Reject (data.item.trans_id)">Reject</b-button>
               <b-button style="margin:1px" v-else-if="data.item.approve === 1 || data.item.approve === 2" size="sm" class="mr-2" variant="danger" disabled>Reject</b-button>
             </div>
             <div>
-              <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item.approve !== 2" size="sm" class="mr-2" variant="success" v-on:click="Papprove (data.item.actId, data.item.id, data.item.amount, data.item.category )">
+              <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item.approve !== 2" size="sm" class="mr-2" variant="success" v-on:click="Papprove (data.item.trans_id)">
                 Approved
               </b-button>
               <b-button style="margin:1px" v-else-if="data.item.approve === 1 || data.item.approve !== 2 && data.item.approve !== 0" size="sm"  class="mr-2" variant="primary" disabled>
                 Approved
               </b-button>
+              <!-- <b-button style="margin:1px" v-else-if="data.item.approve === 2 || data.item.approve !== 1 && data.item.approve !== 0" size="sm"  class="mr-2" variant="danger" disabled>
+                Rejected
+              </b-button> -->
             </div>
           </template>
           <template v-slot:cell(approve)="data" v-else-if="localjwt ==='1'">
@@ -51,59 +58,33 @@
             <div v-else-if="data.item.approve === 2">Rejected</div>
           </template>
         </b-table>
-        <div>
-          <b-modal id="modal-sick" size="sm" hide-footer>
-            <b-row>
-              <b-col>
-                <div class="d-block text-center">ลาป่วยหมด</div>
-              </b-col>
-            </b-row>
-          </b-modal>
-        </div>
-        <div>
-          <b-modal id="modal-leave" size="sm" hide-footer>
-            <b-row>
-              <b-col>
-                <div>
-                  <div class="d-block text-center">ลากิจหมด</div>
-                </div>
-              </b-col>
-            </b-row>
-          </b-modal>
-        </div>
       </b-container>
     </div>
   </div>
-</div>
 </template>
 <script>
 import axios from 'axios'
 import apiURL from '../assets/js/connectionAPI'
-import moment from 'moment'
-// import leaveuser from '../components/approve_leave_user'
+import transuser from '../components/approve_transportation_user'
 export default {
   components: {
-    // 'app-leaveuser': leaveuser
+    'app-transuser': transuser
   },
   data () {
     return {
       apiURL: apiURL,
-      employee_id: [],
       event: [],
       approve: [],
-      reject: [],
+      rejects: [],
       filter: null,
       totalRows: 1,
       currentPage: 1,
-      perPage: 10,
-      isBusy: false,
-      fields: ['id', 'actId', 'type', 'leaveStartDate', 'leaveEndDate', 'reason', 'approve'],
-      localjwt: ''
+      perPage: 10
     }
   },
   metaInfo () {
     return {
-      title: 'Approve Leave',
+      title: 'Approve Transportation',
       titleTemplate: '%s - LPTT'
     }
   },
@@ -116,34 +97,27 @@ export default {
   },
   created () {
     this.localjwt = JSON.parse(localStorage.getItem('role'))
+    // console.log('local', (this.localjwt))
     if (this.localjwt === '0') {
-      console.log('localadmin', (this.localjwt))
+      console.log('localtrans', (this.localjwt))
     }
   },
-  beforeUpdate () {
-
-  },
-  updated () {
-
-  },
+  updated () {},
   mounted () {
-    axios.all([axios.get(this.apiURL + '/leavear/get-all-history')]).then(axios.spread((reslar) => {
-      this.event = reslar.data.result.map((data, i) => {
+    axios.all([axios.get(this.apiURL + '/trans/get-all-trans-history')]).then(axios.spread((restrans) => {
+      this.event = restrans.data.result.map((data, i) => {
         return {
+          trans_id: data.trans_id,
           id: data.employee_id,
-          actId: data.leave_activity_report_id,
-          type: data.leave_name,
-          leaveStartDate: moment(data.start_time).format('MMM Do YY'),
-          leaveEndDate: moment(data.end_time).format('MMM Do YY'),
-          amount: data.amount,
-          reason: data.reason_for_leave,
-          approve: data.status,
-          category: data.leave_category
+          from: data.trans_from,
+          to: data.trans_to,
+          prices: data.trans_values,
+          approve: data.trans_status
         }
       })
-      this.totalRows = this.event.length
-      this.$refs.table.refresh()
+      // console.log(this.event.approve)
     })).catch(e => {
+      this.error.push(e)
     })
     setInterval(this.checkExpire, 150000)
   },
@@ -168,6 +142,59 @@ export default {
       } else {
         console.log('not expire')
       }
+    },
+    // status 0 notapprove, 1 approve, 2 reject
+    Papprove (index) {
+      // console.log('test')
+      this.approve = {
+        trans_id: index,
+        trans_status: 1,
+        approve_id: JSON.parse(localStorage.getItem('username'))
+      }
+      axios({
+        url: this.apiURL + '/trans/approve-transportation',
+        method: 'patch',
+        data: this.approve
+      }).then(response => {
+        console.log(response)
+        this.event = response.data.result.map((data, i) => {
+          return {
+            trans_id: data.trans_id,
+            id: data.employee_id,
+            from: data.trans_from,
+            to: data.trans_to,
+            prices: data.trans_values,
+            approve: data.trans_status
+          }
+        })
+        this.$refs.table.refresh()
+      })
+
+      // this.$refs.table.refresh()
+    },
+    Reject (index) {
+      this.rejects = {
+        trans_id: index,
+        trans_status: 2,
+        approve_id: JSON.parse(localStorage.getItem('username'))
+      }
+      axios({
+        url: this.apiURL + '/trans//reject-transportation',
+        method: 'patch',
+        data: this.rejects
+      }).then(response => {
+        this.event = response.data.result.map((data, i) => {
+          return {
+            trans_id: data.trans_id,
+            id: data.employee_id,
+            from: data.trans_from,
+            to: data.trans_to,
+            prices: data.trans_values,
+            approve: data.trans_status
+          }
+        })
+        this.$refs.table.refresh()
+      })
     }
   }
 }

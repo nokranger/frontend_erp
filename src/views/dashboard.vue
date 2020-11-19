@@ -55,13 +55,13 @@
         <div class="align-center" style="border-radius: 5px;border: thin solid #888;">
           <h1>Activity</h1>
           <b-row class="justify-content-md-center">
-            <b-col cols="12" md="5" style="margin:10px;background-color:whitesmoke;border-radius: 5px;border: thin solid #888;">
+            <b-col cols="12" md="5" style="margin:10px;background-color:whitesmoke;border-radius: 5px;border: thin solid #888;" v-if="localjwts == 0">
               Activity
               <canvas style="width:100%;height:100%;" id="my-chartline"></canvas>
             </b-col>
             <b-col cols="12" md="5" style="margin:10px;background-color:whitesmoke;border-radius: 5px;border: thin solid #888;">
               Most Station
-              <canvas style="width:100%;height:90%;" id="my-chartpie"></canvas>
+              <canvas style="width:100%;height:80%;" id="my-chartpie"></canvas>
             </b-col>
           </b-row>
         </div>
@@ -93,7 +93,8 @@ export default {
       leave: [],
       benz: [],
       toyota: [],
-      lptt: []
+      lptt: [],
+      localjwts: []
     }
   },
   metaInfo () {
@@ -117,6 +118,10 @@ export default {
     // }
   },
   created () {
+    this.localjwts = JSON.parse(localStorage.getItem('role'))
+    if (this.localjwt === '0') {
+      console.log('localadmin', (this.localjwt))
+    }
     var localjwt = localStorage.getItem('jwt')
     if (localjwt !== null) {
       axios.all([axios.get(this.apiURL + '/emp/get-last-emp'), axios.get(this.apiURL + '/leavear/get-last-record'), axios.get(this.apiURL + '/trans/get-last-trans')]).then(axios.spread((resulte, resultl, resultt) => {

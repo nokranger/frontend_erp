@@ -2,7 +2,9 @@
   <div>
     <meta charset="utf-8">
     <meta content="width=device-width,initial-scale=1,minimal-ui" name="viewport">
-    <b-container>
+    <br>
+    <br>
+    <b-container style="border-radius: 5px;border: thin solid #888;">
       <b-row>
         <b-col cols="12" sm="12" md="12" lg="3" xl="3"></b-col>
         <b-col cols="12" sm="12" md="12" lg="6" xl="6">
@@ -50,6 +52,8 @@
         </b-col>
         <b-col cols="12" sm="12" md="12" lg="3" xl="3"></b-col>
       </b-row>
+      <br>
+      <br>
     </b-container>
   </div>
 </template>

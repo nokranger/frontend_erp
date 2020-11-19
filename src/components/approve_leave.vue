@@ -1,8 +1,8 @@
 <template>
-<div v-if="localjwt == 1">
+<!-- <div v-if="localjwt == 1">
   <app-leaveuser></app-leaveuser>
-</div>
-<div v-else-if="localjwt == 0">
+</div> -->
+<div v-if="localjwt == 0">
   <div>
     <div style="font-size:30px;">
       Leave
@@ -83,10 +83,10 @@
 import axios from 'axios'
 import apiURL from '../assets/js/connectionAPI'
 import moment from 'moment'
-import leaveuser from '../components/approve_leave_user'
+// import leaveuser from '../components/approve_leave_user'
 export default {
   components: {
-    'app-leaveuser': leaveuser
+    // 'app-leaveuser': leaveuser
   },
   data () {
     return {
