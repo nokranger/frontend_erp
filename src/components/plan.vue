@@ -178,7 +178,7 @@
                         </b-col>
                         <b-col></b-col>
                       </b-row>
-                      <b-row>
+                      <!-- <b-row>
                         <b-col>
                           <div class="align-center" style="margin:5px;">
                             Permission
@@ -190,7 +190,7 @@
                           </div>
                         </b-col>
                         <b-col></b-col>
-                      </b-row>
+                      </b-row> -->
                       <b-row>
                         <b-col>
                           <div class="align-center" style="margin:5px;">

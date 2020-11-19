@@ -12,7 +12,7 @@ import LeaveReport from '../views/leave_report.vue'
 import TransportationReport from '../views/transportation_report.vue'
 import PettyCash from '../views/petty_cash.vue'
 import Profile from '../views/profile.vue'
-import MenuRecord from '../views/menu_record.vue'
+import MenuRequest from '../views/menu_record.vue'
 import MenuApprove from '../views/menu_Approve.vue'
 import Plan from '../components/plan.vue'
 // import aaa from '../../lptt_erp/public/uploads/prettycash'
@@ -74,9 +74,9 @@ const routes = [
     component: Profile
   },
   {
-    path: '/menurecord',
-    name: 'menurecord',
-    component: MenuRecord
+    path: '/menurequest',
+    name: 'menurequest',
+    component: MenuRequest
   },
   {
     path: '/menuapprove',
