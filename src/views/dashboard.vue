@@ -5,49 +5,51 @@
     </div>
     <b-container>
         <br>
-        <b-row>
-          <b-col style="margin:5px;">
-            <div class="card">
-              <br>
-              <div class="card-body">
-                <h5>Recently Leave</h5>
-                <div v-for="(leaves, index) in leave" :key="index">
-                    <a href="/approveleave"><p v-if="leaves.status == 0">{{leaves.reason_for_leave}} - {{leaves.employee_name}} - ยังไม่อนุมัติ</p></a>
-                    <a href="/approveleave"><p v-if="leaves.status == 1">{{leaves.reason_for_leave}} - {{leaves.employee_name}} - อนุมัติแล้ว</p></a>
-                </div>
-                <div class="align-right">
-                </div>
-              </div>
-            </div>
-          </b-col>
-          <b-col style="margin:5px;">
-            <div class="card">
-              <br>
-              <div class="card-body">
-                <h5>Recently Transportation</h5>
-                <div v-for="(transs, index) in trans" :key="index">
-                  <a href="/approvetrans"><p v-if="transs.trans_status == 0">{{transs.trans_from}} to {{transs.trans_to}} - {{transs.employee_name}} - ยังไม่อนุมัติ</p></a>
-                  <a href="/approvetrans"><p v-if="transs.trans_status == 1">{{transs.trans_from}} to {{transs.trans_to}} - {{transs.employee_name}} - อนุมัติแล้ว</p></a>
-                </div>
-                <div class="align-right">
+        <div style="border-radius: 5px;border: thin solid #888;">
+          <b-row>
+            <b-col style="margin:5px;">
+              <div class="card">
+                <br>
+                <div class="card-body">
+                  <h5>Recently Leave</h5>
+                  <div v-for="(leaves, index) in leave" :key="index">
+                      <a href="/approveleave"><p v-if="leaves.status == 0">{{leaves.reason_for_leave}} - {{leaves.employee_name}} - ยังไม่อนุมัติ</p></a>
+                      <a href="/approveleave"><p v-if="leaves.status == 1">{{leaves.reason_for_leave}} - {{leaves.employee_name}} - อนุมัติแล้ว</p></a>
+                  </div>
+                  <div class="align-right">
+                  </div>
                 </div>
               </div>
-            </div>
-          </b-col>
-          <b-col style="margin:5px;">
-            <div class="card">
-              <br>
-              <div class="card-body">
-                <h5>Recently Employee</h5>
-                <div v-for="(employees, index) in employee" :key="index">
-                  <a href="/profile"><p>{{employees.employee_name}} - {{employees.job_name}}</p></a>
-                </div>
-                <div class="align-right">
+            </b-col>
+            <b-col style="margin:5px;">
+              <div class="card">
+                <br>
+                <div class="card-body">
+                  <h5>Recently Transportation</h5>
+                  <div v-for="(transs, index) in trans" :key="index">
+                    <a href="/approvetrans"><p v-if="transs.trans_status == 0">{{transs.trans_from}} to {{transs.trans_to}} - {{transs.employee_name}} - ยังไม่อนุมัติ</p></a>
+                    <a href="/approvetrans"><p v-if="transs.trans_status == 1">{{transs.trans_from}} to {{transs.trans_to}} - {{transs.employee_name}} - อนุมัติแล้ว</p></a>
+                  </div>
+                  <div class="align-right">
+                  </div>
                 </div>
               </div>
-            </div>
-          </b-col>
-        </b-row>
+            </b-col>
+            <b-col style="margin:5px;">
+              <div class="card">
+                <br>
+                <div class="card-body">
+                  <h5>Recently Employee</h5>
+                  <div v-for="(employees, index) in employee" :key="index">
+                    <a href="/profile"><p>{{employees.employee_name}} - {{employees.job_name}}</p></a>
+                  </div>
+                  <div class="align-right">
+                  </div>
+                </div>
+              </div>
+            </b-col>
+          </b-row>
+        </div>
         <br>
         <br>
         <div class="align-center" style="border-radius: 5px;border: thin solid #888;">

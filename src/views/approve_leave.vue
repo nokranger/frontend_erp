@@ -5,6 +5,7 @@
       <app-approve></app-approve>
     </b-tab>
     <b-tab title="History">
+      <app-history></app-history>
     </b-tab>
   </b-tabs>
 </div>
@@ -12,10 +13,12 @@
 <script>
 import apiURL from '../assets/js/connectionAPI'
 import approve from '../components/approve_leave'
+import history from '../components/history_approve_leave'
 // import leaveuser from '../components/approve_leave_user'
 export default {
   components: {
-    'app-approve': approve
+    'app-approve': approve,
+    'app-history': history
   },
   data () {
     return {

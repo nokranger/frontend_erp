@@ -130,7 +130,7 @@ export default {
 
   },
   mounted () {
-    axios.all([axios.get(this.apiURL + '/leavear/get-all-la_report')]).then(axios.spread((reslar) => {
+    axios.all([axios.get(this.apiURL + '/leavear/get-all-history')]).then(axios.spread((reslar) => {
       this.event = reslar.data.result.map((data, i) => {
         return {
           id: data.employee_id,
@@ -151,70 +151,6 @@ export default {
     setInterval(this.checkExpire, 150000)
   },
   methods: {
-    Papprove (index, empid, amount, category) {
-      this.approve = {
-        id: index,
-        emp_id: empid,
-        status: 1,
-        approve_id: JSON.parse(localStorage.getItem('username')),
-        amount: amount,
-        category: category,
-        approve_date: Date.now()
-      }
-      console.log(this.approve)
-      axios.patch(this.apiURL + '/leavear/approve-leave-report', this.approve).then(response => {
-        console.log('res0', response.data.result)
-        if (response.data.result === 1) {
-          console.log('ลากิจหมด')
-          this.$root.$emit('bv::show::modal', 'modal-leave', '#btnShow')
-        } else if (response.data.result === 2) {
-          console.log('ลาป่วยหมด')
-          this.$root.$emit('bv::show::modal', 'modal-sick', '#btnShow')
-        } else {
-          console.log('ลาได้')
-          this.event = response.data.result.map((data, i) => {
-            return {
-              id: data.employee_id,
-              actId: data.leave_activity_report_id,
-              type: data.leave_name,
-              leaveStartDate: moment(data.start_time).format('MMM Do YY'),
-              leaveEndDate: moment(data.end_time).format('MMM Do YY'),
-              amount: data.amount,
-              reason: data.reason_for_leave,
-              approve: data.status,
-              category: data.leave_category
-            }
-          })
-        }
-        this.totalRows = this.event.length
-        // this.$refs.table.refresh()
-      })
-    },
-    Rejected (index) {
-      this.reject = {
-        id: index,
-        status: 2,
-        approve_id: JSON.parse(localStorage.getItem('username')),
-        approve_date: Date.now()
-      }
-      axios.patch(this.apiURL + '/leavear/reject-leave-report', this.reject).then(response => {
-        this.event = response.data.result.map((data, i) => {
-          return {
-            id: data.employee_id,
-            actId: data.leave_activity_report_id,
-            type: data.leave_name,
-            leaveStartDate: moment(data.start_time).format('MMM Do YY'),
-            leaveEndDate: moment(data.end_time).format('MMM Do YY'),
-            amount: data.amount,
-            reason: data.reason_for_leave,
-            approve: data.status,
-            category: data.leave_category
-          }
-        })
-        this.totalRows = this.event.length
-        this.$refs.table.refresh()
-      })
-    },
     checkPermission () {
       if (JSON.parse(localStorage.getItem('jwt')) !== 'null') {
         console.log('login agian')
