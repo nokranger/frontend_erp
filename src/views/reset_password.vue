@@ -124,6 +124,12 @@ export default {
       }
       return ''
     }
+  },
+  metaInfo () {
+    return {
+      title: 'Reset password',
+      titleTemplate: '%s - LPTT'
+    }
   }
 }
 </script>
