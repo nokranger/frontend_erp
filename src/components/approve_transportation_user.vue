@@ -2,6 +2,34 @@
   <div>
     <div style="font-size:30px;">
       Transportation
+      <b-container>
+        <b-row>
+          <b-col>
+            <div>
+              <div class="align-left">
+                From
+              </div>
+              <b-form-input type="date" v-model="trans_month.from"></b-form-input>
+            </div>
+          </b-col>
+          <b-col>
+            <div>
+              <div class="align-left">
+                To
+              </div>
+              <b-form-input type="date" v-model="trans_month.to"></b-form-input>
+            </div>
+          </b-col>
+          <b-col>
+            <div>
+              <div  style="margin-top:-6px;">
+                <br>
+              </div>
+              <b-button v-on:click="selectMonth ()" variant="success">Select</b-button>
+            </div>
+          </b-col>
+        </b-row>
+      </b-container>
       <br>
       <br>
     </div>
@@ -45,6 +73,24 @@
 <script>
 import axios from 'axios'
 import apiURL from '../assets/js/connectionAPI'
+// import moment from 'moment'
+import pdfMake from 'pdfmake/build/pdfmake'
+import pdfFonts from 'pdfmake/build/vfs_fonts'
+pdfMake.vfs = pdfFonts.pdfMake.vfs
+pdfMake.fonts = {
+  THSarabunNew: {
+    normal: 'THSarabunNew.ttf',
+    bold: 'THSarabunNew-Bold.ttf',
+    italics: 'THSarabunNew-Italic.ttf',
+    bolditalics: 'THSarabunNew-BoldItalic.ttf'
+  },
+  Roboto: {
+    normal: 'Roboto-Regular.ttf',
+    bold: 'Roboto-Medium.ttf',
+    italics: 'Roboto-Italic.ttf',
+    bolditalics: 'Roboto-MediumItalic.ttf'
+  }
+}
 export default {
   data () {
     return {
@@ -52,6 +98,11 @@ export default {
       event: [],
       approve: [],
       employee_id: [],
+      trans_month: {
+        id: '',
+        from: '',
+        to: ''
+      },
       filter: null,
       totalRows: 1,
       currentPage: 1,
@@ -87,6 +138,23 @@ export default {
     })
   },
   methods: {
+    selectMonth () {
+      this.trans_month.id = JSON.parse(localStorage.getItem('username'))
+      axios.post(this.apiURL + '/trans/get-month-trans-user', this.trans_month).then(response => {
+        this.event = response.data.result.map((data, i) => {
+          return {
+            trans_id: data.trans_id,
+            id: data.employee_id,
+            from: data.trans_from,
+            to: data.trans_to,
+            prices: data.trans_values,
+            approve: data.trans_status
+          }
+        })
+      }).catch(e => {
+        this.error.push(e)
+      })
+    }
   }
 }
 </script>

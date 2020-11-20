@@ -25,7 +25,7 @@
               <div  style="margin-top:-6px;">
                 <br>
               </div>
-              <b-button v-on:click="selectMonth ()" variant="success">Query</b-button>
+              <b-button v-on:click="selectMonth ()" variant="success">Select</b-button>
             </div>
           </b-col>
         </b-row>
@@ -192,13 +192,6 @@ export default {
     setInterval(this.checkExpire, 150000)
   },
   methods: {
-    checkPermission () {
-      if (JSON.parse(localStorage.getItem('jwt')) !== 'null') {
-        console.log('login agian')
-      } else {
-        console.log('login agian 2')
-      }
-    },
     checkExpire () {
       console.log('check expire')
       if (Date.now() >= parseInt(localStorage.getItem('iat'), 10) + 600000) {

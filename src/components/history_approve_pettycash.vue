@@ -25,7 +25,7 @@
               <div  style="margin-top:-6px;">
                 <br>
               </div>
-              <b-button v-on:click="selectMonth ()" variant="success">Query</b-button>
+              <b-button v-on:click="selectMonth ()" variant="success">Select</b-button>
             </div>
           </b-col>
         </b-row>
