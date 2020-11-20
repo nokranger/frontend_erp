@@ -36,7 +36,7 @@ export default {
   },
   mounted () {
     console.log(window.location.pathname)
-    if (window.location.pathname === '/') {
+    if (window.location.pathname === '/' | window.location.pathname === '/password_reset') {
       this.pathname = 'login'
       console.log('login')
     } else if (window.location.pathname === '/dashboard') {

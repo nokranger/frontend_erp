@@ -15,6 +15,7 @@ import Profile from '../views/profile.vue'
 import MenuRequest from '../views/menu_record.vue'
 import MenuApprove from '../views/menu_Approve.vue'
 import Plan from '../components/plan.vue'
+import Resetpassword from '../views/reset_password.vue'
 // import aaa from '../../lptt_erp/public/uploads/prettycash'
 
 import Meta from 'vue-meta'
@@ -87,6 +88,11 @@ const routes = [
     path: '/plan',
     name: 'plan',
     component: Plan
+  },
+  {
+    path: '/password_reset',
+    name: 'passwordreset',
+    component: Resetpassword
   },
   {
     path: '*',

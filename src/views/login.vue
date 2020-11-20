@@ -44,6 +44,7 @@
             </b-form-group>
             <div>
             <b-button class="success btn-block" variant="success" type="submit" v-on:click="postLogin ()">LOGIN</b-button><br>
+            <div><a href="/password_reset">Forgot password?</a></div>
             </div>
             <div>
             </div>
