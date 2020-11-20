@@ -60,7 +60,8 @@ export default {
       symbols: '&#9776;',
       permission: 0,
       data: [],
-      showUsers: []
+      showUsers: [],
+      pathname: ''
     }
   },
   metaInfo () {
@@ -114,6 +115,10 @@ export default {
       console.log(this.permission)
       // this.permission = VueJwtDecode.decode(JSON.parse(localStorage.getItem('role')))
     }
+    // if (window.location.pathname === '/dashboard2') {
+    //   this.pathname = 'login'
+    //   console.log('login2')
+    // }
     this.showuser()
     // const jwt = VueJwtDecode.decode(JSON.parse(localStorage.getItem('jwt')))
     // this.permission = JSON.parse(jwt.role)

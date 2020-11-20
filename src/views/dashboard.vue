@@ -118,10 +118,6 @@ export default {
     // }
   },
   created () {
-    this.localjwts = JSON.parse(localStorage.getItem('role'))
-    if (this.localjwt === '0') {
-      console.log('localadmin', (this.localjwt))
-    }
     var localjwt = localStorage.getItem('jwt')
     if (localjwt !== null) {
       axios.all([axios.get(this.apiURL + '/emp/get-last-emp'), axios.get(this.apiURL + '/leavear/get-last-record'), axios.get(this.apiURL + '/trans/get-last-trans')]).then(axios.spread((resulte, resultl, resultt) => {
@@ -139,6 +135,10 @@ export default {
   updated () {
   },
   mounted () {
+    this.localjwts = JSON.parse(localStorage.getItem('role'))
+    if (this.localjwts === '0') {
+      console.log('localadmin', (this.localjwts))
+    }
     axios.get(this.apiURL + '/trans/getstation').then(response => {
       console.log(response)
       this.benz = response.data.result[0]._trans_to_benz

@@ -94,11 +94,11 @@
                                 </h5>
                                 <div>
                                   <div style="margin:5px;">
-                                    <b-input placeholder="Comment" v-model="comment.ccomment"></b-input>
+                                    <b-input placeholder="Comment" v-model="comment.ccomment" v-on:keyup.enter="createComment (datas.plan_id, 'modal-id' + datas.plan_id)"></b-input>
                                   </div>
-                                  <div style="margin:5px;">
+                                  <!-- <div style="margin:5px;">
                                     <b-button v-on:click="createComment (datas.plan_id, 'modal-id' + datas.plan_id)">Save</b-button>
-                                  </div>
+                                  </div> -->
                                 </div>
                                 <div v-for="(item, index) in datas.comments" :key="index">
                                   <div style="border-radius: 5px;border: thin solid white;">
@@ -304,6 +304,7 @@ export default {
       })
     },
     createComment (id, modal) {
+      // console.log('testenter')
       this.comment.id = id
       axios.post(this.apiURL + '/plan/createcomment', this.comment).then(response => {
         // console.log(response)
@@ -313,7 +314,7 @@ export default {
           employee_id: JSON.parse(localStorage.getItem('username')),
           ccomment: ''
         }
-        this.$bvModal.hide(modal)
+        // this.$bvModal.hide(modal)
       })
     },
     showContents () {
