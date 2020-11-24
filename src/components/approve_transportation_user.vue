@@ -67,6 +67,7 @@
           </template>
         </b-table>
       </b-container>
+      <b-button style="margin:5px" v-on:click="pdfPreview ()">Preview PDF</b-button>
     </div>
   </div>
 </template>
@@ -141,6 +142,7 @@ export default {
     selectMonth () {
       this.trans_month.id = JSON.parse(localStorage.getItem('username'))
       axios.post(this.apiURL + '/trans/get-month-trans-user', this.trans_month).then(response => {
+        console.log('selectmonth', response)
         this.event = response.data.result.map((data, i) => {
           return {
             trans_id: data.trans_id,
@@ -151,8 +153,15 @@ export default {
             approve: data.trans_status
           }
         })
+        this.$refs.table.refresh()
       }).catch(e => {
         this.error.push(e)
+      })
+    },
+    pdfPreview () {
+      console.log('pdfpreview')
+      axios.post(this.apiURL + '/trans/pdf', this.trans_month).then(response => {
+        console.log('transpdf', response)
       })
     }
   }
