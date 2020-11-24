@@ -230,7 +230,7 @@ export default {
               alignment: 'justify',
               columns: [
                 { text: this.dataTotable[0].Name.toUpperCase() + ' ' + this.dataTotable[0].Lname.toUpperCase() + '\n', alignment: 'left', fontSize: 18 },
-                { text: moment(from).format('MMM Do YY') + ' - ' + moment(to).format('MMM Do YY'), alignment: 'right', fontSize: 18 }
+                { text: moment(from).format('L') + ' - ' + moment(to).format('L'), alignment: 'right', fontSize: 18 }
               ]
             },
             table(this.dataTotable, ['No', 'Date', 'From', 'To', 'By', 'Value']),
@@ -244,7 +244,7 @@ export default {
             {
               alignment: 'justify',
               columns: [
-                { text: '\nRequest By .....................................', alignment: 'left', fontSize: 16 },
+                { text: '\nRequest By ' + this.dataTotable[0].Name.toUpperCase() + ' ' + this.dataTotable[0].Lname.toUpperCase(), alignment: 'left', fontSize: 16 },
                 { text: '\nApprove By .....................................', alignment: 'right', fontSize: 16 }
               ]
             },
