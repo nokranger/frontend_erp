@@ -67,14 +67,14 @@
           </template>
         </b-table>
       </b-container>
-      <b-button style="margin:5px" v-on:click="pdfPreview ()">Preview PDF</b-button>
+      <b-button id="pdf" name="pdf" style="margin:5px" v-on:click="pdfPreview ()">Preview PDF</b-button>
     </div>
   </div>
 </template>
 <script>
 import axios from 'axios'
 import apiURL from '../assets/js/connectionAPI'
-// import moment from 'moment'
+import moment from 'moment'
 import pdfMake from 'pdfmake/build/pdfmake'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
 pdfMake.vfs = pdfFonts.pdfMake.vfs
@@ -97,6 +97,8 @@ export default {
     return {
       apiURL: apiURL,
       event: [],
+      dataTotable: [],
+      dataTotable2: [],
       approve: [],
       employee_id: [],
       trans_month: {
@@ -160,8 +162,102 @@ export default {
     },
     pdfPreview () {
       console.log('pdfpreview')
+      var from = this.trans_month.from
+      var to = this.trans_month.to
       axios.post(this.apiURL + '/trans/pdf', this.trans_month).then(response => {
         console.log('transpdf', response)
+        // var ss = ''
+        this.dataTotable = response.data.result.map((data, i) => {
+          return {
+            No: data._No,
+            Date: moment(data.date).format('MMM Do YY'),
+            Name: data.employee_name,
+            Lname: data.employee_lastname,
+            From: data.trans_from,
+            To: data.trans_to,
+            By: data.vehicle_name,
+            Value: data.trans_values,
+            Amount: data._amount
+          }
+        })
+        if (this.dataTotable.length < 20) {
+          for (var i = this.dataTotable.length; i < 20; i++) {
+            this.dataTotable2[i] = {
+              No: '\n',
+              Date: '',
+              Name: '',
+              Lname: '',
+              From: '',
+              To: '',
+              By: '',
+              Value: '',
+              Amount: '',
+              Amounts: this.dataTotable[this.dataTotable.length - 1].Amount
+            }
+          }
+          for (var k in this.dataTotable2) {
+            this.dataTotable.push(this.dataTotable2[k])
+          }
+        }
+        console.log('datatable', this.dataTotable)
+        function buildTableBody (data, columns) {
+          var body = []
+          body.push(columns)
+          data.forEach(function (row) {
+            var dataRow = []
+            columns.forEach(function (column) {
+              dataRow.push(row[column].toString())
+            })
+            body.push(dataRow)
+          })
+          return body
+        }
+
+        function table (data, columns) {
+          return {
+            table: {
+              widths: ['*', '*', '*', '*', '*', '*'],
+              headerRows: 1,
+              body: buildTableBody(data, columns)
+            }
+          }
+        }
+        var docDefinition = {
+          content: [
+            { text: 'Logiprotech (Thailand) Co., Ltd.', style: 'header', alignment: 'center', fontSize: 30 },
+            { text: 'Transportation Reimbursement Form\n', alignment: 'center', fontSize: 25 },
+            {
+              alignment: 'justify',
+              columns: [
+                { text: this.dataTotable[0].Name.toUpperCase() + ' ' + this.dataTotable[0].Lname.toUpperCase() + '\n', alignment: 'left', fontSize: 18 },
+                { text: moment(from).format('MMM Do YY') + ' - ' + moment(to).format('MMM Do YY'), alignment: 'right', fontSize: 18 }
+              ]
+            },
+            table(this.dataTotable, ['No', 'Date', 'From', 'To', 'By', 'Value']),
+            {
+              table: {
+                widths: [420, '*'],
+                headerRows: 1,
+                body: [[{ text: 'Total', alignment: 'center' }, { text: this.dataTotable[this.dataTotable.length - 1].Amounts, alignment: 'center' }]]
+              }
+            },
+            {
+              alignment: 'justify',
+              columns: [
+                { text: '\nRequest By .....................................', alignment: 'left', fontSize: 16 },
+                { text: '\nApprove By .....................................', alignment: 'right', fontSize: 16 }
+              ]
+            },
+            // { text: '\nApprove By .....................................', alignment: 'left', fontSize: 16 },
+            // { text: 'Approve By .....................................\n', alignment: 'right', fontSize: 16 },
+            { text: '(Tanat Ratanakosum)\n', alignment: 'right', fontSize: 16 },
+            { text: 'I.T. Development manager\n\n', alignment: 'right', fontSize: 16 }
+          ],
+          defaultStyle: {
+            font: 'THSarabunNew'
+          }
+        }
+        pdfMake.createPdf(docDefinition).open()
       })
     }
   }
