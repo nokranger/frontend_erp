@@ -114,7 +114,11 @@
                                     </div>
                                   </div>
                                   <div style="margin:5px;">
-                                    <div style="border-bottom: thin solid #888;display: inline-block;margin:5px;cursor:pointer;">Edit</div>
+                                    <div style="border-bottom: thin solid #888;display: inline-block;margin:5px;cursor:pointer;" v-b-modal="'modal-cm' + item.comments_id">Edit</div>{{item.comments_id}}
+                                      <b-modal :id="'modal-cm' + item.comments_id" hide-header hide-footer>
+                                        <!-- <p class="my-4">Hello from modal!</p> -->
+                                        <b-input v-model="item.comments" v-on:keyup.enter="editComments(item.comments_id, item.comments)"></b-input>
+                                      </b-modal>
                                     <div style="border-bottom: thin solid #888;display: inline-block;margin:5px;cursor:pointer;">Delete</div>
                                   </div>
                                 </div>
@@ -255,6 +259,16 @@ export default {
         reg: '',
         up: ''
       },
+      editContent: {
+        id: '',
+        content: '',
+        up: ''
+      },
+      editComment: {
+        id: '',
+        comment: '',
+        up: ''
+      },
       new_comment: [],
       value: [],
       data: [],
@@ -326,6 +340,16 @@ export default {
         // this.$bvModal.hide(modal)
       })
     },
+    editComments (id, comments) {
+      // console.log('comment', id)
+      // console.log('comment', comments)
+      this.editComment = {
+        id: id,
+        comment: comments,
+        up: moment(new Date(Date.now())).format()
+      }
+      console.log('commentall', this.editComment)
+    },
     showContents () {
       axios.get(this.apiURL + '/plan/showcontent').then(response => {
         this.data = response.data.result
@@ -345,7 +369,7 @@ export default {
           // eslint-disable-next-line camelcase
           const cFilter = newcomment.filter(({ plans_id }) => plans_id === plan_id)
           // eslint-disable-next-line camelcase
-          const c = cFilter.map(({ plans_id, employee_name, employee_lastname, employee_id, comments, reg_date, up_date }) => ({ plans_id, employee_name, employee_lastname, employee_id, comments, reg_date, up_date }))
+          const c = cFilter.map(({ plans_id, employee_name, employee_lastname, employee_id, comments, reg_date, up_date, comments_id }) => ({ plans_id, employee_name, employee_lastname, employee_id, comments, reg_date, up_date, comments_id }))
           return {
             plan_id,
             employee_id,
