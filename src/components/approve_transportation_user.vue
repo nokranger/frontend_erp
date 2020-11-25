@@ -198,6 +198,24 @@ export default {
           for (var k in this.dataTotable2) {
             this.dataTotable.push(this.dataTotable2[k])
           }
+        } else if (this.dataTotable.length > 20) {
+          for (i = this.dataTotable.length; i < this.dataTotable.length; i++) {
+            this.dataTotable2[i] = {
+              No: '\n',
+              Date: '',
+              Name: '',
+              Lname: '',
+              From: '',
+              To: '',
+              By: '',
+              Value: '',
+              Amount: '',
+              Amounts: this.dataTotable[this.dataTotable.length - 1].Amount
+            }
+          }
+          for (k in this.dataTotable2) {
+            this.dataTotable.push(this.dataTotable2[k])
+          }
         }
         console.log('datatable', this.dataTotable)
         function buildTableBody (data, columns) {
@@ -206,7 +224,7 @@ export default {
           data.forEach(function (row) {
             var dataRow = []
             columns.forEach(function (column) {
-              dataRow.push(row[column].toString())
+              dataRow.push({ text: row[column].toString(), alignment: 'center' })
             })
             body.push(dataRow)
           })
@@ -216,7 +234,7 @@ export default {
         function table (data, columns) {
           return {
             table: {
-              widths: ['*', '*', '*', '*', '*', '*'],
+              widths: ['auto', '*', '*', '*', '*', '*'],
               headerRows: 1,
               body: buildTableBody(data, columns)
             }
@@ -236,7 +254,7 @@ export default {
             table(this.dataTotable, ['No', 'Date', 'From', 'To', 'By', 'Value']),
             {
               table: {
-                widths: [420, '*'],
+                widths: [406, '*'],
                 headerRows: 1,
                 body: [[{ text: 'Total', alignment: 'center' }, { text: this.dataTotable[this.dataTotable.length - 1].Amounts, alignment: 'center' }]]
               }
