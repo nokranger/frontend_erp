@@ -29,8 +29,8 @@
           </b-row>
           <br>
           <b-row>
-            <b-col v-for="(showplan, index) in new_emps" :key="index" style="margin:5px;">
-              <div class="card" style="background-color:#ebecf0;">
+            <b-col cols="12" md="4" sm="4" v-for="(showplan, index) in new_emps" :key="index" style="margin-bottom:5px;">
+              <div class="card" style="background-color:#ebecf0;width:100%;">
                 <div style="border-radius: 5px;border: thin solid #888;">
                   <img src="https://i.imgur.com/KPtSoGK.jpg" alt="">
                   <div class="align-left" style="margin:5px;margin-top:15px;">
@@ -57,7 +57,7 @@
                         </div>
                         <div class="align-right">
                           <div style="display: inline-block;margin:5px;">
-                            {{3}}
+                            {{datas.comments.length}}
                           </div>
                           <div style="display: inline-block;margin:5px;">
                             Edit
@@ -105,7 +105,7 @@
                                     <img src="https://i.imgur.com/KPtSoGK.jpg" alt="">
                                     <div class="align-left" style="margin:5px;margin-top:15px;">
                                       <h5>{{item.employee_name + ' ' + item.employee_lastname}}</h5>
-                                      <div>{{item.reg_date}}</div>
+                                      <div>{{item.up_date | moment('dddd, MMMM Do YYYY')}}</div>
                                     </div>
                                   </div>
                                   <div style="border-radius: 5px;border: thin solid #888;margin:5px;">
@@ -210,7 +210,7 @@
                       </b-row>
                       <br>
                       <div class="align-center">
-                        <b-button v-on:click=" createContent(showplan.value, 'priority' + showplan.value, 'permission' + showplan.value, 'modal-id' + showplan.value)">Add content</b-button>
+                        <b-button v-on:click=" createContent(showplan.value, 'priority' + showplan.value, 'modal-id' + showplan.value)">Add content</b-button>
                       </div>
                     </b-container>
                   </b-modal>
@@ -231,6 +231,7 @@
 <script>
 import axios from 'axios'
 import apiURL from '../assets/js/connectionAPI'
+import moment from 'moment'
 export default {
   data () {
     return {
@@ -242,13 +243,17 @@ export default {
         title: '',
         detail: '',
         priority: '',
+        reg: '',
+        up: '',
         permission: '',
         member: ''
       },
       comment: {
         id: '',
         employee_id: JSON.parse(localStorage.getItem('username')),
-        ccomments: ''
+        ccomments: '',
+        reg: '',
+        up: ''
       },
       new_comment: [],
       value: [],
@@ -282,16 +287,17 @@ export default {
   mounted () {
   },
   methods: {
-    createContent (id, priority, permission, modal) {
+    createContent (id, priority, modal) {
       console.log('ID: ', id)
       this.content.id = id
       this.content.priority = this.$refs[priority][0].localValue
-      this.content.permission = this.$refs[permission][0].localValue
       this.content.member = this.value.toString()
+      this.content.reg = moment(new Date(Date.now())).format()
+      this.content.up = moment(new Date(Date.now())).format()
       console.log('content', this.content)
       console.log('modal', modal)
       axios.post(this.apiURL + '/plan/createplan', this.content).then(response => {
-        this.showContents()
+        this.showComment()
         this.content = {
           id: JSON.parse(localStorage.getItem('username')),
           title: '',
@@ -306,6 +312,9 @@ export default {
     createComment (id, modal) {
       // console.log('testenter')
       this.comment.id = id
+      console.log('date', moment(new Date(Date.now())).format())
+      this.comment.reg = moment(new Date(Date.now())).format()
+      this.comment.up = moment(new Date(Date.now())).format()
       axios.post(this.apiURL + '/plan/createcomment', this.comment).then(response => {
         // console.log(response)
         this.showComment()
