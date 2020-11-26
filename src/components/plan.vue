@@ -65,7 +65,14 @@
                           <div style="display: inline-block;margin:5px;">
                             Reply
                           </div>
-                          <b-modal :id="'modal-id' + datas.plan_id" :title="datas.title" size="lg" hide-footer>
+                          <b-modal :id="'modal-id' + datas.plan_id" :title="datas.title" size="lg" hide-footer hide-header>
+                            <div style="border-bottom: thin solid #888;">
+                              <h5 v-b-modal="'modal-title' + datas.plan_id">{{datas.title}}</h5>
+                              <!-- {{datas}} -->
+                              <b-modal :id="'modal-title' + datas.plan_id" hide-header hide-footer>
+                                <b-input v-model="datas.title" v-on:keyup.enter="editContents(datas.plan_id, datas.title, 'modal-title' + datas.plan_id)"></b-input>
+                              </b-modal>
+                            </div>
                             <b-container>
                               <div>
                                 <div v-if="datas.priority == 2" style="display: inline-block;border-radius: 5px;border: thin solid #888;width: 50px;height: 20px;margin:5px;margin-top:10px;background-color:#FF3A3A">
@@ -83,9 +90,12 @@
                                 <h5>
                                   Detail
                                 </h5>
-                                <div style="margin:5px;">
+                                <div style="margin:5px;" v-b-modal="'modal-detail' + datas.plan_id">
                                   {{datas.detail}}
                                 </div>
+                                <b-modal :id="'modal-detail' + datas.plan_id" hide-header hide-footer>
+                                  <b-input v-model="datas.detail" v-on:keyup.enter="editdetailContents(datas.plan_id, datas.detail, 'modal-detail' + datas.plan_id)"></b-input>
+                                </b-modal>
                               </div>
                               <br>
                               <div>
@@ -105,7 +115,7 @@
                                     <img src="https://i.imgur.com/KPtSoGK.jpg" alt="">
                                     <div class="align-left" style="margin:5px;margin-top:15px;">
                                       <h5>{{item.employee_name + ' ' + item.employee_lastname}}</h5>
-                                      <div>{{item.up_date | moment("dddd, MMMM Do YYYY")}}</div>
+                                      <div>{{item.reg_date | moment("dddd, MMMM Do YYYY")}}</div>
                                     </div>
                                   </div>
                                   <div style="border-radius: 5px;border: thin solid #888;margin:5px;">
@@ -277,6 +287,11 @@ export default {
         content: '',
         up: ''
       },
+      editdetailcontent: {
+        id: '',
+        detail: '',
+        up: ''
+      },
       editcomment: {
         id: '',
         comment: '',
@@ -339,6 +354,30 @@ export default {
         this.$bvModal.hide(modal)
       })
     },
+    editContents (id, title, modal) {
+      this.editcontent = {
+        id: id,
+        title: title,
+        up: moment(new Date(Date.now())).format()
+      }
+      axios.patch(this.apiURL + '/plan/editcontents', this.editcontent).then(response => {
+        console.log(response)
+        this.showComment()
+        this.$bvModal.hide(modal)
+      })
+    },
+    editdetailContents (id, detail, modal) {
+      this.editdetailcontent = {
+        id: id,
+        detail: detail,
+        up: moment(new Date(Date.now())).format()
+      }
+      axios.patch(this.apiURL + '/plan/editdetailcontents', this.editdetailcontent).then(response => {
+        console.log(response)
+        this.showComment()
+        this.$bvModal.hide(modal)
+      })
+    },
     createComment (id, modal) {
       // console.log('testenter')
       this.comment.id = id
@@ -387,7 +426,7 @@ export default {
       })
     },
     showComment () {
-      // this.showContents()
+      this.showContents()
       axios.get(this.apiURL + '/plan/showcomment').then(response => {
         // this.rescomment = response.data.result
         const newcomment = response.data.result
