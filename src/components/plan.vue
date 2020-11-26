@@ -66,18 +66,25 @@
                             Reply
                           </div>
                           <b-modal :id="'modal-id' + datas.plan_id" :title="datas.title" size="lg" hide-footer hide-header>
-                            <div style="border-bottom: thin solid #888;display: inline-block;width:90%">
-                              <h5 v-b-modal="'modal-title' + datas.plan_id">{{datas.title}}</h5>
-                              <!-- {{datas}} -->
-                              <b-modal :id="'modal-title' + datas.plan_id" hide-header hide-footer>
-                                <b-input v-model="datas.title" v-on:keyup.enter="editContents(datas.plan_id, datas.title, 'modal-title' + datas.plan_id)"></b-input>
-                              </b-modal>
+                            <div v-if="showplan.value == login">
+                              <div style="border-bottom: thin solid #888;display: inline-block;width:90%">
+                                <h5 v-b-modal="'modal-title' + datas.plan_id">{{datas.title}}</h5>
+                                <!-- {{datas}} -->
+                                <b-modal :id="'modal-title' + datas.plan_id" hide-header hide-footer>
+                                  <b-input v-model="datas.title" v-on:keyup.enter="editContents(datas.plan_id, datas.title, 'modal-title' + datas.plan_id)"></b-input>
+                                </b-modal>
+                              </div>
+                              <div v-b-modal="'modal-delete-content' + datas.plan_id" style="display: inline-block;"><i class="fas fa-trash-alt"></i></div>
+                                <b-modal :id="'modal-delete-content' + datas.plan_id" hide-header hide-footer>
+                                  Do you want to delete content ??
+                                  <b-button style="float:right" v-on:click="deleteContents (datas.plan_id, 'modal-delete-content' + datas.plan_id)">ok</b-button>
+                                </b-modal>
                             </div>
-                            <div v-b-modal="'modal-delete-content' + datas.plan_id" style="display: inline-block;"><i class="fas fa-trash-alt"></i></div>
-                              <b-modal :id="'modal-delete-content' + datas.plan_id" hide-header hide-footer>
-                                Do you want to delete content ??
-                                <b-button style="float:right" v-on:click="deleteContents (datas.plan_id, 'modal-delete-content' + datas.plan_id)">ok</b-button>
-                              </b-modal>
+                            <div v-if="showplan.value !== login">
+                              <div style="border-bottom: thin solid #888;display: inline-block;width:90%">
+                                <h5>{{datas.title}}</h5>
+                              </div>
+                            </div>
                             <b-container>
                               <div>
                                 <div v-if="datas.priority == 2" style="display: inline-block;border-radius: 5px;border: thin solid #888;width: 50px;height: 20px;margin:5px;margin-top:10px;background-color:#FF3A3A">
@@ -95,12 +102,19 @@
                                 <h5>
                                   Detail
                                 </h5>
-                                <div style="margin:5px;" v-b-modal="'modal-detail' + datas.plan_id">
-                                  {{datas.detail}}
+                                <div v-if="showplan.value == login">
+                                  <div style="margin:5px;" v-b-modal="'modal-detail' + datas.plan_id">
+                                    {{datas.detail}}
+                                  </div>
+                                  <b-modal :id="'modal-detail' + datas.plan_id" hide-header hide-footer>
+                                    <b-input v-model="datas.detail" v-on:keyup.enter="editdetailContents(datas.plan_id, datas.detail, 'modal-detail' + datas.plan_id)"></b-input>
+                                  </b-modal>
                                 </div>
-                                <b-modal :id="'modal-detail' + datas.plan_id" hide-header hide-footer>
-                                  <b-input v-model="datas.detail" v-on:keyup.enter="editdetailContents(datas.plan_id, datas.detail, 'modal-detail' + datas.plan_id)"></b-input>
-                                </b-modal>
+                                <div v-else-if="showplan.value !== login">
+                                  <div style="margin:5px;">
+                                    {{datas.detail}}
+                                  </div>
+                                </div>
                               </div>
                               <br>
                               <div>
@@ -128,17 +142,19 @@
                                       {{item.comments}}
                                     </div>
                                   </div>
-                                  <div style="margin:5px;">
-                                    <div style="border-bottom: thin solid #888;display: inline-block;margin:5px;cursor:pointer;" v-b-modal="'modal-cm' + item.comments_id">Edit</div>
-                                      <b-modal :id="'modal-cm' + item.comments_id" hide-header hide-footer>
-                                        <!-- <p class="my-4">Hello from modal!</p> -->
-                                        <b-input v-model="item.comments" v-on:keyup.enter="editComments(item.comments_id, item.comments, 'modal-cm' + item.comments_id)"></b-input>
-                                      </b-modal>
-                                    <div style="border-bottom: thin solid #888;display: inline-block;margin:5px;cursor:pointer;" v-b-modal="'modal-dcm' + item.comments_id">Delete</div>
-                                      <b-modal :id="'modal-dcm' + item.comments_id" hide-header hide-footer>
-                                        Do you want to delete comment ??
-                                        <b-button style="float:right" v-on:click="deleteComments (item.comments_id, 'modal-dcm' + item.comments_id)">ok</b-button>
-                                      </b-modal>
+                                  <div v-if="item.employee_id == login">
+                                    <div style="margin:5px;">
+                                      <div style="border-bottom: thin solid #888;display: inline-block;margin:5px;cursor:pointer;" v-b-modal="'modal-cm' + item.comments_id">Edit</div>
+                                        <b-modal :id="'modal-cm' + item.comments_id" hide-header hide-footer>
+                                          <!-- <p class="my-4">Hello from modal!</p> -->
+                                          <b-input v-model="item.comments" v-on:keyup.enter="editComments(item.comments_id, item.comments, 'modal-cm' + item.comments_id)"></b-input>
+                                        </b-modal>
+                                      <div style="border-bottom: thin solid #888;display: inline-block;margin:5px;cursor:pointer;" v-b-modal="'modal-dcm' + item.comments_id">Delete</div>
+                                        <b-modal :id="'modal-dcm' + item.comments_id" hide-header hide-footer>
+                                          Do you want to delete comment ??
+                                          <b-button style="float:right" v-on:click="deleteComments (item.comments_id, 'modal-dcm' + item.comments_id)">ok</b-button>
+                                        </b-modal>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
