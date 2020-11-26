@@ -66,13 +66,18 @@
                             Reply
                           </div>
                           <b-modal :id="'modal-id' + datas.plan_id" :title="datas.title" size="lg" hide-footer hide-header>
-                            <div style="border-bottom: thin solid #888;">
+                            <div style="border-bottom: thin solid #888;display: inline-block;width:90%">
                               <h5 v-b-modal="'modal-title' + datas.plan_id">{{datas.title}}</h5>
                               <!-- {{datas}} -->
                               <b-modal :id="'modal-title' + datas.plan_id" hide-header hide-footer>
                                 <b-input v-model="datas.title" v-on:keyup.enter="editContents(datas.plan_id, datas.title, 'modal-title' + datas.plan_id)"></b-input>
                               </b-modal>
                             </div>
+                            <div v-b-modal="'modal-delete-content' + datas.plan_id" style="display: inline-block;"><i class="fas fa-trash-alt"></i></div>
+                              <b-modal :id="'modal-delete-content' + datas.plan_id" hide-header hide-footer>
+                                Do you want to delete content ??
+                                <b-button style="float:right" v-on:click="deleteContents (datas.plan_id, 'modal-delete-content' + datas.plan_id)">ok</b-button>
+                              </b-modal>
                             <b-container>
                               <div>
                                 <div v-if="datas.priority == 2" style="display: inline-block;border-radius: 5px;border: thin solid #888;width: 50px;height: 20px;margin:5px;margin-top:10px;background-color:#FF3A3A">
@@ -131,16 +136,7 @@
                                       </b-modal>
                                     <div style="border-bottom: thin solid #888;display: inline-block;margin:5px;cursor:pointer;" v-b-modal="'modal-dcm' + item.comments_id">Delete</div>
                                       <b-modal :id="'modal-dcm' + item.comments_id" hide-header hide-footer>
-                                        <!-- <p class="my-4">Hello from modal!</p> -->
-                                        <!-- <b-input v-model="item.comments" v-on:keyup.enter="editComments(item.comments_id, item.comments, 'modal-cm' + item.comments_id)"></b-input> -->
                                         Do you want to delete comment ??
-                                        <!-- <b-row>
-                                          <b-col></b-col>
-                                          <b-col></b-col>
-                                          <b-col>
-                                            <b-button v-on:click="deleteComments (item.comments_id, 'modal-dcm' + item.comments_id)">ok</b-button>
-                                          </b-col>
-                                        </b-row> -->
                                         <b-button style="float:right" v-on:click="deleteComments (item.comments_id, 'modal-dcm' + item.comments_id)">ok</b-button>
                                       </b-modal>
                                   </div>
@@ -292,6 +288,9 @@ export default {
         detail: '',
         up: ''
       },
+      deletecontent: {
+        id: ''
+      },
       editcomment: {
         id: '',
         comment: '',
@@ -374,6 +373,15 @@ export default {
       }
       axios.patch(this.apiURL + '/plan/editdetailcontents', this.editdetailcontent).then(response => {
         console.log(response)
+        this.showComment()
+        this.$bvModal.hide(modal)
+      })
+    },
+    deleteContents (id, modal) {
+      this.deletecontent = {
+        id: id
+      }
+      axios.post(this.apiURL + '/plan/deletecontents', this.deletecontent).then(response => {
         this.showComment()
         this.$bvModal.hide(modal)
       })
