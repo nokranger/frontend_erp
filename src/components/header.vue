@@ -5,7 +5,7 @@
       <a href="javascript:void(0)" class="closebtn" v-on:click="openNav ()">&times;</a>
       <div class="align-left" style="color: white;border-radius: 5px;border: thin solid #888;" v-for="(showuserr, index) in showUsers" :key="index">
         <div style="margin:5px;">
-          <img id="profile" style="width:40px;height:40px;border-radius:50%;" :src="require('../img/uploads/signup/' + showuserr.employee_pic)">
+          <img id="profile" style="width:40px;height:40px;border-radius:50%;" :src="require('../assets/img/uploads/signup/' + showuserr.employee_pic)">
           <!-- {{showUsers}} -->
           <div style="display: inline-block;margin-left: 10px;">
             {{showuserr.employee_name + ' ' + showuserr.employee_lastname}}

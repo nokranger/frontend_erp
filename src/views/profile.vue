@@ -12,7 +12,7 @@
         <br>
         <b-row>
           <div class="img-profile ">
-            <img style="width:250px;hieght:400px;border-radius:8px;" :src="require('../img/uploads/signup/' + profiles.employee_pic)" alt="">
+            <img style="width:250px;hieght:400px;border-radius:8px;" :src="require('../assets/img/uploads/signup/' + profiles.employee_pic)" alt="">
           </div>
           <b-col cols="12">
             <div style="display: flex;flex-direction: row;" class="align-left">

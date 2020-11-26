@@ -73,7 +73,7 @@
                     <b-row>
                       <b-col></b-col>
                       <b-col>
-                        <img style="width:480px;hieght:720px;" :src="require('../img/uploads/prettycash/' + data.item.File)" alt="">
+                        <img style="width:480px;hieght:720px;" :src="require('../assets/img/uploads/prettycash/' + data.item.File)" alt="">
                       </b-col>
                       <b-col></b-col>
                     </b-row>
@@ -112,6 +112,7 @@ import apiURL from '../assets/js/connectionAPI'
 import moment from 'moment'
 import pdfMake from 'pdfmake/build/pdfmake'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
+// import aa from '../assets/img/uploads/prettycash'
 pdfMake.vfs = pdfFonts.pdfMake.vfs
 pdfMake.fonts = {
   THSarabunNew: {
