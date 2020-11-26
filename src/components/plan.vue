@@ -105,7 +105,7 @@
                                     <img src="https://i.imgur.com/KPtSoGK.jpg" alt="">
                                     <div class="align-left" style="margin:5px;margin-top:15px;">
                                       <h5>{{item.employee_name + ' ' + item.employee_lastname}}</h5>
-                                      <div>{{item.up_date | moment('dddd, MMMM Do YYYY')}}</div>
+                                      <!-- <div>{{item.up_date | moment('dddd, MMMM Do YYYY')}}</div> -->
                                     </div>
                                   </div>
                                   <div style="border-radius: 5px;border: thin solid #888;margin:5px;">
@@ -114,10 +114,10 @@
                                     </div>
                                   </div>
                                   <div style="margin:5px;">
-                                    <div style="border-bottom: thin solid #888;display: inline-block;margin:5px;cursor:pointer;" v-b-modal="'modal-cm' + item.comments_id">Edit</div>{{item.comments_id}}
+                                    <div style="border-bottom: thin solid #888;display: inline-block;margin:5px;cursor:pointer;" v-b-modal="'modal-cm' + item.comments_id">Edit</div>
                                       <b-modal :id="'modal-cm' + item.comments_id" hide-header hide-footer>
                                         <!-- <p class="my-4">Hello from modal!</p> -->
-                                        <b-input v-model="item.comments" v-on:keyup.enter="editComments(item.comments_id, item.comments)"></b-input>
+                                        <b-input v-model="item.comments" v-on:keyup.enter="editComments(item.comments_id, item.comments, 'modal-cm' + item.comments_id)"></b-input>
                                       </b-modal>
                                     <div style="border-bottom: thin solid #888;display: inline-block;margin:5px;cursor:pointer;">Delete</div>
                                   </div>
@@ -259,12 +259,12 @@ export default {
         reg: '',
         up: ''
       },
-      editContent: {
+      editcontent: {
         id: '',
         content: '',
         up: ''
       },
-      editComment: {
+      editcomment: {
         id: '',
         comment: '',
         up: ''
@@ -340,15 +340,19 @@ export default {
         // this.$bvModal.hide(modal)
       })
     },
-    editComments (id, comments) {
+    editComments (id, comments, modal) {
       // console.log('comment', id)
       // console.log('comment', comments)
-      this.editComment = {
+      this.editcomment = {
         id: id,
         comment: comments,
         up: moment(new Date(Date.now())).format()
       }
-      console.log('commentall', this.editComment)
+      axios.patch(this.apiURL + '/plan/editcomments', this.editcomment).then(response => {
+        this.showComment()
+        this.$bvModal.hide(modal)
+      })
+      // console.log('commentall', this.editcomment)
     },
     showContents () {
       axios.get(this.apiURL + '/plan/showcontent').then(response => {
