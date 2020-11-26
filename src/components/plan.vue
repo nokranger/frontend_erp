@@ -105,7 +105,7 @@
                                     <img src="https://i.imgur.com/KPtSoGK.jpg" alt="">
                                     <div class="align-left" style="margin:5px;margin-top:15px;">
                                       <h5>{{item.employee_name + ' ' + item.employee_lastname}}</h5>
-                                      <!-- <div>{{item.up_date | moment('dddd, MMMM Do YYYY')}}</div> -->
+                                      <div>{{item.up_date | moment("dddd, MMMM Do YYYY")}}</div>
                                     </div>
                                   </div>
                                   <div style="border-radius: 5px;border: thin solid #888;margin:5px;">
@@ -119,7 +119,20 @@
                                         <!-- <p class="my-4">Hello from modal!</p> -->
                                         <b-input v-model="item.comments" v-on:keyup.enter="editComments(item.comments_id, item.comments, 'modal-cm' + item.comments_id)"></b-input>
                                       </b-modal>
-                                    <div style="border-bottom: thin solid #888;display: inline-block;margin:5px;cursor:pointer;">Delete</div>
+                                    <div style="border-bottom: thin solid #888;display: inline-block;margin:5px;cursor:pointer;" v-b-modal="'modal-dcm' + item.comments_id">Delete</div>
+                                      <b-modal :id="'modal-dcm' + item.comments_id" hide-header hide-footer>
+                                        <!-- <p class="my-4">Hello from modal!</p> -->
+                                        <!-- <b-input v-model="item.comments" v-on:keyup.enter="editComments(item.comments_id, item.comments, 'modal-cm' + item.comments_id)"></b-input> -->
+                                        Do you want to delete comment ??
+                                        <!-- <b-row>
+                                          <b-col></b-col>
+                                          <b-col></b-col>
+                                          <b-col>
+                                            <b-button v-on:click="deleteComments (item.comments_id, 'modal-dcm' + item.comments_id)">ok</b-button>
+                                          </b-col>
+                                        </b-row> -->
+                                        <b-button style="float:right" v-on:click="deleteComments (item.comments_id, 'modal-dcm' + item.comments_id)">ok</b-button>
+                                      </b-modal>
                                   </div>
                                 </div>
                               </div>
@@ -269,6 +282,9 @@ export default {
         comment: '',
         up: ''
       },
+      deletecomment: {
+        id: ''
+      },
       new_comment: [],
       value: [],
       data: [],
@@ -353,6 +369,17 @@ export default {
         this.$bvModal.hide(modal)
       })
       // console.log('commentall', this.editcomment)
+    },
+    deleteComments (id, modal) {
+      this.deletecomment = {
+        id: id
+      }
+      axios.post(this.apiURL + '/plan/deletecomments', this.deletecomment).then(response => {
+        this.showComment()
+        this.$bvModal.hide(modal)
+      })
+      // this.$bvModal.hide(modal)
+      // console.log(id)
     },
     showContents () {
       axios.get(this.apiURL + '/plan/showcontent').then(response => {
