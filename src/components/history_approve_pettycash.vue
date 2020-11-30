@@ -83,7 +83,7 @@
             <template v-slot:cell(approve)="data" v-if="localjwt === '0'">
             <div>
               <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item !== 2" size="sm" class="mr-2" variant="danger" v-on:click="Rejected (data.item.Id)">Reject</b-button>
-              <b-button style="margin:1px" v-else-if="data.item.approve === 1 || data.item.approve === 2" size="sm" class="mr-2" variant="danger" disabled>Reject</b-button>
+              <b-button style="margin:1px" v-else-if="data.item.approve === 2" size="sm" class="mr-2" variant="danger" disabled>Reject</b-button>
             </div>
             <div>
               <b-button style="margin:1px" v-if="data.item.approve === 0 && data.item.approve !== 1 && data.item.approve !== 2" size="sm" class="mr-2" variant="success" v-on:click="Papprove (data.item.Id)">

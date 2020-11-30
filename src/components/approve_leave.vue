@@ -46,6 +46,26 @@
               <b-button style="margin:1px" v-else-if="data.item.approve === 1 || data.item.approve !== 2 && data.item.approve !== 0" size="sm"  class="mr-2" variant="primary" disabled>
                 Approved
               </b-button>
+                <div>
+                <b-modal :id="'modal-sick' + data.item.actId" size="sm" hide-footer>
+                  <b-row>
+                    <b-col>
+                      <div class="d-block text-center">ลาป่วยหมด</div>
+                    </b-col>
+                  </b-row>
+                </b-modal>
+              </div>
+              <div>
+                <b-modal :id="'modal-leave' + data.item.actId" size="sm" hide-footer>
+                  <b-row>
+                    <b-col>
+                      <div>
+                        <div class="d-block text-center">ลากิจหมด</div>
+                      </div>
+                    </b-col>
+                  </b-row>
+                </b-modal>
+              </div>
             </div>
           </template>
           <template v-slot:cell(approve)="data" v-else-if="localjwt ==='1'">
@@ -54,26 +74,6 @@
             <div v-else-if="data.item.approve === 2">Rejected</div>
           </template>
         </b-table>
-        <div>
-          <b-modal id="modal-sick" size="sm" hide-footer>
-            <b-row>
-              <b-col>
-                <div class="d-block text-center">ลาป่วยหมด</div>
-              </b-col>
-            </b-row>
-          </b-modal>
-        </div>
-        <div>
-          <b-modal id="modal-leave" size="sm" hide-footer>
-            <b-row>
-              <b-col>
-                <div>
-                  <div class="d-block text-center">ลากิจหมด</div>
-                </div>
-              </b-col>
-            </b-row>
-          </b-modal>
-        </div>
       </b-container>
     </div>
   </div>
@@ -166,10 +166,10 @@ export default {
         console.log('res0', response.data.result)
         if (response.data.result === 1) {
           console.log('ลากิจหมด')
-          this.$root.$emit('bv::show::modal', 'modal-leave', '#btnShow')
+          this.$root.$emit('bv::show::modal', 'modal-leave' + index, '#btnShow')
         } else if (response.data.result === 2) {
           console.log('ลาป่วยหมด')
-          this.$root.$emit('bv::show::modal', 'modal-sick', '#btnShow')
+          this.$root.$emit('bv::show::modal', 'modal-sick' + index, '#btnShow')
         } else {
           console.log('ลาได้')
           this.event = response.data.result.map((data, i) => {
@@ -212,7 +212,7 @@ export default {
           }
         })
         this.totalRows = this.event.length
-        this.$refs.table.refresh()
+        // this.$refs.table.refresh()
       })
     },
     checkPermission () {
