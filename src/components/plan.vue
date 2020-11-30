@@ -32,7 +32,7 @@
             <b-col cols="12" md="4" sm="4" v-for="(showplan, index) in new_emps" :key="index" style="margin-bottom:5px;">
               <div class="card" style="background-color:#ebecf0;width:100%;">
                 <div style="border-radius: 5px;border: thin solid #888;">
-                  <img src="https://i.imgur.com/KPtSoGK.jpg" alt="">
+                  <img :src="apiURL + '/signup/' + showplan.img" alt="">
                   <div class="align-left" style="margin:5px;margin-top:15px;">
                     <h5>{{showplan.text + ' ' + showplan.lastname}}</h5>
                   </div>
@@ -480,7 +480,7 @@ export default {
         this.new_comment = result2
         const emp = this.options4
         const con = this.new_comment
-        const result = emp.map(({ value, text, lastname }) => {
+        const result = emp.map(({ value, text, lastname, img }) => {
           // eslint-disable-next-line camelcase
           const cFilter = con.filter(({ employee_id }) => employee_id === value)
           // eslint-disable-next-line camelcase
@@ -490,6 +490,7 @@ export default {
             value,
             text,
             lastname,
+            img,
             con: c
           }
         })
@@ -502,7 +503,8 @@ export default {
           return {
             value: data.employee_id,
             text: data.employee_name,
-            lastname: data.employee_lastname
+            lastname: data.employee_lastname,
+            img: data.employee_pic
           }
         })
       })

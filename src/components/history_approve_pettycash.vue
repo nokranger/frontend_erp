@@ -73,7 +73,7 @@
                     <b-row>
                       <b-col></b-col>
                       <b-col>
-                        <img style="width:480px;hieght:720px;" :src="require('../assets/img/uploads/prettycash/' + data.item.File)" alt="">
+                        <img style="width:480px;hieght:720px;" :src="apiURL + '/pettycash/' + data.item.File" alt="">
                       </b-col>
                       <b-col></b-col>
                     </b-row>
