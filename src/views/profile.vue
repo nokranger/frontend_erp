@@ -74,6 +74,7 @@
                   <div style="display: flex;flex-direction: row;" class="align-left">
                   <div style="margin:5px" class="input-m">New password<b-input type="password" ref="upassword" v-model="updatepassword.upassword"></b-input></div>
                   <div style="margin:5px" class="input-m">Confirm password<b-input type="password" ref="cpassword" v-model="updatepassword.cpassword"></b-input></div>
+                  <div style="margin:5px" class="input-m">Email<b-input type="text" ref="email" v-model="profiles.employee_email"></b-input></div>
                   <div style="margin:5px" class="input-m"><br><b-button variant="success" @click="showu=true">Change password</b-button></div>
                     <b-modal v-model="showu" size="sm" hide-footer>
                       <p class="my-4">Do you want to change password</p>
@@ -198,8 +199,10 @@ export default {
       // console.log('password', md5(this.$refs.cpassword[0].localValue))
       this.updatepassword = {
         id: JSON.parse(localStorage.getItem('username')),
-        password: md5(this.$refs.cpassword[0].localValue)
+        password: md5(this.$refs.cpassword[0].localValue),
+        email: this.$refs.email[0].localValue
       }
+      // console.log(this.updatepassword)
       axios.patch(this.apiURL + '/emp/changepassword', this.updatepassword).then(response => {
         // console.log(response)
         this.profile = response.data.result

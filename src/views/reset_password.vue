@@ -53,6 +53,17 @@
                 placeholder="Enter confirm password"
               ></b-form-input>
             </b-form-group>
+            <b-form-group id="input-group-4">
+              <!-- <p style="color:red">{{checkpassword}}</p> -->
+              <label class="forminput">Email</label>
+              <b-form-input
+                id="input-4"
+                v-model="form.email"
+                type="text"
+                required
+                placeholder="Enter your email"
+              ></b-form-input>
+            </b-form-group>
             <div>
               <b-button class="success btn-block" variant="success" type="submit" v-on:click="resetpassword ()">Reset</b-button><br>
               <div>
@@ -91,7 +102,8 @@ export default {
       form: {
         id: '',
         password: '',
-        cpassword: ''
+        cpassword: '',
+        email: ''
       },
       show: true,
       error: null,
@@ -108,7 +120,8 @@ export default {
         this.form = {
           id: '',
           password: '',
-          cpassword: ''
+          cpassword: '',
+          email: ''
         }
         this.$root.$emit('bv::show::modal', 'modal-resetpassword', '#btnShow')
       })
