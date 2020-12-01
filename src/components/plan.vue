@@ -131,7 +131,7 @@
                                 </div>
                                 <div v-for="(item, index) in datas.comments" :key="index">
                                   <div style="border-radius: 5px;border: thin solid white;">
-                                    <img src="https://i.imgur.com/KPtSoGK.jpg" alt="">
+                                    <img :src="apiURL + '/signup/' + showplan.img" alt="">
                                     <div class="align-left" style="margin:5px;margin-top:15px;">
                                       <h5>{{item.employee_name + ' ' + item.employee_lastname}}</h5>
                                       <div>{{item.reg_date | moment("dddd, MMMM Do YYYY")}}</div>
