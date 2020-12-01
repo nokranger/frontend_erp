@@ -189,6 +189,10 @@ export default {
         this.totalRows = this.event.length
         this.$root.$emit('bv::refresh::table', 'my-table')
         // this.$refs.table.refresh()
+      }).catch(e => {
+        if (e.response.status === 404) {
+          location.reload()
+        }
       })
     },
     Rejected (index) {
@@ -198,6 +202,7 @@ export default {
         approve_id: JSON.parse(localStorage.getItem('username')),
         approve_date: Date.now()
       }
+      console.log('reject', this.reject)
       axios.patch(this.apiURL + '/leavear/reject-leave-report', this.reject).then(response => {
         this.event = response.data.result.map((data, i) => {
           return {
@@ -215,6 +220,10 @@ export default {
         this.totalRows = this.event.length
         this.$root.$emit('bv::refresh::table', 'my-table')
         // this.$refs.table.refresh()
+      }).catch(e => {
+        if (e.response.status === 404) {
+          location.reload()
+        }
       })
     },
     checkPermission () {

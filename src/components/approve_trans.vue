@@ -168,6 +168,10 @@ export default {
           }
         })
         this.$refs.table.refresh()
+      }).catch(e => {
+        if (e.response.status === 404) {
+          location.reload()
+        }
       })
 
       // this.$refs.table.refresh()
@@ -194,6 +198,10 @@ export default {
           }
         })
         this.$refs.table.refresh()
+      }).catch(e => {
+        if (e.response.status === 404) {
+          location.reload()
+        }
       })
     }
   }
