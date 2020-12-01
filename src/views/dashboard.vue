@@ -124,9 +124,7 @@ export default {
         this.employee = resulte.data.result
         this.leave = resultl.data.result
         this.trans = resultt.data.result
-      })).catch(e => {
-        this.error.push(e)
-      })
+      }))
     } else {
       location.replace('/')
     }
