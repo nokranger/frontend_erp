@@ -97,14 +97,14 @@ export default {
   },
   created () {
     this.localjwt = JSON.parse(localStorage.getItem('role'))
-    // console.log('local', (this.localjwt))
+    // // console.log('local', (this.localjwt))
     if (this.localjwt === '0') {
-      console.log('localtrans', (this.localjwt))
+      // console.log('localtrans', (this.localjwt))
     }
   },
   updated () {},
   mounted () {
-    console.log('showerptrans')
+    // console.log('showerptrans')
     axios.all([axios.get(this.apiURL + '/trans/get-all-trans-history')]).then(axios.spread((restrans) => {
       this.event = restrans.data.result.map((data, i) => {
         return {
@@ -116,7 +116,7 @@ export default {
           approve: data.trans_status
         }
       })
-      // console.log(this.event.approve)
+      // // console.log(this.event.approve)
     })).catch(e => {
       this.error.push(e)
     })
@@ -125,28 +125,28 @@ export default {
   methods: {
     checkPermission () {
       if (JSON.parse(localStorage.getItem('jwt')) !== 'null') {
-        console.log('login agian')
+        // console.log('login agian')
       } else {
-        console.log('login agian 2')
+        // console.log('login agian 2')
       }
     },
     checkExpire () {
-      console.log('check expire')
+      // console.log('check expire')
       if (Date.now() >= parseInt(localStorage.getItem('iat'), 10) + 600000) {
-        console.log('10min')
-        console.log('logout')
+        // console.log('10min')
+        // console.log('logout')
         localStorage.removeItem('iat')
         localStorage.removeItem('username')
         localStorage.removeItem('jwt')
         localStorage.removeItem('role')
         location.replace('/')
       } else {
-        console.log('not expire')
+        // console.log('not expire')
       }
     },
     // status 0 notapprove, 1 approve, 2 reject
     Papprove (index) {
-      // console.log('test')
+      // // console.log('test')
       this.approve = {
         trans_id: index,
         trans_status: 1,
@@ -157,7 +157,7 @@ export default {
         method: 'patch',
         data: this.approve
       }).then(response => {
-        console.log(response)
+        // console.log(response)
         this.event = response.data.result.map((data, i) => {
           return {
             trans_id: data.trans_id,

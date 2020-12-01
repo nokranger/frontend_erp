@@ -139,15 +139,15 @@ export default {
   created () {
     this.localjwt = JSON.parse(localStorage.getItem('role'))
     if (this.localjwt === '0') {
-      console.log('local', (this.localjwt))
+      // console.log('local', (this.localjwt))
     } else if (this.localjwt === '1') {
       this.data = {
         employee_id: JSON.parse(localStorage.getItem('username'))
       }
-      console.log('username', this.data.employee_id)
+      // console.log('username', this.data.employee_id)
       axios.post(this.apiURL + '/emp/settingprofile', this.data).then(response => {
         this.profile = response.data.result
-        console.log('pic', this.profile[0].employee_pic.replace(/\\/g, '/'))
+        // console.log('pic', this.profile[0].employee_pic.replace(/\\/g, '/'))
       })
     }
   },
@@ -160,23 +160,23 @@ export default {
   methods: {
     checkPermission () {
       if (JSON.parse(localStorage.getItem('jwt')) !== 'null') {
-        console.log('login agian')
+        // console.log('login agian')
       } else {
-        console.log('login agian 2')
+        // console.log('login agian 2')
       }
     },
     checkExpire () {
-      console.log('check expire')
+      // console.log('check expire')
       if (Date.now() >= parseInt(localStorage.getItem('iat'), 10) + 600000) {
-        console.log('10min')
-        console.log('logout')
+        // console.log('10min')
+        // console.log('logout')
         localStorage.removeItem('iat')
         localStorage.removeItem('username')
         localStorage.removeItem('jwt')
         localStorage.removeItem('role')
         location.replace('/')
       } else {
-        console.log('not expire')
+        // console.log('not expire')
       }
     },
     updateProfile () {
@@ -187,21 +187,21 @@ export default {
         tel: this.profile[0].employee_tel,
         email: this.profile[0].employee_email
       }
-      console.log(this.updateprofile)
+      // console.log(this.updateprofile)
       axios.patch(this.apiURL + '/emp/updateusers', this.updateprofile).then(response => {
-        console.log(response)
+        // console.log(response)
         this.profile = response.data.result
       })
     },
     changePassword () {
-      console.log('password', this.$refs.cpassword[0].localValue)
-      console.log('password', md5(this.$refs.cpassword[0].localValue))
+      // console.log('password', this.$refs.cpassword[0].localValue)
+      // console.log('password', md5(this.$refs.cpassword[0].localValue))
       this.updatepassword = {
         id: JSON.parse(localStorage.getItem('username')),
         password: md5(this.$refs.cpassword[0].localValue)
       }
       axios.patch(this.apiURL + '/emp/changepassword', this.updatepassword).then(response => {
-        console.log(response)
+        // console.log(response)
         this.profile = response.data.result
       })
     }
@@ -209,7 +209,7 @@ export default {
   computed: {
     checkpassword () {
       if (this.updatepassword.upassword !== this.updatepassword.cpassword) {
-        console.log('not same')
+        // console.log('not same')
         return '** Passwords not match.'
       } else if (this.updatepassword.upassword === this.updatepassword.cpassword) {
         return ''

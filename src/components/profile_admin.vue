@@ -167,14 +167,14 @@ export default {
         tel: this.$refs[tel].localValue,
         email: this.$refs[email].localValue
       }
-      console.log(this.updateprofile)
+      // console.log(this.updateprofile)
       axios.patch(this.apiURL + '/emp/updateusersadmin', this.updateprofile).then(response => {
-        console.log(response)
+        // console.log(response)
         this.profile = response.data.result
       })
     },
     changePassword (id, password, cpassword, role) {
-      console.log(this.$refs[password].localValue, this.$refs[cpassword].localValue, this.$refs[role].localValue)
+      // console.log(this.$refs[password].localValue, this.$refs[cpassword].localValue, this.$refs[role].localValue)
       this.updateuser = {
         approve_id: JSON.parse(localStorage.getItem('username')),
         id: this.$refs[id].localValue,
@@ -182,7 +182,7 @@ export default {
         role: this.$refs[role].localValue
       }
       axios.patch(this.apiURL + '/emp/adminchangepassword', this.updateuser).then(response => {
-        console.log(response)
+        // console.log(response)
         this.profiles = response.data.result.map((data, i) => {
           return {
             id: data.employee_id,
@@ -207,7 +207,7 @@ export default {
   computed: {
     checkpassword () {
       if (this.user.cpassword !== this.user.password) {
-        console.log('not same')
+        // console.log('not same')
         return '** Passwords not match.'
       } else if (this.user.cpassword === this.user.password) {
         return ''

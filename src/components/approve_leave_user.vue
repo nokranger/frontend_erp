@@ -67,9 +67,9 @@ export default {
   },
   created () {
     this.localjwt = JSON.parse(localStorage.getItem('role'))
-    // console.log('local', (this.localjwt))
+    // // console.log('local', (this.localjwt))
     if (this.localjwt === '0') {
-      console.log('localuser', (this.localjwt))
+      // console.log('localuser', (this.localjwt))
     }
   },
   beforeUpdate () {

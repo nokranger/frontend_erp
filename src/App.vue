@@ -35,15 +35,15 @@ export default {
     }
   },
   mounted () {
-    console.log(window.location.pathname)
+    // console.log(window.location.pathname)
     if (window.location.pathname === '/' | window.location.pathname === '/password_reset') {
       this.pathname = 'login'
-      console.log('login')
+      // console.log('login')
     } else if (window.location.pathname === '/dashboard') {
       this.cssProps.height = 'auto'
     } else if (window.location.pathname === '/print') {
       this.colorlptt = 'white'
-      console.log('login')
+      // console.log('login')
     } else if (window.location.pathname === '/approveleave') {
       this.cssProps.height = '1400px'
     } else if (window.location.pathname === '/approvetrans') {

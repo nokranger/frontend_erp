@@ -348,14 +348,14 @@ export default {
   },
   methods: {
     createContent (id, priority, modal) {
-      console.log('ID: ', id)
+      // console.log('ID: ', id)
       this.content.id = id
       this.content.priority = this.$refs[priority][0].localValue
       this.content.member = this.value.toString()
       this.content.reg = moment(new Date(Date.now())).format()
       this.content.up = moment(new Date(Date.now())).format()
-      console.log('content', this.content)
-      console.log('modal', modal)
+      // console.log('content', this.content)
+      // console.log('modal', modal)
       axios.post(this.apiURL + '/plan/createplan', this.content).then(response => {
         this.showComment()
         this.content = {
@@ -376,7 +376,7 @@ export default {
         up: moment(new Date(Date.now())).format()
       }
       axios.patch(this.apiURL + '/plan/editcontents', this.editcontent).then(response => {
-        console.log(response)
+        // console.log(response)
         this.showComment()
         this.$bvModal.hide(modal)
       })
@@ -388,7 +388,7 @@ export default {
         up: moment(new Date(Date.now())).format()
       }
       axios.patch(this.apiURL + '/plan/editdetailcontents', this.editdetailcontent).then(response => {
-        console.log(response)
+        // console.log(response)
         this.showComment()
         this.$bvModal.hide(modal)
       })
@@ -403,13 +403,13 @@ export default {
       })
     },
     createComment (id, modal) {
-      // console.log('testenter')
+      // // console.log('testenter')
       this.comment.id = id
-      console.log('date', moment(new Date(Date.now())).format())
+      // console.log('date', moment(new Date(Date.now())).format())
       this.comment.reg = moment(new Date(Date.now())).format()
       this.comment.up = moment(new Date(Date.now())).format()
       axios.post(this.apiURL + '/plan/createcomment', this.comment).then(response => {
-        // console.log(response)
+        // // console.log(response)
         this.showComment()
         this.comment = {
           id: '',
@@ -420,8 +420,8 @@ export default {
       })
     },
     editComments (id, comments, modal) {
-      // console.log('comment', id)
-      // console.log('comment', comments)
+      // // console.log('comment', id)
+      // // console.log('comment', comments)
       this.editcomment = {
         id: id,
         comment: comments,
@@ -431,7 +431,7 @@ export default {
         this.showComment()
         this.$bvModal.hide(modal)
       })
-      // console.log('commentall', this.editcomment)
+      // // console.log('commentall', this.editcomment)
     },
     deleteComments (id, modal) {
       this.deletecomment = {
@@ -442,7 +442,7 @@ export default {
         this.$bvModal.hide(modal)
       })
       // this.$bvModal.hide(modal)
-      // console.log(id)
+      // // console.log(id)
     },
     showContents () {
       axios.get(this.apiURL + '/plan/showcontent').then(response => {
@@ -454,10 +454,10 @@ export default {
       axios.get(this.apiURL + '/plan/showcomment').then(response => {
         // this.rescomment = response.data.result
         const newcomment = response.data.result
-        // console.log('newcom', newcomment)
+        // // console.log('newcom', newcomment)
         // eslint-disable-next-line camelcase
         const renew_emps = this.data
-        // console.log('reemp', renew_emps)
+        // // console.log('reemp', renew_emps)
         // eslint-disable-next-line camelcase
         const result2 = renew_emps.map(({ plan_id, employee_id, title, detail, priority, permission, member, reg_date, up_date }) => {
           // eslint-disable-next-line camelcase

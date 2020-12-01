@@ -85,7 +85,7 @@ export default {
     if (localjwt !== null) {
       location.replace('/dashboard')
     } else {
-      console.log('re login')
+      // console.log('re login')
     }
   },
   created () {
@@ -99,20 +99,20 @@ export default {
     postLogin () {
       this.form.employee_id = this.form.employee_id.toUpperCase()
       this.form.password = md5(this.form.password)
-      // console.log(this.data)
+      // // console.log(this.data)
       axios.post(this.apiURL + '/emp/login', this.form)
         .then(response => {
-          console.log(VueJwtDecode.decode(response.data))
+          // console.log(VueJwtDecode.decode(response.data))
           const jwt = VueJwtDecode.decode(response.data)
           if (jwt.loginSuccessfull === true) {
-            console.log('ss')
+            // console.log('ss')
             this.error = true
             localStorage.setItem('username', JSON.stringify(jwt.sub))
             localStorage.setItem('role', JSON.stringify(jwt.role))
             localStorage.setItem('iat', JSON.stringify(jwt.iat))
             localStorage.setItem('jwt', JSON.stringify(response.data))
-            console.log(jwt.iat)
-            console.log(jwt.sub)
+            // console.log(jwt.iat)
+            // console.log(jwt.sub)
             location.replace('/dashboard')
           }
         }).catch(e => {

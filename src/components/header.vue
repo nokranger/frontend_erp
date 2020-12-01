@@ -87,7 +87,7 @@ export default {
       document.getElementById('mySidenav').style.width = '0'
     },
     logOut () {
-      console.log('logout')
+      // console.log('logout')
       localStorage.removeItem('iat')
       localStorage.removeItem('username')
       localStorage.removeItem('jwt')
@@ -98,7 +98,7 @@ export default {
       this.data = {
         id: JSON.parse(localStorage.getItem('username'))
       }
-      // await console.log('url', this.apiURL)
+      // await // console.log('url', this.apiURL)
       axios.post(this.apiURl + '/emp/get-all-emp', this.data).then(response => {
         this.showUsers = response.data.result
       })
@@ -106,23 +106,23 @@ export default {
   },
   mounted () {
     document.getElementById('xx').innerHTML = '<i class="fas fa-align-justify"></i>'
-    // console.log(VueJwtDecode.decode(JSON.parse(localStorage.getItem('jwt'))))
+    // // console.log(VueJwtDecode.decode(JSON.parse(localStorage.getItem('jwt'))))
     var localjwt = localStorage.getItem('jwt')
     if (localjwt !== null) {
-      console.log('3')
+      // console.log('3')
       const jwt = VueJwtDecode.decode(JSON.parse(localStorage.getItem('jwt')))
       this.permission = JSON.parse(jwt.role)
-      console.log(this.permission)
+      // console.log(this.permission)
       // this.permission = VueJwtDecode.decode(JSON.parse(localStorage.getItem('role')))
     }
     // if (window.location.pathname === '/dashboard2') {
     //   this.pathname = 'login'
-    //   console.log('login2')
+    //   // console.log('login2')
     // }
     this.showuser()
     // const jwt = VueJwtDecode.decode(JSON.parse(localStorage.getItem('jwt')))
     // this.permission = JSON.parse(jwt.role)
-    // console.log(this.permission)
+    // // console.log(this.permission)
     // this.permission = VueJwtDecode.decode(JSON.parse(localStorage.getItem('role')))
   }
 }

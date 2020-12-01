@@ -120,9 +120,9 @@ export default {
       const formData = new FormData()
       formData.set('data', JSON.stringify(this.prettycash))
       formData.append('file', this.prettycash.picture)
-      console.log(this.prettycash.picture)
+      // console.log(this.prettycash.picture)
       axios.post(this.apiURL + '/cash/post-prettycash', formData).then(respone => {
-        console.log(respone)
+        // console.log(respone)
         this.prettycash = {
           date: '',
           employee_id: JSON.parse(localStorage.getItem('username')),

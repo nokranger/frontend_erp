@@ -104,7 +104,7 @@ export default {
     resetpassword () {
       this.form.password = md5(this.form.password)
       axios.patch(this.apiURL + '/emp/changepassword', this.form).then(response => {
-        console.log(response)
+        // console.log(response)
         this.form = {
           id: '',
           password: '',
@@ -117,7 +117,7 @@ export default {
   computed: {
     checkpassword () {
       if (this.form.cpassword !== this.form.password) {
-        console.log('not same')
+        // console.log('not same')
         return '** Passwords not match.'
       } else if (this.form.cpassword === this.form.password) {
         return ''

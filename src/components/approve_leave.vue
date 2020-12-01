@@ -32,7 +32,7 @@
           ></b-form-input>
         </b-col>
         </b-row>
-        <b-table :items="event" :fields="fields" :filter="filter" :current-page="currentPage"
+        <b-table ref="table" id="my-table" :items="event" :fields="fields" :filter="filter" :current-page="currentPage"
       :per-page="perPage" class="mt-3" responsive="sm" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
           <template v-slot:cell(approve)="data" v-if="localjwt === '0'">
             <div>
@@ -120,7 +120,7 @@ export default {
   created () {
     this.localjwt = JSON.parse(localStorage.getItem('role'))
     if (this.localjwt === '0') {
-      console.log('localadmin', (this.localjwt))
+      // console.log('localadmin', (this.localjwt))
     }
   },
   beforeUpdate () {
@@ -161,17 +161,17 @@ export default {
         category: category,
         approve_date: Date.now()
       }
-      console.log(this.approve)
+      // console.log(this.approve)
       axios.patch(this.apiURL + '/leavear/approve-leave-report', this.approve).then(response => {
-        console.log('res0', response.data.result)
+        // console.log('res0', response.data.result)
         if (response.data.result === 1) {
-          console.log('ลากิจหมด')
+          // console.log('ลากิจหมด')
           this.$root.$emit('bv::show::modal', 'modal-leave' + index, '#btnShow')
         } else if (response.data.result === 2) {
-          console.log('ลาป่วยหมด')
+          // console.log('ลาป่วยหมด')
           this.$root.$emit('bv::show::modal', 'modal-sick' + index, '#btnShow')
         } else {
-          console.log('ลาได้')
+          // console.log('ลาได้')
           this.event = response.data.result.map((data, i) => {
             return {
               id: data.employee_id,
@@ -187,6 +187,7 @@ export default {
           })
         }
         this.totalRows = this.event.length
+        this.$root.$emit('bv::refresh::table', 'my-table')
         // this.$refs.table.refresh()
       })
     },
@@ -212,28 +213,29 @@ export default {
           }
         })
         this.totalRows = this.event.length
+        this.$root.$emit('bv::refresh::table', 'my-table')
         // this.$refs.table.refresh()
       })
     },
     checkPermission () {
       if (JSON.parse(localStorage.getItem('jwt')) !== 'null') {
-        console.log('login agian')
+        // console.log('login agian')
       } else {
-        console.log('login agian 2')
+        // console.log('login agian 2')
       }
     },
     checkExpire () {
-      console.log('check expire')
+      // console.log('check expire')
       if (Date.now() >= parseInt(localStorage.getItem('iat'), 10) + 600000) {
-        console.log('10min')
-        console.log('logout')
+        // console.log('10min')
+        // console.log('logout')
         localStorage.removeItem('iat')
         localStorage.removeItem('username')
         localStorage.removeItem('jwt')
         localStorage.removeItem('role')
         location.replace('/')
       } else {
-        console.log('not expire')
+        // console.log('not expire')
       }
     }
   }

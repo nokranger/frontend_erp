@@ -115,9 +115,9 @@ export default {
   beforeCreate () {},
   created () {
     this.localjwt = JSON.parse(localStorage.getItem('role'))
-    // console.log('local', (this.localjwt))
+    // // console.log('local', (this.localjwt))
     if (this.localjwt === '0') {
-      console.log('local', (this.localjwt))
+      // console.log('local', (this.localjwt))
     }
   },
   updated () {},
@@ -144,7 +144,7 @@ export default {
     selectMonth () {
       this.trans_month.id = JSON.parse(localStorage.getItem('username'))
       axios.post(this.apiURL + '/trans/get-month-trans-user', this.trans_month).then(response => {
-        console.log('selectmonth', response)
+        // console.log('selectmonth', response)
         this.event = response.data.result.map((data, i) => {
           return {
             trans_id: data.trans_id,
@@ -161,11 +161,11 @@ export default {
       })
     },
     pdfPreview () {
-      console.log('pdfpreview')
+      // console.log('pdfpreview')
       var from = this.trans_month.from
       var to = this.trans_month.to
       axios.post(this.apiURL + '/trans/pdf', this.trans_month).then(response => {
-        console.log('transpdf', response)
+        // console.log('transpdf', response)
         // var ss = ''
         this.dataTotable = response.data.result.map((data, i) => {
           return {
@@ -217,7 +217,7 @@ export default {
             this.dataTotable.push(this.dataTotable2[k])
           }
         }
-        console.log('datatable', this.dataTotable)
+        // console.log('datatable', this.dataTotable)
         function buildTableBody (data, columns) {
           var body = []
           body.push(columns)

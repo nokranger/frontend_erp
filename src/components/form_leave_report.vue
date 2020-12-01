@@ -130,8 +130,8 @@ export default {
       // this.check_amount_leave()
       this.leaveActivityReport.leave_category = this.$refs.leave_report.localValue
       axios.post(this.apiURL + '/leavear/post-la_report', this.leaveActivityReport).then(response => {
-        console.log(response)
-        console.log('1')
+        // console.log(response)
+        // console.log('1')
         this.leaveActivityReport = {
           employee_id: JSON.parse(localStorage.getItem('username')),
           leave_activity_report_id: '',
@@ -149,7 +149,7 @@ export default {
         .catch(e => {
           this.error.push(e)
         })
-      console.log('2')
+      // console.log('2')
     },
     check_amount_leave () {
       var minutes = 1000 * 60
@@ -179,14 +179,14 @@ export default {
       document.getElementById('reason').readOnly = false
     },
     check_leave () {
-      console.log('checkleave')
+      // console.log('checkleave')
       const emp = {
         id: JSON.parse(localStorage.getItem('username'))
       }
       axios.post(this.apiURL + '/leavear/checkleave', emp).then(response => {
         this.leaveCount = response.data.result[0].leave_activity
         this.sick_leave = response.data.result[0].leave_sick
-        console.log('res', this.leaveCount)
+        // console.log('res', this.leaveCount)
         if ((this.leaveCount <= 0 && this.sick_leave <= 0) || this.leaveCount === '') {
           this.dis_form()
         } else if ((this.leaveCount > 0 && this.sick_leave >= 0) || this.leaveCount !== '') {

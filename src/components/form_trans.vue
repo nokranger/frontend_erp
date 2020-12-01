@@ -147,7 +147,7 @@ export default {
   methods: {
     send () {
       this.selected = null
-      console.log('test')
+      // console.log('test')
       this.trans = {
         employee_id: JSON.parse(localStorage.getItem('username')),
         trans_date: this.transportation.trans_date,
@@ -159,7 +159,7 @@ export default {
         status: 0
       }
       axios.post(this.apiURL + '/trans/post-trans', this.trans).then(response => {
-        console.log(response)
+        // console.log(response)
         this.transportation = {
           employee_id: JSON.parse(localStorage.getItem('username')),
           trans_date: '',

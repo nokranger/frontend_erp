@@ -176,7 +176,7 @@ export default {
   created () {
     this.localjwt = JSON.parse(localStorage.getItem('role'))
     if (this.localjwt === '0') {
-      console.log('local', (this.localjwt))
+      // console.log('local', (this.localjwt))
     }
     this.isBusy = !this.isBusy
   },
@@ -187,23 +187,23 @@ export default {
 
   },
   mounted () {
-    // console.log('appid', this.appId)
-    console.log(this.ArabicNumberToText(1001.23))
+    // // console.log('appid', this.appId)
+    // console.log(this.ArabicNumberToText(1001.23))
     setInterval(this.checkExpire, 150000)
   },
   methods: {
     checkExpire () {
-      console.log('check expire')
+      // console.log('check expire')
       if (Date.now() >= parseInt(localStorage.getItem('iat'), 10) + 600000) {
-        console.log('10min')
-        console.log('logout')
+        // console.log('10min')
+        // console.log('logout')
         localStorage.removeItem('iat')
         localStorage.removeItem('username')
         localStorage.removeItem('jwt')
         localStorage.removeItem('role')
         location.replace('/')
       } else {
-        console.log('not expire')
+        // console.log('not expire')
       }
     },
     selectMonth () {
@@ -226,14 +226,14 @@ export default {
           this.isBusy = false
         }).catch(e => {
           // if (e.response.status === 404) {
-          //   console.log('Not found')
+          //   // console.log('Not found')
           // } else if (e.response.status === 500) {
-          //   console.log('internal error')
+          //   // console.log('internal error')
           // }
         })
     },
     Papprove (index) {
-      console.log('event', index)
+      // console.log('event', index)
       this.approve = {
         id: index,
         status: 1,
@@ -263,9 +263,9 @@ export default {
     },
     updateApprove () {
       axios.post(this.apiURL + '/cash/get-month-prettycash', this.prettycash_month)
-      console.log('done select 2')
+      // console.log('done select 2')
         .then(response => {
-          // console.log(response.data.result)
+          // // console.log(response.data.result)
           this.event = response.data.result.map((data, i) => {
             // this.remaining = this.remaining - data.amount
             return {
@@ -334,7 +334,7 @@ export default {
     pdfPreview () {
       axios.post(this.apiURL + '/cash/pdf', this.prettycash_month).then(response => {
         this.dataTotable2 = response.data.result
-        console.log('response', response.data)
+        // console.log('response', response.data)
         this.dataTotable2 = response.data.result.map((data, i) => {
           return {
             No: data._No,
@@ -344,7 +344,7 @@ export default {
             Amounts: data._amounts
           }
         })
-        console.log('Amount', this.dataTotable2[this.dataTotable2.length - 1].Amounts)
+        // console.log('Amount', this.dataTotable2[this.dataTotable2.length - 1].Amounts)
         if (this.dataTotable2.length < 20) {
           for (var i = this.dataTotable2.length; i < 20; i++) {
             this.dataTotable[i] = {
@@ -392,8 +392,8 @@ export default {
         }
 
         function table (data, columns) {
-          // console.log(data)
-          // console.log(columns)
+          // // console.log(data)
+          // // console.log(columns)
           return {
             table: {
               widths: [20, 50, 370, 40],

@@ -146,23 +146,23 @@ export default {
   methods: {
     checkPermission () {
       if (JSON.parse(localStorage.getItem('jwt')) !== 'null') {
-        console.log('login agian')
+        // console.log('login agian')
       } else {
-        console.log('login agian 2')
+        // console.log('login agian 2')
       }
     },
     checkExpire () {
-      console.log('check expire')
+      // console.log('check expire')
       if (Date.now() >= parseInt(localStorage.getItem('iat'), 10) + 600000) {
-        console.log('10min')
-        console.log('logout')
+        // console.log('10min')
+        // console.log('logout')
         localStorage.removeItem('iat')
         localStorage.removeItem('username')
         localStorage.removeItem('jwt')
         localStorage.removeItem('role')
         location.replace('/')
       } else {
-        console.log('not expire')
+        // console.log('not expire')
       }
     },
     uploadImage () {
@@ -181,9 +181,9 @@ export default {
       const formData = new FormData()
       formData.set('data', JSON.stringify(this.empCategory))
       formData.append('file', this.empCategory.employee_pic)
-      console.log((this.empCategory))
+      // console.log((this.empCategory))
       axios.post(this.apiURL + '/emp/post-emp', formData).then(response => {
-        console.log(response)
+        // console.log(response)
         this.empCategory = {
           employee_pic: null,
           employee_id: '',
@@ -204,8 +204,8 @@ export default {
     },
     test () {
       this.empCategory.job_position_id = this.$refs.jobId.localValue
-      console.log(this.empCategory.job_position_id)
-      console.log('test')
+      // console.log(this.empCategory.job_position_id)
+      // console.log('test')
       // location.reload()
     }
   }
