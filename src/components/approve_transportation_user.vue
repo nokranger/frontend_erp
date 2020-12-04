@@ -156,8 +156,6 @@ export default {
           }
         })
         this.$refs.table.refresh()
-      }).catch(e => {
-        this.error.push(e)
       })
     },
     pdfPreview () {
